@@ -170,7 +170,6 @@ panel.addEventListener('close', () => {
 document.getElementById('panel-close').addEventListener('click', closePanel);
 panel.addEventListener('click', (e) => { if (e.target === panel) closePanel(); });  // backdrop
 addEventListener('hashchange', route);
-route();
 
 /* --------------------------------------------------------- text helpers */
 
@@ -418,3 +417,6 @@ async function startGame(root) {
     if (b && !busy) ask(b.textContent);
   });
 })();
+
+// Open a panel named in the URL only now that everything above (the game included) is defined.
+route();
