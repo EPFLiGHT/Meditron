@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Meditron</title>
+  <meta name="description" content="Meditron is open medical AI from EPFL's LiGHT lab: a fully open model, its training data, and an evaluation built with clinicians from Switzerland to Kenya.">
+  <meta name="theme-color" content="#0c43a0">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Meditron">
+  <meta property="og:title" content="Meditron">
+  <meta property="og:description" content="Open medical AI, built with clinicians and tested by them. A fully open model, its training data, and an evaluation you can play.">
+  <meta property="og:url" content="https://epfllight.github.io/MeditronWebsite/">
+  <meta property="og:image" content="https://epfllight.github.io/MeditronWebsite/static/img/social-preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="The Meditron wordmark over a dithered globe, surrounded by project folders">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://epfllight.github.io/MeditronWebsite/static/img/social-preview.png">
+  <link rel="icon" href="static/img/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap">
+  <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+  <a class="skip" href="#chat">Skip to the chat</a>
+
+  <header class="top">
+    <a class="top-lab" href="https://www.light-laboratory.org/" target="_blank" rel="noopener"><img src="static/img/light-logo.png" alt="LiGHT, EPFL"></a>
+    <nav class="top-links" aria-label="Project links">
+      <a href="https://arxiv.org/abs/2605.16215" target="_blank" rel="noopener">Paper</a>
+      <a href="https://huggingface.co/collections/EPFLiGHT/meditronfo" target="_blank" rel="noopener">Models</a>
+      <a href="https://github.com/EPFLiGHT/FullyOpenMeditron" target="_blank" rel="noopener">Code</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" aria-label="Meditron">
+      <canvas id="globe" aria-hidden="true"></canvas>
+
+      <div class="hero-center">
+        <h1 class="wordmark">Meditron</h1>
+        <p class="tagline">Open medical AI, built with clinicians and tested by them.</p>
+        <a class="talk" href="#chat">Talk to Meditron</a>
+      </div>
+
+      <p class="globe-key"><span class="dot" aria-hidden="true"></span>Where clinicians tested Meditron</p>
+
+      <div class="folders" aria-label="The parts of Meditron">
+        <button class="folder" type="button" data-open="apertus" style="--l:4%;--t:9%;--r:-4deg">
+          <span class="folder-tab">The base model</span>
+          <span class="folder-body">
+            <strong class="folder-title">Apertus</strong>
+            <span class="folder-text">Switzerland's fully open language model. Meditron is trained on top of it, so every layer can be checked.</span>
+          </span>
+        </button>
+        <button class="folder" type="button" data-open="data" style="--l:73%;--t:11%;--r:3deg">
+          <span class="folder-tab">Training data</span>
+          <span class="folder-body">
+            <strong class="folder-title">533,888 examples</strong>
+            <span class="folder-text">Everything Meditron learned from, public. Open any example and see how it was checked.</span>
+          </span>
+        </button>
+        <button class="folder" type="button" data-open="moove" style="--l:6%;--t:62%;--r:2.5deg">
+          <span class="folder-tab">Clinician testing</span>
+          <span class="folder-body">
+            <strong class="folder-title">MOOVE</strong>
+            <span class="folder-text">3,786 questions written by clinicians at 18 events in Switzerland, Belgium, Kenya, Tanzania, Malawi, Ethiopia and India.</span>
+          </span>
+        </button>
+        <button class="folder folder-play" type="button" data-open="automoove" style="--l:77%;--t:53%;--r:-3deg">
+          <span class="folder-tab">Evaluation</span>
+          <span class="folder-body">
+            <strong class="folder-title">AutoMOOVE</strong>
+            <span class="folder-text">An AI judge stands in for clinicians. Can you judge like one? Five real cases.</span>
+            <span class="folder-cta">Play</span>
+          </span>
+        </button>
+        <button class="folder" type="button" data-open="healthbench" style="--l:58%;--t:78%;--r:1.5deg">
+          <span class="folder-tab">Results</span>
+          <span class="folder-body">
+            <strong class="folder-title">HealthBench</strong>
+            <span class="mini-bars" aria-label="HealthBench: Apertus-70B-Instruct 39.4, Apertus-70B-Meditron 49.3">
+              <span class="mini"><span class="mini-name">Apertus-70B</span><span class="mini-track"><span style="width:56%"></span></span><span class="mini-val">39.4</span></span>
+              <span class="mini ours"><span class="mini-name">+ Meditron</span><span class="mini-track"><span style="width:70%"></span></span><span class="mini-val">49.3</span></span>
+            </span>
+          </span>
+        </button>
+      </div>
+    </section>
+
+    <section class="hosts" aria-label="Who builds Meditron">
+      <a class="hosts-lab" href="https://www.light-laboratory.org/" target="_blank" rel="noopener"><img src="static/img/light-logo.png" alt="LiGHT, Laboratory for intelligent Global Health and Humanitarian Response Technologies"></a>
+      <p class="hosts-label">LiGHT is hosted by</p>
+      <ul class="hosts-list">
+        <li><a href="https://www.epfl.ch/" target="_blank" rel="noopener"><img class="h-epfl" src="static/img/hosts/epfl.png" alt="EPFL"></a></li>
+        <li><a href="https://www.ariadnelabs.org/" target="_blank" rel="noopener"><img class="h-ariadne" src="static/img/hosts/ariadne.png" alt="Ariadne Labs, Harvard"></a></li>
+        <li><a href="https://www.ashoka.edu.in/" target="_blank" rel="noopener"><img class="h-ashoka" src="static/img/hosts/ashoka.png" alt="Ashoka University"></a></li>
+        <li><a href="https://c4ir.rw/" target="_blank" rel="noopener"><img class="h-c4ir" src="static/img/hosts/c4ir.png" alt="World Economic Forum, Rwanda Centre for the Fourth Industrial Revolution"></a></li>
+      </ul>
+    </section>
+
+    <section id="chat" class="chat-section" aria-labelledby="chat-title">
+      <div class="chat-wrap">
+        <h2 id="chat-title">Talk to Meditron</h2>
+        <p class="chat-intro">Ask a medical question. Meditron runs on EPFL's servers. It is a research model, not a doctor: it can be wrong, and it knows nothing about you beyond what you type.</p>
+        <div class="chat-log" id="chat-log" aria-live="polite"></div>
+        <div class="chat-suggest" id="chat-suggest">
+          <button type="button">A 2-year-old has sunken eyes and drinks eagerly. How should a health post manage this?</button>
+          <button type="button">What should I ask a farmer with pneumonia before choosing an antibiotic?</button>
+          <button type="button">When does a sore throat in a child need antibiotics?</button>
+        </div>
+        <form class="chat-form" id="chat-form">
+          <label class="sr" for="chat-input">Your question</label>
+          <textarea id="chat-input" rows="2" placeholder="Ask Meditron a question"></textarea>
+          <button type="submit" class="send" id="chat-send">Send</button>
+        </form>
+        <p class="chat-status" id="chat-status" role="status"></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p>Meditron is built at EPFL's LiGHT lab with the Swiss AI Initiative and compute from CSCS (Alps). Thanks to the clinicians of the MOOVE initiative and the LiGHT physician review panel.</p>
+    <p class="foot-links">
+      <a href="https://arxiv.org/abs/2605.16215" target="_blank" rel="noopener">Paper</a>
+      <a href="https://huggingface.co/collections/EPFLiGHT/meditronfo" target="_blank" rel="noopener">Models</a>
+      <a href="https://huggingface.co/datasets/EPFLiGHT/fully-open-meditron" target="_blank" rel="noopener">Training data</a>
+      <a href="https://github.com/EPFLiGHT/FullyOpenMeditron" target="_blank" rel="noopener">Code</a>
+      <a href="https://jointhemoove.org/" target="_blank" rel="noopener">MOOVE</a>
+    </p>
+  </footer>
+
+  <!-- One dialog; its content comes from the templates below, chosen by the URL hash. -->
+  <dialog class="panel" id="panel" aria-labelledby="panel-title">
+    <div class="panel-head">
+      <span class="panel-tab" id="panel-title"></span>
+      <button type="button" class="panel-close" id="panel-close">Close</button>
+    </div>
+    <div class="panel-body" id="panel-body"></div>
+  </dialog>
+
+  <template id="tpl-apertus" data-title="Apertus, the base model">
+    <h2>Apertus</h2>
+    <p class="lead">Apertus is the large language model built in Switzerland by EPFL, ETH Zurich and CSCS. Its weights, training data and training code are all public. That is why we build Meditron on it: if the base model is open all the way down, so is Meditron.</p>
+    <h3>What Meditron adds</h3>
+    <ul class="bars" aria-label="Apertus-70B before and after Meditron training">
+      <li><span class="who">Apertus-70B-Instruct<small>HealthBench, the starting point</small></span><span class="track"><span class="fill" style="width:56.3%"></span></span><span class="val">39.4</span></li>
+      <li class="ours"><span class="who">Apertus-70B-Meditron<small>HealthBench, after our training</small></span><span class="track"><span class="fill" style="width:70.4%"></span></span><span class="val">49.3</span></li>
+    </ul>
+    <p>In blind side-by-side comparisons, the AI judges prefer Meditron's answer over the starting model's in 90% of 516 clinician-written cases.</p>
+    <h3>What you can check</h3>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Model</th><th>Open base model</th><th>Open medical data</th><th>Open data pipeline</th><th>Open training code</th></tr></thead>
+        <tbody>
+          <tr><td>MedGemma-27B (Google)</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td></tr>
+          <tr><td>Meditron-70B (2023)</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td></tr>
+          <tr class="ours"><td>Meditron on Apertus</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="links"><a href="https://huggingface.co/swiss-ai" target="_blank" rel="noopener">Apertus on Hugging Face</a><a href="https://huggingface.co/collections/EPFLiGHT/meditronfo" target="_blank" rel="noopener">Meditron models</a></p>
+  </template>
+
+  <template id="tpl-data" data-title="The training data">
+    <h2>533,888 examples, all public</h2>
+    <p class="lead">Commercial medical assistants don't show what they learned from. Meditron's training set is on Hugging Face, row by row. Here is one row.</p>
+    <div class="specimen">
+      <div class="specimen-head"><strong>Training example</strong><span>Guidelines QA</span></div>
+      <div class="field">
+        <div class="field-label">Question</div>
+        <p>A 12-year-old boy, weight 38 kg, is being considered for fingolimod therapy. What is the recommended starting dose?</p>
+        <ol class="opts"><li class="key">0.25 mg once daily</li><li>0.5 mg once daily</li><li>0.75 mg once daily</li><li>No dose is approved for his age/weight</li></ol>
+      </div>
+      <div class="field">
+        <div class="field-label">Answer the model was trained on, written by gpt-oss-120b</div>
+        <p>Fingolimod (Gilenya) is approved for pediatric patients &ge; 10 years of age, but the dose is adjusted for body weight.</p>
+        <ul><li>Weight &ge; 40 kg: the same adult dose of 0.5 mg once daily is used.</li><li>Weight &lt; 40 kg: the recommended pediatric dose is 0.25 mg once daily (to reduce the risk of dose-related cardiac and infection side-effects).</li></ul>
+        <p>The boy is 12 years old and weighs 38 kg, which places him in the &lt; 40 kg category. Therefore the appropriate starting dose is the lower, weight-adjusted dose of 0.25 mg once daily. <strong>The answer is A.</strong></p>
+      </div>
+      <div class="record">
+        <div class="field-label">How this example was checked</div>
+        <ul>
+          <li class="ok">Answer key: A, from the source document</li>
+          <li class="drop">First answer: wrong, discarded</li>
+          <li class="ok">Later answer: A, kept</li>
+          <li class="ok">Checked against all test benchmarks</li>
+        </ul>
+      </div>
+    </div>
+    <h3>How the set was made</h3>
+    <ol class="steps">
+      <li>Four clinicians rewrote the generation prompts.</li>
+      <li>gpt-oss-120b wrote 340,000 new questions from exams, clinical guidelines and clinician cases.</li>
+      <li>Each answer had to match the answer key, within 8 tries, or the question was dropped.</li>
+      <li>Every question that overlaps a test benchmark was removed.</li>
+    </ol>
+    <p class="note">Not perfect: AI reviewers still flag about 1 in 10 sampled rows. You can check them yourself.</p>
+    <p class="links"><a href="https://huggingface.co/datasets/EPFLiGHT/fully-open-meditron" target="_blank" rel="noopener">Browse the training data</a></p>
+  </template>
+
+  <template id="tpl-moove" data-title="MOOVE, clinician testing">
+    <h2>MOOVE</h2>
+    <p class="lead">Benchmarks made of exam questions miss what clinicians actually ask. On the MOOVE platform, clinicians write the questions they face in their own practice, then read two anonymous answers side by side and vote for the better one.</p>
+    <dl class="stats">
+      <div><dt>Events</dt><dd>18</dd></div>
+      <div><dt>Questions written</dt><dd>3,786</dd></div>
+      <div><dt>Countries</dt><dd>7</dd></div>
+    </dl>
+    <h3>Where the events ran</h3>
+    <ul class="places">
+      <li><strong>Switzerland</strong> CHUV Lausanne (3 events) and HUG Geneva, mostly specialist hospital care</li>
+      <li><strong>Belgium</strong> one event</li>
+      <li><strong>Kenya</strong> a validation event and two primary-care events</li>
+      <li><strong>Tanzania</strong> a validation event and a primary-care event</li>
+      <li><strong>Malawi</strong> two primary-care events</li>
+      <li><strong>Ethiopia</strong> two events</li>
+      <li><strong>India</strong> four validation events</li>
+    </ul>
+    <p>Clinician votes are the reference we trust most, and the scarcest. AutoMOOVE turns them into an evaluation we can rerun on every new model.</p>
+    <p class="links"><a href="https://jointhemoove.org/" target="_blank" rel="noopener">Join the MOOVE</a><a href="#automoove">Try the clinicians' job in AutoMOOVE</a></p>
+  </template>
+
+  <template id="tpl-healthbench" data-title="HealthBench results">
+    <h2>Where Meditron stands</h2>
+    <p class="lead">HealthBench: 5,000 health conversations, each graded against rubrics written by physicians.</p>
+    <ul class="bars" aria-label="HealthBench full scores">
+      <li><span class="who">gpt-oss-120b<small>OpenAI; wrote our training answers</small></span><span class="track"><span class="fill" style="width:85.6%"></span></span><span class="val">59.9</span></li>
+      <li class="ours"><span class="who">Gemma-3-27B-Meditron<small>Our recipe on Google's Gemma</small></span><span class="track"><span class="fill" style="width:80.3%"></span></span><span class="val">56.2</span></li>
+      <li><span class="who">MedGemma-27B<small>Google; training data not released</small></span><span class="track"><span class="fill" style="width:78.3%"></span></span><span class="val">54.8</span></li>
+      <li class="ours"><span class="who">Apertus-70B-Meditron<small>Fully open, end to end</small></span><span class="track"><span class="fill" style="width:70.4%"></span></span><span class="val">49.3</span></li>
+      <li><span class="who">Apertus-70B-Instruct<small>Its starting point</small></span><span class="track"><span class="fill" style="width:56.3%"></span></span><span class="val">39.4</span></li>
+    </ul>
+    <ul class="points">
+      <li>Training adds 10 points to the fully open Apertus model.</li>
+      <li>The fully open model is still behind MedGemma and gpt-oss-120b.</li>
+      <li>Our recipe on Gemma, MedGemma's own base model, is level with MedGemma.</li>
+      <li>About half the gain comes from longer, more complete answers.</li>
+    </ul>
+    <p class="note">Graded by Gemma-4-31B, so the scores are not comparable to OpenAI's published numbers.</p>
+  </template>
+
+  <template id="tpl-automoove" data-title="AutoMOOVE, the evaluation">
+    <div id="game"></div>
+  </template>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/15.0.7/marked.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.2.4/purify.min.js"></script>
+  <script src="static/app.js"></script>
+</body>
+</html>
