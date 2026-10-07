@@ -92,7 +92,7 @@ const SITES = [
     if (hovered) placeTip();
   }
 
-  // A site's description shows while the pointer is on its square; the globe stops turning meanwhile.
+  // A site's description follows its square as the globe turns, until the pointer moves off it or it turns out of view.
   const tip = document.createElement('div');
   tip.className = 'site-tip';
   tip.setAttribute('role', 'tooltip');
@@ -130,7 +130,7 @@ const SITES = [
 
   function frame(t) {
     if (visible && !document.hidden && t - last > 40) {
-      if (!hovered) lon += (t - last > 200 ? 0 : (t - last) * 0.006);
+      lon += (t - last > 200 ? 0 : (t - last) * 0.006);
       last = t; draw();
     } else if (t - last > 200) last = t;
     requestAnimationFrame(frame);
