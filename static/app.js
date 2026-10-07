@@ -1,10 +1,12 @@
 // Meditron site: dithered globe, draggable folders, project panels, the AutoMOOVE game, chat.
 
-// The chat goes through server/chat_server.py, which holds the RCP key and pins the
-// model, temperature and token budget. The page only sends the conversation.
-// Same origin by default; for a page hosted elsewhere, put the server's full URL here.
+// The public chat goes through the MOOVE gateway's meditron-chat relay, which holds the RCP key
+// and pins the model, temperature and token budget; the page only sends the conversation.
+// Served locally by server/chat_server.py, the page uses that server's same-origin relay instead.
 const CHAT = {
-  endpoint: 'api/chat',
+  endpoint: ['localhost', '127.0.0.1'].includes(location.hostname)
+    ? 'api/chat'
+    : 'https://moovegateway.epfl.ch/meditron/chat',
 };
 
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -455,7 +457,9 @@ async function startGame(root) {
         signal: busy.signal,
       });
       if (!res.ok) {
-        const msg = await res.json().then((d) => d.error).catch(() => null);
+        // the relay answers {error}; Kong's own refusals, like its rate limit, answer {message}
+        const d = await res.json().catch(() => ({}));
+        const msg = d.error || (res.status === 429 ? 'Too many questions in a short time. Wait a minute.' : d.message);
         throw new Error(msg || `The server answered ${res.status}.`);
       }
       const reader = res.body.getReader(), dec = new TextDecoder();
@@ -473,11 +477,11 @@ async function startGame(root) {
         }
         out.innerHTML = renderMarkdown(answer) || '<p>…</p>';
       }
-      history.push({ role: 'assistant', content: answer });
+      if (answer.trim()) history.push({ role: 'assistant', content: answer });
       status.textContent = '';
     } catch (err) {
       if (err.name === 'AbortError') {
-        if (answer) history.push({ role: 'assistant', content: answer });
+        if (answer.trim()) history.push({ role: 'assistant', content: answer });
         status.textContent = 'Stopped.';
       } else {
         history.pop();
