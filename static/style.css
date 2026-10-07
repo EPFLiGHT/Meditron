@@ -64,7 +64,7 @@ button { font: inherit; color: inherit; }
 .top a { color: var(--muted); text-decoration: none; }
 .top a:hover { color: var(--blue); }
 .top-lab img { height: 1.9rem; width: auto; filter: var(--logo-filter); }
-@media (max-width: 560px) { .top-lab img { height: 1.35rem; } .top-links { gap: 0.9rem; } }
+@media (max-width: 560px) { .top-lab img { height: 1.35rem; } .top-links { gap: 0.8rem; } .top-links a { font-size: 0.8rem; } .top-code { display: none; } }
 @media (max-width: 360px) { .top-lab img { height: 1.1rem; } .top-links { gap: 0.7rem; } }
 .top-links { display: flex; gap: 1.25rem; }
 
@@ -218,6 +218,7 @@ button { font: inherit; color: inherit; }
 .foot { border-top: 1px solid var(--rule); padding: 2.5rem 16px 3rem; max-width: 56rem; margin: 0 auto; font-size: var(--t-sm); color: var(--muted); }
 .foot-logo { height: 2.6rem; width: auto; margin-bottom: 1rem; }
 .foot-links { display: flex; flex-wrap: wrap; gap: 1.25rem; }
+.foot-contact { font-size: var(--t-base); color: var(--ink); margin-bottom: 1.25rem; }
 
 /* ---------- panel (opened folder) ---------- */
 .panel {
