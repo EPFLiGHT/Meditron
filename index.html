@@ -45,7 +45,7 @@
         <a class="talk" href="#chat">Talk to Meditron</a>
       </div>
 
-      <p class="globe-key"><span class="dot" aria-hidden="true"></span>Where clinicians tested Meditron. Point at a square for details.</p>
+      <p class="globe-key"><span class="dot" aria-hidden="true"></span><span>Where clinicians tested Meditron.<br>Point at a square for details.</span></p>
 
       <div class="folders" aria-label="The parts of Meditron">
         <button class="folder" type="button" data-open="apertus" style="--l:4%;--t:9%;--r:-4deg">
@@ -69,19 +69,26 @@
             <span class="folder-text">3,786 questions written by clinicians at 18 events in Switzerland, Belgium, Kenya, Tanzania, Malawi, Ethiopia and India.</span>
           </span>
         </button>
+        <button class="folder" type="button" data-open="swiss-moove" style="--l:1.5%;--t:34%;--r:-2.5deg">
+          <span class="folder-tab">Leaderboard</span>
+          <span class="folder-body">
+            <strong class="folder-title">Swiss MOOVE results</strong>
+            <span class="folder-text">How specialists at CHUV, Lausanne ranked 8 models they compared blind.</span>
+          </span>
+        </button>
+        <button class="folder" type="button" data-open="east-africa-moove" style="--l:28%;--t:74%;--r:-1.5deg">
+          <span class="folder-tab">Leaderboard</span>
+          <span class="folder-body">
+            <strong class="folder-title">East Africa MOOVE results</strong>
+            <span class="folder-text">How primary-care clinicians in Kenya, Tanzania and Malawi ranked 7 systems.</span>
+          </span>
+        </button>
         <button class="folder folder-play" type="button" data-open="automoove" style="--l:77%;--t:53%;--r:-3deg">
           <span class="folder-tab">Evaluation</span>
           <span class="folder-body">
             <strong class="folder-title">AutoMOOVE</strong>
             <span class="folder-text">An AI judge stands in for clinicians. Can you judge like one? Five real cases.</span>
             <span class="folder-cta">Play</span>
-          </span>
-        </button>
-        <button class="folder" type="button" data-open="leaderboards" style="--l:30%;--t:72%;--r:-2deg">
-          <span class="folder-tab">Leaderboards</span>
-          <span class="folder-body">
-            <strong class="folder-title">CHUV and primary care</strong>
-            <span class="folder-text">How clinicians ranked the models they compared blind, in Lausanne and in Kenya, Tanzania and Malawi.</span>
           </span>
         </button>
         <button class="folder" type="button" data-open="healthbench" style="--l:58%;--t:78%;--r:1.5deg">
@@ -254,8 +261,8 @@
       <h2>How clinicians ranked the models</h2>
       <p class="lead">At MOOVE events, clinicians read two anonymous answers to the same question and vote for the better one. Thousands of votes add up to a ranking: the share of matchups each model would win against an average model at that event.</p>
       <div class="board-tabs" role="group" aria-label="Choose a leaderboard">
-        <button type="button" data-board="chuv" aria-pressed="true">CHUV, Lausanne</button>
-        <button type="button" data-board="phc" aria-pressed="false">Primary care, East Africa</button>
+        <button type="button" data-board="chuv" aria-pressed="true">Swiss MOOVE</button>
+        <button type="button" data-board="phc" aria-pressed="false">East Africa MOOVE</button>
       </div>
       <p class="board-note" data-note="chuv">Three events at CHUV, Lausanne, Aug 2024 to Nov 2025: 684 questions from hospital specialists, 1,788 clinician-ranked pairs. Not every pair of models met equally often.</p>
       <p class="board-note" data-note="phc" hidden>Kenya PHC, Tanzania PHC and Malawi PHC, May to Aug 2026: 605 primary-care questions, 4,235 clinician-ranked pairs, every system against every other. During these events Apertus-70B-MeditronFO was served at temperature 1.0, which cut off many of its answers.</p>

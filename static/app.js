@@ -190,22 +190,29 @@ const panel = document.getElementById('panel');
 const panelBody = document.getElementById('panel-body');
 const panelTitle = document.getElementById('panel-title');
 
+// The two leaderboard folders open the same page, each on its own board.
+const BOARD_PAGES = {
+  'swiss-moove': { board: 'chuv', title: 'Swiss MOOVE results' },
+  'east-africa-moove': { board: 'phc', title: 'East Africa MOOVE results' },
+};
+const templateFor = (name) => document.getElementById(`tpl-${BOARD_PAGES[name] ? 'leaderboards' : name}`);
+
 function route() {
   const name = location.hash.slice(1);
-  const tpl = document.getElementById(`tpl-${name}`);
+  const tpl = templateFor(name);
   if (!tpl) { if (panel.open) panel.close(); return; }
-  panelTitle.textContent = tpl.dataset.title;
+  panelTitle.textContent = BOARD_PAGES[name]?.title ?? tpl.dataset.title;
   panelBody.replaceChildren(tpl.content.cloneNode(true));
   panelBody.scrollTop = 0;
   if (name === 'automoove') startGame(document.getElementById('game'));
-  if (name === 'leaderboards') showBoards(document.getElementById('boards'));
+  if (tpl.id === 'tpl-leaderboards') showBoards(document.getElementById('boards'), BOARD_PAGES[name]?.board ?? 'chuv');
   if (!panel.open) panel.showModal();
 }
 function closePanel() {
   if (panel.open) panel.close();
 }
 panel.addEventListener('close', () => {
-  if (document.getElementById(`tpl-${location.hash.slice(1)}`)) {
+  if (templateFor(location.hash.slice(1))) {
     history.pushState(null, '', location.pathname + location.search);
   }
 });
@@ -239,7 +246,7 @@ function renderMarkdown(text) {
 
 let boardData = null;
 
-async function showBoards(root) {
+async function showBoards(root, first) {
   if (!boardData) {
     try {
       boardData = await (await fetch('static/data/leaderboards.json')).json();
@@ -266,9 +273,13 @@ async function showBoards(root) {
   }
   root.onclick = (e) => {
     const b = e.target.closest('[data-board]');
-    if (b) show(b.dataset.board);
+    if (!b) return;
+    show(b.dataset.board);
+    const [page, { title }] = Object.entries(BOARD_PAGES).find(([, p]) => p.board === b.dataset.board);
+    panelTitle.textContent = title;
+    history.replaceState(null, '', `#${page}`);
   };
-  show('chuv');
+  show(first);
 }
 
 /* ------------------------------------------------------ AutoMOOVE game */
