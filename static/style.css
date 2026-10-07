@@ -16,7 +16,7 @@
   --marker: #e08a12;
   --logo-filter: none;
 
-  --font: 'Archivo', system-ui, sans-serif;
+  --font: 'Manrope', system-ui, sans-serif;
   --t-sm: 0.875rem;
   --t-base: 1.0625rem;
   --t-md: 1.3125rem;
@@ -81,8 +81,7 @@ button { font: inherit; color: inherit; }
 .hero-center { position: relative; z-index: 2; text-align: center; padding: 0 16px; pointer-events: none; }
 .hero-center a { pointer-events: auto; }
 .wordmark {
-  font-size: clamp(3.25rem, 14.5vw, 12.5rem); font-weight: 900;
-  font-variation-settings: "wdth" 125; letter-spacing: -0.035em; line-height: 0.9;
+  font-size: clamp(3.25rem, 14.5vw, 12.5rem); font-weight: 800; letter-spacing: -0.035em; line-height: 0.9;
   color: var(--ink);
   /* paper-coloured halo keeps the letters legible on the dither */
   text-shadow: 0 0 0.04em var(--paper), 0 0 0.12em var(--paper);
@@ -94,7 +93,6 @@ button { font: inherit; color: inherit; }
 .talk {
   display: inline-block; padding: 0.8rem 1.4rem; border-radius: 999px;
   background: var(--blue); color: var(--paper); text-decoration: none; font-weight: 800; font-size: 1.05rem;
-  font-variation-settings: "wdth" 110;
 }
 .talk:hover { background: var(--ink); }
 .globe-key {
@@ -126,7 +124,7 @@ button { font: inherit; color: inherit; }
   display: block; padding: 0.85rem 1rem 1rem;
   background: var(--folder); border: 1.5px solid var(--folder-edge); border-radius: 0 7px 7px 7px;
 }
-.folder-title { display: block; font-size: 1.35rem; font-weight: 800; font-variation-settings: "wdth" 112; line-height: 1.15; margin-bottom: 0.35rem; }
+.folder-title { display: block; font-size: 1.35rem; font-weight: 800; line-height: 1.15; margin-bottom: 0.35rem; }
 .folder-text { display: block; font-size: 0.95rem; line-height: 1.45; }
 .folder-cta {
   display: inline-block; margin-top: 0.7rem; padding: 0.3rem 1rem; border-radius: 999px;
@@ -183,7 +181,7 @@ button { font: inherit; color: inherit; }
 /* ---------- chat ---------- */
 .chat-section { padding: 5rem 16px 4rem; border-top: 1px solid var(--rule); }
 .chat-wrap { max-width: var(--measure); margin: 0 auto; }
-.chat-section h2 { font-size: var(--t-xl); font-weight: 900; font-variation-settings: "wdth" 118; letter-spacing: -0.02em; margin-bottom: 0.75rem; }
+.chat-section h2 { font-size: var(--t-xl); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.75rem; }
 .chat-intro { color: var(--muted); }
 .chat-log { display: flex; flex-direction: column; gap: 1rem; margin: 1.5rem 0; }
 .msg { max-width: 92%; padding: 0.75rem 1rem; border-radius: 12px; line-height: 1.55; }
@@ -237,12 +235,12 @@ button { font: inherit; color: inherit; }
   display: flex; justify-content: space-between; align-items: center;
   padding: 0.6rem 0.8rem 0.6rem 1.25rem; background: var(--folder); border-bottom: 1.5px solid var(--folder-edge);
 }
-.panel-tab { font-weight: 800; font-variation-settings: "wdth" 110; }
+.panel-tab { font-weight: 800; }
 .panel-close { background: none; border: 1.5px solid var(--folder-edge); border-radius: 6px; padding: 0.25rem 0.8rem; cursor: pointer; font-weight: 700; font-size: var(--t-sm); }
 .panel-close:hover { background: var(--paper); }
 .panel-body { overflow-y: auto; padding: 1.75rem clamp(1rem, 4vw, 2.75rem) 2.5rem; }
 .panel-body > * { max-width: var(--measure); }
-.panel-body h2 { font-size: var(--t-xl); font-weight: 900; font-variation-settings: "wdth" 118; letter-spacing: -0.02em; margin-bottom: 0.9rem; }
+.panel-body h2 { font-size: var(--t-xl); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.9rem; }
 .panel-body h3 { font-size: var(--t-md); font-weight: 800; margin: 2rem 0 0.75rem; }
 .lead { font-size: 1.15rem; }
 .note { font-size: var(--t-sm); color: var(--muted); }
@@ -274,7 +272,7 @@ tr.ours td { font-weight: 700; background: var(--blue-wash); }
 
 .stats { display: flex; flex-wrap: wrap; gap: 2.5rem; margin: 1.5rem 0; }
 .stats dt { font-size: var(--t-sm); color: var(--muted); }
-.stats dd { margin: 0; font-size: 2.2rem; font-weight: 900; font-variation-settings: "wdth" 118; line-height: 1.1; }
+.stats dd { margin: 0; font-size: 2.2rem; font-weight: 800; line-height: 1.1; }
 .places { list-style: none; padding: 0; }
 .places li { padding: 0.4rem 0; border-top: 1px solid var(--rule); }
 .places strong { display: inline-block; min-width: 7rem; }
@@ -346,13 +344,13 @@ tr.ours td { font-weight: 700; background: var(--blue-wash); }
 .answers { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: start; }
 @media (max-width: 760px) { .answers { grid-template-columns: 1fr; } }
 .answer { border: 1.5px solid var(--rule); border-radius: 8px; padding: 0.9rem 1.1rem; font-size: 0.95rem; line-height: 1.55; position: relative; }
-.answer h4 { margin: 0 0 0.5rem; font-size: 1rem; font-weight: 900; font-variation-settings: "wdth" 115; display: flex; justify-content: space-between; gap: 0.5rem; }
-.answer h4 small { font-weight: 600; color: var(--muted); font-variation-settings: "wdth" 100; }
+.answer h4 { margin: 0 0 0.5rem; font-size: 1rem; font-weight: 800; display: flex; justify-content: space-between; gap: 0.5rem; }
+.answer h4 small { font-weight: 600; color: var(--muted); }
 .answer p { margin: 0 0 0.45rem; }
 .answer p.li { padding-left: 1rem; position: relative; margin-bottom: 0.25rem; }
 .answer p.li::before { content: "\2022"; position: absolute; left: 0.1rem; color: var(--muted); }
 .answer.clin { border-color: var(--blue); box-shadow: inset 0 0 0 1.5px var(--blue); }
-.answer .badge { font-size: 0.78rem; font-weight: 800; color: var(--paper); background: var(--blue); padding: 0.1rem 0.55rem; border-radius: 999px; font-variation-settings: "wdth" 100; }
+.answer .badge { font-size: 0.78rem; font-weight: 800; color: var(--paper); background: var(--blue); padding: 0.1rem 0.55rem; border-radius: 999px; }
 
 .vote {
   position: sticky; bottom: -2.5rem; margin: 1.25rem -0.5rem -2.5rem; padding: 1rem 0.5rem 1.5rem;
@@ -378,7 +376,7 @@ tr.ours td { font-weight: 700; background: var(--blue-wash); }
 .conf-key { font-size: 0.8rem; color: var(--muted); }
 .case-note { max-width: 44rem; margin: 1rem 0 0; }
 
-.score { font-size: 3.4rem; font-weight: 900; font-variation-settings: "wdth" 120; line-height: 1; margin: 0.5rem 0 0.75rem; }
+.score { font-size: 3.4rem; font-weight: 800; line-height: 1; margin: 0.5rem 0 0.75rem; }
 .tally { display: grid; grid-template-columns: repeat(5, 2.4rem); gap: 0.35rem; margin: 0.25rem 0 0; }
 .tally span { height: 2.4rem; display: grid; place-items: center; font-weight: 800; border: 1.5px solid var(--rule); border-radius: 4px; font-size: 0.85rem; }
 .tally span.hit { background: var(--blue); border-color: var(--blue); color: var(--paper); }
