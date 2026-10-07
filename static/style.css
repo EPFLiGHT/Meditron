@@ -64,6 +64,8 @@ button { font: inherit; color: inherit; }
 .top a { color: var(--muted); text-decoration: none; }
 .top a:hover { color: var(--blue); }
 .top-lab img { height: 1.9rem; width: auto; filter: var(--logo-filter); }
+@media (max-width: 560px) { .top-lab img { height: 1.35rem; } .top-links { gap: 0.9rem; } }
+@media (max-width: 360px) { .top-lab img { height: 1.1rem; } .top-links { gap: 0.7rem; } }
 .top-links { display: flex; gap: 1.25rem; }
 
 /* ---------- hero: globe, wordmark, folders ---------- */
