@@ -6,7 +6,7 @@
 const CHAT = {
   endpoint: ['localhost', '127.0.0.1'].includes(location.hostname)
     ? 'api/chat'
-    : 'https://moovegateway.epfl.ch/meditron/chat',
+    : 'https://moovegateway.epfl.ch/dev/meditron/chat', // the dev gateway until moove-gateway's main has the route
 };
 
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
