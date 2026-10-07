@@ -1,0 +1,141 @@
+{
+ "chuv": [
+  {
+   "name": "DeepSeek Chat",
+   "maker": "DeepSeek",
+   "ours": false,
+   "win": 66.4,
+   "lo": 63.0,
+   "hi": 69.6,
+   "judge_rank": 1
+  },
+  {
+   "name": "Gemini 2.0 Flash",
+   "maker": "Google",
+   "ours": false,
+   "win": 59.2,
+   "lo": 55.4,
+   "hi": 62.9,
+   "judge_rank": 2
+  },
+  {
+   "name": "Claude 3.7 Sonnet",
+   "maker": "Anthropic",
+   "ours": false,
+   "win": 58.1,
+   "lo": 53.8,
+   "hi": 62.2,
+   "judge_rank": 3
+  },
+  {
+   "name": "MedGemma 27B",
+   "maker": "Google",
+   "ours": false,
+   "win": 51.5,
+   "lo": 46.1,
+   "hi": 56.7,
+   "judge_rank": 4
+  },
+  {
+   "name": "GPT-4o",
+   "maker": "OpenAI",
+   "ours": false,
+   "win": 50.4,
+   "lo": 46.9,
+   "hi": 54.1,
+   "judge_rank": 5
+  },
+  {
+   "name": "Meditron-CHUV",
+   "maker": "Meditron, LiGHT",
+   "ours": true,
+   "win": 48.8,
+   "lo": 46.0,
+   "hi": 51.8,
+   "judge_rank": 6
+  },
+  {
+   "name": "Llama 3.3 70B",
+   "maker": "Meta",
+   "ours": false,
+   "win": 37.6,
+   "lo": 33.8,
+   "hi": 41.5,
+   "judge_rank": 7
+  },
+  {
+   "name": "Meditron-3 70B",
+   "maker": "Meditron, LiGHT",
+   "ours": true,
+   "win": 29.0,
+   "lo": 26.4,
+   "hi": 31.6,
+   "judge_rank": 8
+  }
+ ],
+ "phc": [
+  {
+   "name": "GPT-5.5",
+   "maker": "OpenAI",
+   "ours": false,
+   "win": 62.8,
+   "lo": 60.8,
+   "hi": 64.9,
+   "judge_rank": 1
+  },
+  {
+   "name": "gpt-oss-120b",
+   "maker": "OpenAI",
+   "ours": false,
+   "win": 60.3,
+   "lo": 58.1,
+   "hi": 62.4,
+   "judge_rank": 2
+  },
+  {
+   "name": "Meditron-CHUV",
+   "maker": "Meditron, LiGHT",
+   "ours": true,
+   "win": 59.9,
+   "lo": 57.7,
+   "hi": 62.1,
+   "judge_rank": 4
+  },
+  {
+   "name": "Qwen3-VL 235B",
+   "maker": "Alibaba",
+   "ours": false,
+   "win": 51.1,
+   "lo": 48.9,
+   "hi": 53.4,
+   "judge_rank": 3
+  },
+  {
+   "name": "MedGemma 27B",
+   "maker": "Google",
+   "ours": false,
+   "win": 47.7,
+   "lo": 45.5,
+   "hi": 49.8,
+   "judge_rank": 5
+  },
+  {
+   "name": "Apertus-70B-MeditronFO",
+   "maker": "Meditron, fully open",
+   "ours": true,
+   "win": 39.5,
+   "lo": 37.1,
+   "hi": 41.6,
+   "judge_rank": 6
+  },
+  {
+   "name": "Human-written answers",
+   "maker": "",
+   "ours": false,
+   "win": 29.5,
+   "lo": 27.3,
+   "hi": 31.6,
+   "judge_rank": 7
+  }
+ ]
+}

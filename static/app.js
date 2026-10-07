@@ -12,18 +12,19 @@ const css = (name) => getComputedStyle(document.documentElement).getPropertyValu
 
 /* ---------------------------------------------------------------- globe */
 
-// Where the MOOVE events ran. Country-level markers; city where the event is known.
+// Where the MOOVE events ran: city where the event is known, the capital otherwise.
+// Counts are distinct questions and clinician votes per event, summed per place.
 const SITES = [
-  [6.63, 46.52],   // CHUV, Lausanne
-  [6.15, 46.20],   // HUG, Geneva
-  [4.35, 50.85],   // Belgium
-  [36.82, -1.29],  // Kenya
-  [39.21, -6.79],  // Tanzania
-  [33.79, -13.96], // Malawi
-  [38.74, 9.03],   // Ethiopia
-  [77.59, 12.97],  // India, Bengaluru
-  [78.49, 17.39],  // India, Hyderabad
-  [77.02, 28.99],  // India, Ashoka (Sonipat)
+  { at: [6.63, 46.52], name: 'CHUV, Lausanne', lines: ['3 events, Aug 2024 to Nov 2025', '758 questions, 5,086 clinician votes', 'Specialist hospital care'] },
+  { at: [6.15, 46.20], name: 'HUG, Geneva', lines: ['1 event, Sep to Dec 2024', '320 questions, 1,704 clinician votes', 'Specialist hospital care'] },
+  { at: [4.35, 50.85], name: 'Belgium', lines: ['1 event, Oct 2025', '108 questions, 126 clinician votes', 'Specialist hospital care'] },
+  { at: [36.82, -1.29], name: 'Kenya', lines: ['3 events, May 2025 to Aug 2026', '712 questions, 2,923 clinician votes', 'Primary care'] },
+  { at: [39.21, -6.79], name: 'Tanzania', lines: ['2 events, Dec 2025 to Jun 2026', '467 questions, 3,034 clinician votes', 'Primary care'] },
+  { at: [33.79, -13.96], name: 'Malawi', lines: ['2 events, May to Jul 2026', '300 questions, 1,700 clinician votes', 'Primary care'] },
+  { at: [38.74, 9.03], name: 'Ethiopia', lines: ['2 events, Mar to Apr 2026', '612 questions, 1,534 clinician votes', 'Primary care'] },
+  { at: [77.59, 12.97], name: 'Bengaluru, India', lines: ['1 event, Jan to Mar 2026', '305 questions, 491 clinician votes', 'Specialist hospital care'] },
+  { at: [78.49, 17.39], name: 'Hyderabad, India', lines: ['1 event, Jan to Feb 2026', '98 questions, 87 clinician votes', 'Specialist hospital care'] },
+  { at: [77.02, 28.99], name: 'Ashoka University, India', lines: ['1 event, Jan to Apr 2026', '86 questions, 138 clinician votes', 'Specialist hospital care'] },
 ];
 
 (function globe() {
@@ -32,7 +33,7 @@ const SITES = [
   const mask = document.createElement('canvas');
   const mctx = mask.getContext('2d', { willReadFrequently: true });
   let land = null, size = 0, noise = null, out = null, ink = [12, 67, 160], marker = '#e08a12';
-  let lon = -25, last = 0, visible = true;
+  let lon = -25, last = 0, visible = true, hovered = null, shown = [];
 
   const projection = d3.geoOrthographic().clipAngle(90).precision(0.5);
   const path = d3.geoPath(projection, mctx);
@@ -80,16 +81,56 @@ const SITES = [
     // event sites on the near side, as solid squares so they sit in the dither's pixel grid
     const center = [-lon, 12], d = Math.max(3, Math.round(size / 95));
     ctx.fillStyle = marker;
+    shown = [];
     for (const s of SITES) {
-      if (d3.geoDistance(s, center) > Math.PI / 2 - 0.08) continue;
-      const [px, py] = projection(s);
-      ctx.fillRect(Math.round(px - d / 2), Math.round(py - d / 2), d, d);
+      if (d3.geoDistance(s.at, center) > Math.PI / 2 - 0.08) continue;
+      const [px, py] = projection(s.at);
+      const k = s === hovered ? 2 * d : d;
+      ctx.fillRect(Math.round(px - k / 2), Math.round(py - k / 2), k, k);
+      shown.push({ s, px, py });
     }
+    if (hovered) placeTip();
   }
+
+  // A site's description shows while the pointer is on its square; the globe stops turning meanwhile.
+  const tip = document.createElement('div');
+  tip.className = 'site-tip';
+  tip.setAttribute('role', 'tooltip');
+  tip.hidden = true;
+  canvas.after(tip);
+
+  function siteAt(e) {
+    const r = canvas.getBoundingClientRect(), k = size / r.width;
+    const x = (e.clientX - r.left) * k, y = (e.clientY - r.top) * k;
+    let best = null, bestD = 14 * k;
+    for (const m of shown) {
+      const dist = Math.hypot(m.px - x, m.py - y);
+      if (dist < bestD) { best = m.s; bestD = dist; }
+    }
+    return best;
+  }
+  function hover(s) {
+    if (s === hovered) return;
+    hovered = s;
+    canvas.style.cursor = s ? 'pointer' : '';
+    if (s) tip.innerHTML = `<strong>${s.name}</strong>${s.lines.map((l) => `<span>${l}</span>`).join('')}`;
+    tip.hidden = !s;
+    draw();
+  }
+  function placeTip() {
+    const m = shown.find((x) => x.s === hovered);
+    if (!m) { hover(null); return; }
+    const r = canvas.getBoundingClientRect(), h = canvas.parentElement.getBoundingClientRect(), k = r.width / size;
+    tip.style.left = `${r.left - h.left + m.px * k}px`;
+    tip.style.top = `${r.top - h.top + m.py * k}px`;
+  }
+  canvas.addEventListener('pointermove', (e) => hover(siteAt(e)));
+  canvas.addEventListener('pointerdown', (e) => hover(siteAt(e)));
+  canvas.addEventListener('pointerleave', () => hover(null));
 
   function frame(t) {
     if (visible && !document.hidden && t - last > 40) {
-      lon += (t - last > 200 ? 0 : (t - last) * 0.006);
+      if (!hovered) lon += (t - last > 200 ? 0 : (t - last) * 0.006);
       last = t; draw();
     } else if (t - last > 200) last = t;
     requestAnimationFrame(frame);
@@ -157,6 +198,7 @@ function route() {
   panelBody.replaceChildren(tpl.content.cloneNode(true));
   panelBody.scrollTop = 0;
   if (name === 'automoove') startGame(document.getElementById('game'));
+  if (name === 'leaderboards') showBoards(document.getElementById('boards'));
   if (!panel.open) panel.showModal();
 }
 function closePanel() {
@@ -191,6 +233,42 @@ function renderText(text) {
 function renderMarkdown(text) {
   if (!window.marked || !window.DOMPurify) return renderText(text);
   return DOMPurify.sanitize(marked.parse(text, { gfm: true, breaks: false }));
+}
+
+/* --------------------------------------------------------- leaderboards */
+
+let boardData = null;
+
+async function showBoards(root) {
+  if (!boardData) {
+    try {
+      boardData = await (await fetch('static/data/leaderboards.json')).json();
+    } catch {
+      root.innerHTML = '<p>The leaderboards did not load. Reload the page to try again.</p>';
+      return;
+    }
+  }
+  const tabs = root.querySelectorAll('[data-board]');
+  const x = (v) => (v - 20) / 0.6;  // the axis runs from 20% to 80%
+  function show(key) {
+    tabs.forEach((t) => t.setAttribute('aria-pressed', String(t.dataset.board === key)));
+    root.querySelectorAll('.board-note').forEach((n) => { n.hidden = n.dataset.note !== key; });
+    root.querySelector('.lb').innerHTML = boardData[key].map((r, i) => `
+      <li class="${r.ours ? 'ours' : ''}">
+        <span class="lb-rank">${i + 1}</span>
+        <span class="who">${esc(r.name)}${r.maker ? `<small>${esc(r.maker)}</small>` : ''}</span>
+        <span class="lb-track" aria-hidden="true">
+          <span class="lb-ci" style="left:${x(r.lo)}%;width:${x(r.hi) - x(r.lo)}%"></span>
+          <span class="lb-dot" style="left:${x(r.win)}%"></span>
+        </span>
+        <span class="val">${Math.round(r.win)}%</span>
+      </li>`).join('') + '<li class="lb-axis" aria-hidden="true"><span></span><span></span><span class="lb-ticks"><span>20%</span><span>50%</span><span>80%</span></span><span></span></li>';
+  }
+  root.onclick = (e) => {
+    const b = e.target.closest('[data-board]');
+    if (b) show(b.dataset.board);
+  };
+  show('chuv');
 }
 
 /* ------------------------------------------------------ AutoMOOVE game */

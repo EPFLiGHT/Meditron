@@ -45,7 +45,7 @@
         <a class="talk" href="#chat">Talk to Meditron</a>
       </div>
 
-      <p class="globe-key"><span class="dot" aria-hidden="true"></span>Where clinicians tested Meditron</p>
+      <p class="globe-key"><span class="dot" aria-hidden="true"></span>Where clinicians tested Meditron. Point at a square for details.</p>
 
       <div class="folders" aria-label="The parts of Meditron">
         <button class="folder" type="button" data-open="apertus" style="--l:4%;--t:9%;--r:-4deg">
@@ -75,6 +75,13 @@
             <strong class="folder-title">AutoMOOVE</strong>
             <span class="folder-text">An AI judge stands in for clinicians. Can you judge like one? Five real cases.</span>
             <span class="folder-cta">Play</span>
+          </span>
+        </button>
+        <button class="folder" type="button" data-open="leaderboards" style="--l:30%;--t:72%;--r:-2deg">
+          <span class="folder-tab">Leaderboards</span>
+          <span class="folder-body">
+            <strong class="folder-title">CHUV and primary care</strong>
+            <span class="folder-text">How clinicians ranked the models they compared blind, in Lausanne and in Kenya, Tanzania and Malawi.</span>
           </span>
         </button>
         <button class="folder" type="button" data-open="healthbench" style="--l:58%;--t:78%;--r:1.5deg">
@@ -240,6 +247,21 @@
       <li>About half the gain comes from longer, more complete answers.</li>
     </ul>
     <p class="note">Graded by Gemma-4-31B, so the scores are not comparable to OpenAI's published numbers.</p>
+  </template>
+
+  <template id="tpl-leaderboards" data-title="MOOVE leaderboards">
+    <div id="boards">
+      <h2>How clinicians ranked the models</h2>
+      <p class="lead">At MOOVE events, clinicians read two anonymous answers to the same question and vote for the better one. Thousands of votes add up to a ranking: the share of matchups each model would win against an average model at that event.</p>
+      <div class="board-tabs" role="group" aria-label="Choose a leaderboard">
+        <button type="button" data-board="chuv" aria-pressed="true">CHUV, Lausanne</button>
+        <button type="button" data-board="phc" aria-pressed="false">Primary care, East Africa</button>
+      </div>
+      <p class="board-note" data-note="chuv">Three events at CHUV, Lausanne, Aug 2024 to Nov 2025: 684 questions from hospital specialists, 1,788 clinician-ranked pairs. Not every pair of models met equally often.</p>
+      <p class="board-note" data-note="phc" hidden>Kenya PHC, Tanzania PHC and Malawi PHC, May to Aug 2026: 605 primary-care questions, 4,235 clinician-ranked pairs, every system against every other. During these events Apertus-70B-MeditronFO was served at temperature 1.0, which cut off many of its answers.</p>
+      <ol class="lb" aria-label="Leaderboard"></ol>
+      <p class="note">The axis runs from 20% to 80%; bars show the 95% range over 1,000 bootstrap resamples, and the dashed line is 50%. Ranking: Bradley–Terry on clinician votes, ties counting half. An AI judge replaying both events reproduces these rankings (rank correlation 1.00 at CHUV, 0.96 in primary care), which is what lets <a href="#automoove">AutoMOOVE</a> stand in between events.</p>
+    </div>
   </template>
 
   <template id="tpl-automoove" data-title="AutoMOOVE, the evaluation">

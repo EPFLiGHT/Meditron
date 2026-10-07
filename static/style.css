@@ -168,6 +168,16 @@ button { font: inherit; color: inherit; }
 .hosts-list a:hover { opacity: 1; }
 .h-epfl { height: 1.35rem; } .h-ariadne { height: 2.3rem; } .h-ashoka { height: 2.3rem; } .h-c4ir { height: 2.5rem; }
 
+.site-tip {
+  position: absolute; z-index: 4; pointer-events: none;
+  transform: translate(-50%, calc(-100% - 14px));
+  background: var(--paper); border: 1.5px solid var(--ink); border-radius: 6px;
+  padding: 0.5rem 0.75rem; font-size: 0.85rem; line-height: 1.4; white-space: nowrap;
+  box-shadow: 0 6px 16px rgb(20 32 46 / 0.18);
+}
+.site-tip strong { display: block; font-size: 0.95rem; font-weight: 800; }
+.site-tip span { display: block; color: var(--muted); }
+
 /* ---------- chat ---------- */
 .chat-section { padding: 5rem 16px 4rem; border-top: 1px solid var(--rule); }
 .chat-wrap { max-width: var(--measure); margin: 0 auto; }
@@ -268,6 +278,39 @@ tr.ours td { font-weight: 700; background: var(--blue-wash); }
 .places strong { display: inline-block; min-width: 7rem; }
 
 .steps { padding-left: 1.4rem; } .steps li { margin: 0.4rem 0; padding-left: 0.3rem; }
+
+/* leaderboards */
+.board-tabs { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1.25rem 0 0.75rem; }
+.board-tabs button {
+  border: 2px solid var(--blue); background: var(--paper); color: var(--blue);
+  border-radius: 999px; padding: 0.4rem 1rem; font-weight: 800; cursor: pointer;
+}
+.board-tabs button[aria-pressed="true"] { background: var(--blue); color: var(--paper); }
+.board-note { color: var(--muted); font-size: 0.95rem; }
+.lb { list-style: none; margin: 1rem 0; padding: 0; }
+.lb li {
+  display: grid; grid-template-columns: 1.6rem minmax(0, 13rem) minmax(0, 1fr) 3rem;
+  gap: 0.75rem; align-items: center; padding: 0.45rem 0; border-top: 1px solid var(--rule);
+}
+.lb li:nth-last-child(2) { border-bottom: 1px solid var(--rule); }
+.lb li.lb-axis { border-top: 0; padding-top: 0.2rem; }
+.lb-ticks { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--muted); }
+.lb-ticks span:first-child { transform: translateX(-50%); } .lb-ticks span:last-child { transform: translateX(50%); }
+.lb-rank { font-weight: 800; color: var(--muted); font-variant-numeric: tabular-nums; }
+.lb .who { font-size: 0.95rem; line-height: 1.3; }
+.lb .who small { display: block; color: var(--muted); font-size: 0.8rem; }
+.lb li.ours .who { font-weight: 700; }
+.lb-track { position: relative; height: 1rem; }
+.lb-track::before { content: ""; position: absolute; left: 50%; top: -0.35rem; bottom: -0.35rem; border-left: 1.5px dashed var(--muted); }
+.lb-ci { position: absolute; top: 0.3rem; height: 0.4rem; border-radius: 2px; background: var(--grey-bar); }
+.lb-dot { position: absolute; top: 0; width: 1rem; height: 1rem; margin-left: -0.5rem; background: var(--grey-bar); border: 2px solid var(--paper); border-radius: 50%; }
+.lb li.ours .lb-ci { background: color-mix(in srgb, var(--blue) 35%, transparent); }
+.lb li.ours .lb-dot { background: var(--blue); }
+.lb .val { text-align: right; font-weight: 800; font-variant-numeric: tabular-nums; }
+@media (max-width: 560px) {
+  .lb li { grid-template-columns: 1.6rem 1fr 3rem; }
+  .lb-track, .lb-ticks { grid-column: 2 / -1; grid-row: 2; }
+}
 
 /* the training example, laid out like a record form */
 .specimen { border: 2px solid var(--ink); border-radius: 4px; font-size: 0.98rem; line-height: 1.55; margin: 1.25rem 0; }
