@@ -1,0 +1,98 @@
+/* Run tracker. Tokens, top line and footer come from ../static/style.css; studies are folders like the hero's. */
+body.tracker { overflow-x: hidden; }
+.tracker .top { position: static; }
+.tracker code { font-size: 0.85em; }
+.tr { max-width: 72rem; margin: 0 auto; padding: 1.5rem 16px 3rem; display: grid; gap: 2.5rem; }
+.tr h1 { font-size: clamp(2.4rem, 6vw, 3.6rem); font-weight: 800; letter-spacing: -0.03em; }
+.tr h2 { font-size: var(--t-lg); font-weight: 800; letter-spacing: -0.01em; text-wrap: balance; }
+.tr h3 { font-size: 1.15rem; font-weight: 800; text-wrap: balance; }
+.tr-head { display: grid; gap: 0.75rem; }
+.tr-eyebrow { font-size: var(--t-sm); font-weight: 700; color: var(--muted); letter-spacing: 0.02em; }
+.tr-sub { color: var(--muted); max-width: var(--measure); margin: 0; }
+.num { font-variant-numeric: tabular-nums; }
+
+/* headline numbers */
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(10.5rem, 1fr)); gap: 1.25rem 2rem; margin-top: 0.75rem; }
+.kpi { display: grid; gap: 0.15rem; border-top: 3px solid var(--ink); padding-top: 0.6rem; min-width: 0; }
+.kpi b { font-size: var(--t-xl); font-weight: 800; letter-spacing: -0.02em; line-height: 1.05; font-variant-numeric: tabular-nums; }
+.kpi span { color: var(--muted); font-size: var(--t-sm); line-height: 1.4; }
+.kpi.warn b { color: var(--red); }
+
+/* filters */
+.controls { display: flex; flex-wrap: wrap; gap: 0.75rem 1.25rem; align-items: center; font-size: var(--t-sm); }
+.seg { display: inline-flex; flex-wrap: wrap; gap: 0.4rem; }
+.seg button { border: 1.5px solid var(--rule); background: var(--paper); border-radius: 999px; padding: 0.35rem 0.95rem; font-weight: 700; cursor: pointer; color: var(--muted); }
+.seg button:hover { border-color: var(--blue); color: var(--blue); }
+.seg button[aria-pressed="true"] { background: var(--blue); border-color: var(--blue); color: var(--paper); }
+.controls label { display: inline-flex; gap: 0.45rem; align-items: center; color: var(--muted); cursor: pointer; }
+.controls input[type="checkbox"] { accent-color: var(--blue); width: 1rem; height: 1rem; }
+#q { font: inherit; padding: 0.4rem 0.9rem; border: 1.5px solid var(--rule); border-radius: 999px; background: var(--paper); color: var(--ink); flex: 1 1 14rem; max-width: 22rem; min-width: 0; }
+
+/* compute bars, same build as the leaderboard bars */
+.compute { display: grid; gap: 1rem; }
+.bars { display: grid; gap: 0.5rem; }
+.bar { display: grid; grid-template-columns: minmax(0, 17rem) 1fr 4.5rem; gap: 0.9rem; align-items: center; font-size: var(--t-sm); }
+.bar .lbl { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bar .lbl small { color: var(--muted); font-weight: 700; margin-right: 0.35rem; }
+.bar .track { height: 0.85rem; display: flex; background: var(--blue-wash); }
+.bar .ok { background: var(--blue); }
+.bar .lost { background: var(--red); }
+.bar .v { text-align: right; font-weight: 800; font-variant-numeric: tabular-nums; }
+.legend { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; font-size: var(--t-sm); color: var(--muted); margin: 0; }
+.legend i { display: inline-block; width: 0.7rem; height: 0.7rem; margin-right: 0.45rem; vertical-align: -0.05rem; }
+.k-ok { background: var(--blue); } .k-lost { background: var(--red); }
+
+/* axes and study folders */
+.axes { display: grid; gap: 3rem; }
+.axis { display: grid; gap: 1.75rem; }
+.axis-head { display: grid; gap: 0.3rem; }
+.axis-head p { margin: 0; color: var(--muted); max-width: var(--measure); }
+.axis-head .tr-eyebrow { color: var(--blue); }
+.study { min-width: 0; }
+.study .folder-tab { display: inline-flex; gap: 0.6rem; align-items: center; }
+.study-body { background: var(--paper); border: 1.5px solid var(--folder-edge); border-radius: 0 7px 7px 7px; display: grid; overflow: hidden; }
+.study-top { padding: 1rem 1.15rem 1.1rem; display: grid; gap: 0.55rem; background: var(--folder); }
+.study-meta { font-size: var(--t-sm); color: var(--muted); font-variant-numeric: tabular-nums; }
+.study .q { margin: 0; color: var(--muted); max-width: 52rem; font-size: 0.98rem; }
+.study .finding { margin: 0; max-width: 52rem; }
+.study.support .study-top { background: var(--paper); }
+
+/* state chips: square marker like the globe sites */
+.chip { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.78rem; font-weight: 800; white-space: nowrap; text-transform: lowercase; }
+.chip::before { content: ""; width: 0.55rem; height: 0.55rem; background: currentColor; }
+.c-ok { color: var(--green); }
+.c-lost { color: var(--red); }
+.c-cancel { color: var(--marker); }
+.c-live { color: var(--blue); }
+.c-open { color: var(--blue); }
+.c-concluded { color: var(--green); }
+
+/* run table */
+.tbl { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: var(--t-sm); }
+th { text-align: left; font-weight: 700; color: var(--muted); padding: 0.6rem 0.75rem; border-bottom: 1.5px solid var(--ink); white-space: nowrap; }
+td { padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--rule); vertical-align: middle; }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover td { background: var(--blue-wash); }
+th.n, td.n { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+td.exp { font-weight: 600; word-break: break-word; min-width: 15rem; }
+td.exp small { display: block; color: var(--muted); font-weight: 400; }
+.val { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.val b { color: var(--blue); font-weight: 800; }
+.val small { color: var(--muted); }
+.val .sets { display: block; color: var(--muted); font-size: 0.78rem; }
+.u-good { color: var(--green); } .u-mid { color: var(--ink); } .u-poor { color: var(--red); }
+svg.spark { display: block; overflow: visible; }
+svg.spark .ar { fill: var(--blue-wash); }
+svg.spark .ln { fill: none; stroke: var(--blue); stroke-width: 1.6; }
+svg.spark .bs { fill: var(--marker); }
+svg.spark .pt { fill: var(--blue); }
+.note { padding: 0.75rem 1.15rem; font-size: var(--t-sm); color: var(--muted); border-top: 1px solid var(--rule); margin: 0; }
+.support details summary { cursor: pointer; padding: 0.75rem 1.15rem; font-size: var(--t-sm); font-weight: 700; color: var(--blue); border-top: 1px solid var(--rule); }
+.support details p { padding: 0 1.15rem 1rem; font-size: var(--t-sm); margin: 0; }
+.empty { color: var(--muted); }
+
+@media (max-width: 640px) {
+  .bar { grid-template-columns: minmax(0, 1fr) 4rem; }
+  .bar .track { grid-column: 1 / -1; grid-row: 2; }
+}
