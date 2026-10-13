@@ -200,6 +200,19 @@ button { font: inherit; color: inherit; }
 .msg.bot table { min-width: 0; width: 100%; font-size: 0.86rem; margin: 0.5rem 0 0.8rem; display: block; overflow-x: auto; }
 .msg.bot th, .msg.bot td { padding: 0.3rem 0.5rem; vertical-align: top; }
 .msg.user { align-self: flex-end; background: var(--blue); color: var(--paper); border-bottom-right-radius: 3px; white-space: pre-wrap; }
+.msg-row { align-self: flex-start; display: flex; gap: 0.6rem; align-items: flex-start; max-width: 100%; }
+.msg-row .msg { min-width: 0; max-width: calc(92% - 2.6rem); }
+.chat-cube { flex: none; width: 2rem; margin-top: 0.15rem; }
+.chat-cube img { width: 100%; height: auto; }
+/* the Meditron cube in its own colours; white outline on dark backgrounds */
+.cube { display: inline-block; }
+.cube .cube-dark { display: none; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .cube .cube-light { display: none; }
+  :root:not([data-theme="light"]) .cube .cube-dark { display: block; }
+}
+:root[data-theme="dark"] .cube .cube-light { display: none; }
+:root[data-theme="dark"] .cube .cube-dark { display: block; }
 .msg.bot { align-self: flex-start; background: var(--blue-wash); border-bottom-left-radius: 3px; }
 .msg.bot.error { background: none; border: 1.5px solid var(--red); color: var(--ink); }
 .chat-suggest { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }

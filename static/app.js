@@ -434,11 +434,19 @@ async function startGame(root) {
   setOnline(false);
   fetch(CHAT.endpoint).then((r) => r.ok && r.json()).then((d) => setOnline(Boolean(d && d.ok))).catch(() => {});
 
+  // Meditron's answers carry the cube, as chat apps put the assistant's logo beside its messages.
+  const CUBE = '<span class="cube chat-cube" aria-hidden="true"><img class="cube-light" src="static/img/cube.png" alt=""><img class="cube-dark" src="static/img/cube-dark.png" alt=""></span>';
   function bubble(role, html) {
     const el = document.createElement('div');
     el.className = `msg ${role}`;
     if (role === 'user') el.textContent = html; else el.innerHTML = html;
-    log.append(el);
+    if (role === 'bot') {
+      const row = document.createElement('div');
+      row.className = 'msg-row';
+      row.innerHTML = CUBE;
+      row.append(el);
+      log.append(row);
+    } else log.append(el);
     return el;
   }
 
