@@ -220,6 +220,23 @@ button { font: inherit; color: inherit; }
 .send:disabled, .chat-form textarea:disabled { opacity: 0.5; cursor: not-allowed; }
 .chat-status { font-size: var(--t-sm); color: var(--muted); margin-top: 0.6rem; min-height: 1.4em; }
 
+/* ---------- cite ---------- */
+.cite-section { padding: 3rem 16px; border-top: 1px solid var(--rule); }
+.cite-wrap { max-width: var(--measure); margin: 0 auto; }
+.cite-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0.75rem 1rem; margin-bottom: 0.75rem; }
+.cite-section h2 { font-size: var(--t-lg); font-weight: 800; letter-spacing: -0.02em; }
+.cite-copy {
+  border: 2px solid var(--blue); background: var(--paper); color: var(--blue);
+  border-radius: 999px; padding: 0.35rem 1rem; font-weight: 800; font-size: var(--t-sm); cursor: pointer;
+}
+.cite-copy:hover { background: var(--blue-wash); }
+.cite-ref { color: var(--muted); font-size: 0.95rem; }
+.bibtex {
+  margin: 0; padding: 1rem 1.2rem; overflow-x: auto;
+  background: var(--folder); border-left: 4px solid var(--sky);
+  font-size: 0.8rem; line-height: 1.5;
+}
+
 /* ---------- contact and credits, just above the footer ---------- */
 .credits {
   display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 1.5rem 2.5rem;

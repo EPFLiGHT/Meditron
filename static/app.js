@@ -513,5 +513,23 @@ async function startGame(root) {
   });
 })();
 
+/* --------------------------------------------------------- cite */
+
+(() => {
+  const btn = document.getElementById('cite-copy');
+  const bib = document.getElementById('cite-bibtex');
+  btn.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(bib.textContent);
+      btn.textContent = 'Copied';
+    } catch {
+      // No clipboard access (e.g. plain http): select the entry so it can be copied by hand.
+      getSelection().selectAllChildren(bib);
+      btn.textContent = 'Press Ctrl+C';
+    }
+    setTimeout(() => { btn.textContent = 'Copy BibTeX'; }, 2000);
+  });
+})();
+
 // Open a panel named in the URL only now that everything above (the game included) is defined.
 route();
