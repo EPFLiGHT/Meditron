@@ -192,23 +192,28 @@ const panel = document.getElementById('panel');
 const panelBody = document.getElementById('panel-body');
 const panelTitle = document.getElementById('panel-title');
 
-// The two leaderboard folders open the same page, each on its own board.
-const BOARD_PAGES = {
-  'swiss-moove': { board: 'chuv', title: 'Swiss MOOVE results' },
-  'east-africa-moove': { board: 'phc', title: 'East Africa MOOVE results' },
+// Older links name panels that are now merged into others; the board says which leaderboard to show first.
+const ALIASES = {
+  apertus: { page: 'open' },
+  data: { page: 'open' },
+  healthbench: { page: 'results' },
+  'swiss-moove': { page: 'results', board: 'chuv' },
+  'east-africa-moove': { page: 'results', board: 'phc' },
 };
-const templateFor = (name) => document.getElementById(`tpl-${BOARD_PAGES[name] ? 'leaderboards' : name}`);
+const templateFor = (name) => document.getElementById(`tpl-${ALIASES[name]?.page ?? name}`);
 
 function route() {
   const name = location.hash.slice(1);
   const tpl = templateFor(name);
   if (!tpl) { if (panel.open) panel.close(); return; }
-  panelTitle.textContent = BOARD_PAGES[name]?.title ?? tpl.dataset.title;
+  panelTitle.textContent = tpl.dataset.title;
   panelBody.replaceChildren(tpl.content.cloneNode(true));
   panelBody.scrollTop = 0;
   if (name === 'automoove') startGame(document.getElementById('game'));
-  if (tpl.id === 'tpl-leaderboards') showBoards(document.getElementById('boards'), BOARD_PAGES[name]?.board ?? 'chuv');
+  const board = ALIASES[name]?.board;
+  if (tpl.id === 'tpl-results') showBoards(document.getElementById('boards'), board ?? 'chuv');
   if (!panel.open) panel.showModal();
+  if (board) document.getElementById('boards').scrollIntoView();
 }
 function closePanel() {
   if (panel.open) panel.close();
@@ -277,9 +282,6 @@ async function showBoards(root, first) {
     const b = e.target.closest('[data-board]');
     if (!b) return;
     show(b.dataset.board);
-    const [page, { title }] = Object.entries(BOARD_PAGES).find(([, p]) => p.board === b.dataset.board);
-    panelTitle.textContent = title;
-    history.replaceState(null, '', `#${page}`);
   };
   show(first);
 }

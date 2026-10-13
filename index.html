@@ -27,7 +27,7 @@
   <a class="skip" href="#chat">Skip to the chat</a>
 
   <header class="top">
-    <a class="top-lab" href="https://www.light-laboratory.org/" target="_blank" rel="noopener"><img src="static/img/light-logo.png" alt="LiGHT, EPFL"></a>
+    <a class="top-lab" href="https://www.light-laboratory.org/" target="_blank" rel="noopener"><img class="logo-color" src="static/img/light-logo-color.png" alt="LiGHT, EPFL"><img class="logo-mono" src="static/img/light-logo.png" alt=""></a>
     <nav class="top-links" aria-label="Project links">
       <a href="https://arxiv.org/abs/2605.16215" target="_blank" rel="noopener">Paper</a>
       <a href="https://huggingface.co/collections/EPFLiGHT/meditronfo" target="_blank" rel="noopener">Models</a>
@@ -49,77 +49,45 @@
       <p class="globe-key"><span class="dot" aria-hidden="true"></span>Where clinicians tested Meditron</p>
 
       <div class="folders" aria-label="The parts of Meditron">
-        <button class="folder" type="button" data-open="apertus" style="--l:4%;--t:9%;--r:-4deg">
-          <span class="folder-tab">The base model</span>
+        <button class="folder" type="button" data-open="open" style="--l:5%;--t:13%;--r:-3deg">
+          <span class="folder-tab">Open</span>
           <span class="folder-body">
-            <strong class="folder-title">Apertus</strong>
-            <span class="folder-text">Switzerland's fully open language model. Meditron is trained on top of it, so every layer can be checked.</span>
+            <strong class="folder-title">Open down to the data</strong>
+            <span class="folder-stat"><b>533,888</b> training examples, all public</span>
           </span>
         </button>
-        <button class="folder" type="button" data-open="data" style="--l:73%;--t:11%;--r:3deg">
-          <span class="folder-tab">Training data</span>
+        <button class="folder" type="button" data-open="moove" style="--l:6%;--t:60%;--r:2deg">
+          <span class="folder-tab">MOOVE</span>
           <span class="folder-body">
-            <strong class="folder-title">533,888 examples</strong>
-            <span class="folder-text">Everything Meditron learned from, public. Open any example and see how it was checked.</span>
+            <strong class="folder-title">Tested by clinicians</strong>
+            <span class="folder-stat"><b>3,786</b> questions from 7 countries</span>
           </span>
         </button>
-        <button class="folder" type="button" data-open="moove" style="--l:6%;--t:62%;--r:2.5deg">
-          <span class="folder-tab">Clinician testing</span>
-          <span class="folder-body">
-            <strong class="folder-title">MOOVE</strong>
-            <span class="folder-text">3,786 questions written by clinicians at 18 events in Switzerland, Belgium, Kenya, Tanzania, Malawi, Ethiopia and India.</span>
-          </span>
-        </button>
-        <button class="folder" type="button" data-open="swiss-moove" style="--l:1.5%;--t:34%;--r:-2.5deg">
-          <span class="folder-tab">Leaderboard</span>
-          <span class="folder-body">
-            <strong class="folder-title">Swiss MOOVE results</strong>
-            <span class="folder-text">How specialists at CHUV, Lausanne ranked 8 models they compared blind.</span>
-          </span>
-        </button>
-        <button class="folder" type="button" data-open="east-africa-moove" style="--l:28%;--t:74%;--r:-1.5deg">
-          <span class="folder-tab">Leaderboard</span>
-          <span class="folder-body">
-            <strong class="folder-title">East Africa MOOVE results</strong>
-            <span class="folder-text">How primary-care clinicians in Kenya, Tanzania and Malawi ranked 7 systems.</span>
-          </span>
-        </button>
-        <button class="folder folder-play" type="button" data-open="automoove" style="--l:77%;--t:53%;--r:-3deg">
-          <span class="folder-tab">Evaluation</span>
-          <span class="folder-body">
-            <strong class="folder-title">AutoMOOVE</strong>
-            <span class="folder-text">An AI judge stands in for clinicians. Can you judge like one? Five real cases.</span>
-            <span class="folder-cta">Play</span>
-          </span>
-        </button>
-        <button class="folder" type="button" data-open="healthbench" style="--l:58%;--t:78%;--r:1.5deg">
+        <button class="folder" type="button" data-open="results" style="--l:74%;--t:14%;--r:2.5deg">
           <span class="folder-tab">Results</span>
           <span class="folder-body">
-            <strong class="folder-title">HealthBench</strong>
-            <span class="mini-bars" aria-label="HealthBench: Apertus-70B-Instruct 39.4, Apertus-70B-Meditron 49.3">
+            <strong class="folder-title">How good is it?</strong>
+            <span class="mini-bars" aria-label="HealthBench: Apertus-70B 39.4, with Meditron training 49.3">
               <span class="mini"><span class="mini-name">Apertus-70B</span><span class="mini-track"><span style="width:56%"></span></span><span class="mini-val">39.4</span></span>
               <span class="mini ours"><span class="mini-name">+ Meditron</span><span class="mini-track"><span style="width:70%"></span></span><span class="mini-val">49.3</span></span>
             </span>
+            <span class="folder-note">HealthBench score</span>
+          </span>
+        </button>
+        <button class="folder folder-play" type="button" data-open="automoove" style="--l:75%;--t:60%;--r:-2.5deg">
+          <span class="folder-tab">AutoMOOVE</span>
+          <span class="folder-body">
+            <strong class="folder-title">Judge like a clinician</strong>
+            <span class="folder-cta">Play</span>
           </span>
         </button>
       </div>
     </section>
 
-    <section class="hosts" aria-label="Who builds Meditron">
-      <a class="hosts-lab" href="https://www.light-laboratory.org/" target="_blank" rel="noopener"><img src="static/img/light-logo.png" alt="LiGHT, Laboratory for intelligent Global Health and Humanitarian Response Technologies"></a>
-      <p class="hosts-label">LiGHT is hosted by</p>
-      <ul class="hosts-list">
-        <li><a href="https://www.epfl.ch/" target="_blank" rel="noopener"><img class="h-epfl" src="static/img/hosts/epfl.png" alt="EPFL"></a></li>
-        <li><a href="https://www.ariadnelabs.org/" target="_blank" rel="noopener"><img class="h-ariadne" src="static/img/hosts/ariadne.png" alt="Ariadne Labs, Harvard"></a></li>
-        <li><a href="https://www.ashoka.edu.in/" target="_blank" rel="noopener"><img class="h-ashoka" src="static/img/hosts/ashoka.png" alt="Ashoka University"></a></li>
-        <li><a href="https://c4ir.rw/" target="_blank" rel="noopener"><img class="h-c4ir" src="static/img/hosts/c4ir.png" alt="World Economic Forum, Rwanda Centre for the Fourth Industrial Revolution"></a></li>
-      </ul>
-    </section>
-
     <section id="chat" class="chat-section" aria-labelledby="chat-title">
       <div class="chat-wrap">
         <h2 id="chat-title">Talk to Meditron</h2>
-        <p class="chat-intro">Ask a medical question. Meditron runs on EPFL's servers. It is a research model, not a doctor: it can be wrong, and it knows nothing about you beyond what you type.</p>
+        <p class="chat-intro">Ask a medical question. It is a research model, not a doctor: it can be wrong, and it knows nothing about you beyond what you type.</p>
         <div class="chat-log" id="chat-log" aria-live="polite"></div>
         <div class="chat-suggest" id="chat-suggest">
           <button type="button">A 2-year-old has sunken eyes and drinks eagerly. How should a health post manage this?</button>
@@ -134,18 +102,44 @@
         <p class="chat-status" id="chat-status" role="status"></p>
       </div>
     </section>
+
+    <section class="credits" id="contact" aria-label="Contact and credits">
+      <div>
+        <h2>Contact</h2>
+        <p>Questions about Meditron? Write to <a href="mailto:xavier.theimer-lienhard@epfl.ch?subject=Meditron">xavier.theimer-lienhard@epfl.ch</a>.</p>
+      </div>
+      <div>
+        <h2>Credits</h2>
+        <p>Built at EPFL's LiGHT lab with the Swiss AI Initiative and compute from CSCS (Alps). Thanks to the clinicians of the MOOVE initiative and the LiGHT physician review panel.</p>
+      </div>
+    </section>
   </main>
 
-  <footer class="foot" id="contact">
-    <p class="foot-contact">Questions about Meditron, its data or working with us? Write to <a href="mailto:xavier.theimer-lienhard@epfl.ch?subject=Meditron">xavier.theimer-lienhard@epfl.ch</a>.</p>
-    <p>Meditron is built at EPFL's LiGHT lab with the Swiss AI Initiative and compute from CSCS (Alps). Thanks to the clinicians of the MOOVE initiative and the LiGHT physician review panel.</p>
-    <p class="foot-links">
-      <a href="https://arxiv.org/abs/2605.16215" target="_blank" rel="noopener">Paper</a>
-      <a href="https://huggingface.co/collections/EPFLiGHT/meditronfo" target="_blank" rel="noopener">Models</a>
-      <a href="https://huggingface.co/datasets/EPFLiGHT/fully-open-meditron" target="_blank" rel="noopener">Training data</a>
-      <a href="https://github.com/EPFLiGHT/FullyOpenMeditron" target="_blank" rel="noopener">Code</a>
-      <a href="https://jointhemoove.org/" target="_blank" rel="noopener">MOOVE</a>
-    </p>
+  <footer class="foot">
+    <div class="foot-inner">
+      <div class="foot-row">
+        <a href="https://www.light-laboratory.org/" target="_blank" rel="noopener"><img class="foot-logo" src="static/img/light-logo.png" alt="LiGHT, Laboratory for intelligent Global Health and Humanitarian Response Technologies"></a>
+        <section class="hosts" aria-label="LiGHT is hosted by">
+          <p class="hosts-label">Hosted by</p>
+          <ul class="hosts-list">
+            <li><a href="https://www.epfl.ch/" target="_blank" rel="noopener"><img class="h-epfl" src="static/img/hosts/epfl.png" alt="EPFL"></a></li>
+            <li><a href="https://www.ariadnelabs.org/" target="_blank" rel="noopener"><img class="h-ariadne" src="static/img/hosts/ariadne.png" alt="Ariadne Labs, Harvard"></a></li>
+            <li><a href="https://www.ashoka.edu.in/" target="_blank" rel="noopener"><img class="h-ashoka" src="static/img/hosts/ashoka.png" alt="Ashoka University"></a></li>
+            <li><a href="https://c4ir.rw/" target="_blank" rel="noopener"><img class="h-c4ir" src="static/img/hosts/c4ir.png" alt="World Economic Forum, Rwanda Centre for the Fourth Industrial Revolution"></a></li>
+          </ul>
+        </section>
+        <nav class="foot-links" aria-label="Links">
+          <a href="https://arxiv.org/abs/2605.16215" target="_blank" rel="noopener">Paper</a>
+          <a href="https://huggingface.co/collections/EPFLiGHT/meditronfo" target="_blank" rel="noopener">Models</a>
+          <a href="https://huggingface.co/datasets/EPFLiGHT/fully-open-meditron" target="_blank" rel="noopener">Training data</a>
+          <a href="https://github.com/EPFLiGHT/FullyOpenMeditron" target="_blank" rel="noopener">Code</a>
+          <a href="https://jointhemoove.org/" target="_blank" rel="noopener">MOOVE</a>
+          <a href="https://www.light-laboratory.org/who-we-are" target="_blank" rel="noopener">Who we are</a>
+          <a href="https://www.linkedin.com/company/light-laboratory/" target="_blank" rel="noopener">LinkedIn</a>
+          <p class="foot-copy">© 2026 LiGHT, EPFL</p>
+        </nav>
+      </div>
+    </div>
   </footer>
 
   <!-- One dialog; its content comes from the templates below, chosen by the URL hash. -->
@@ -157,16 +151,12 @@
     <div class="panel-body" id="panel-body"></div>
   </dialog>
 
-  <template id="tpl-apertus" data-title="Apertus, the base model">
-    <h2>Apertus</h2>
-    <p class="lead">Apertus is the large language model built in Switzerland by EPFL, ETH Zurich and CSCS. Its weights, training data and training code are all public. That is why we build Meditron on it: if the base model is open all the way down, so is Meditron.</p>
-    <h3>What Meditron adds</h3>
-    <ul class="bars" aria-label="Apertus-70B before and after Meditron training">
-      <li><span class="who">Apertus-70B-Instruct<small>HealthBench, the starting point</small></span><span class="track"><span class="fill" style="width:56.3%"></span></span><span class="val">39.4</span></li>
-      <li class="ours"><span class="who">Apertus-70B-Meditron<small>HealthBench, after our training</small></span><span class="track"><span class="fill" style="width:70.4%"></span></span><span class="val">49.3</span></li>
-    </ul>
-    <p>In blind side-by-side comparisons, the AI judges prefer Meditron's answer over the starting model's in 90% of 516 clinician-written cases.</p>
-    <h3>What you can check</h3>
+  <template id="tpl-open" data-title="Open down to the data">
+    <h2>Open down to the data</h2>
+    <p class="lead">Meditron is open at every layer: the base model it starts from, the data it learned from, and the code that trained it.</p>
+    <h3>The base model: Apertus</h3>
+    <p>Apertus is the large language model built in Switzerland by EPFL, ETH Zurich and CSCS. Its weights, training data and training code are all public. That is why we build Meditron on it: if the base model is open all the way down, so is Meditron.</p>
+    <h4>What you can check</h4>
     <div class="table-scroll">
       <table>
         <thead><tr><th>Model</th><th>Open base model</th><th>Open medical data</th><th>Open data pipeline</th><th>Open training code</th></tr></thead>
@@ -177,12 +167,8 @@
         </tbody>
       </table>
     </div>
-    <p class="links"><a href="https://huggingface.co/swiss-ai" target="_blank" rel="noopener">Apertus on Hugging Face</a><a href="https://huggingface.co/collections/EPFLiGHT/meditronfo" target="_blank" rel="noopener">Meditron models</a></p>
-  </template>
-
-  <template id="tpl-data" data-title="The training data">
-    <h2>533,888 examples, all public</h2>
-    <p class="lead">Commercial medical assistants don't show what they learned from. Meditron's training set is on Hugging Face, row by row. Here is one row.</p>
+    <h3>The training data: 533,888 examples</h3>
+    <p>Commercial medical assistants don't show what they learned from. Meditron's training set is on Hugging Face, row by row. Here is one row.</p>
     <div class="specimen">
       <div class="specimen-head"><strong>Training example</strong><span>Guidelines QA</span></div>
       <div class="field">
@@ -206,7 +192,7 @@
         </ul>
       </div>
     </div>
-    <h3>How the set was made</h3>
+    <h4>How the set was made</h4>
     <ol class="steps">
       <li>Four clinicians rewrote the generation prompts.</li>
       <li>gpt-oss-120b wrote 340,000 new questions from exams, clinical guidelines and clinician cases.</li>
@@ -214,7 +200,7 @@
       <li>Every question that overlaps a test benchmark was removed.</li>
     </ol>
     <p class="note">Not perfect: AI reviewers still flag about 1 in 10 sampled rows. You can check them yourself.</p>
-    <p class="links"><a href="https://huggingface.co/datasets/EPFLiGHT/fully-open-meditron" target="_blank" rel="noopener">Browse the training data</a></p>
+    <p class="links"><a href="https://huggingface.co/swiss-ai" target="_blank" rel="noopener">Apertus on Hugging Face</a><a href="https://huggingface.co/collections/EPFLiGHT/meditronfo" target="_blank" rel="noopener">Meditron models</a><a href="https://huggingface.co/datasets/EPFLiGHT/fully-open-meditron" target="_blank" rel="noopener">Browse the training data</a></p>
   </template>
 
   <template id="tpl-moove" data-title="MOOVE, clinician testing">
@@ -226,6 +212,7 @@
       <div><dt>Countries</dt><dd>7</dd></div>
     </dl>
     <h3>Where the events ran</h3>
+    <p class="note">The amber squares on the globe mark these events.</p>
     <ul class="places">
       <li><strong>Switzerland</strong> CHUV Lausanne (3 events) and HUG Geneva, mostly specialist hospital care</li>
       <li><strong>Belgium</strong> one event</li>
@@ -239,9 +226,11 @@
     <p class="links"><a href="https://jointhemoove.org/" target="_blank" rel="noopener">Join the MOOVE</a><a href="#automoove">Try the clinicians' job in AutoMOOVE</a></p>
   </template>
 
-  <template id="tpl-healthbench" data-title="HealthBench results">
-    <h2>Where Meditron stands</h2>
-    <p class="lead">HealthBench: 5,000 health conversations, each graded against rubrics written by physicians.</p>
+  <template id="tpl-results" data-title="Results">
+    <h2>How good is it?</h2>
+    <p class="lead">Two kinds of evidence: a public benchmark graded against physician rubrics, and blind votes by clinicians at MOOVE events.</p>
+    <h3>HealthBench</h3>
+    <p>5,000 health conversations, each graded against rubrics written by physicians.</p>
     <ul class="bars" aria-label="HealthBench full scores">
       <li><span class="who">gpt-oss-120b<small>OpenAI; wrote our training answers</small></span><span class="track"><span class="fill" style="width:85.6%"></span></span><span class="val">59.9</span></li>
       <li class="ours"><span class="who">Gemma-3-27B-Meditron<small>Our recipe on Google's Gemma</small></span><span class="track"><span class="fill" style="width:80.3%"></span></span><span class="val">56.2</span></li>
@@ -254,14 +243,12 @@
       <li>The fully open model is still behind MedGemma and gpt-oss-120b.</li>
       <li>Our recipe on Gemma, MedGemma's own base model, is level with MedGemma.</li>
       <li>About half the gain comes from longer, more complete answers.</li>
+      <li>In blind side-by-side comparisons, the AI judges prefer Meditron's answer over the starting model's in 90% of 516 clinician-written cases.</li>
     </ul>
     <p class="note">Graded by Gemma-4-31B, so the scores are not comparable to OpenAI's published numbers.</p>
-  </template>
-
-  <template id="tpl-leaderboards" data-title="MOOVE leaderboards">
     <div id="boards">
-      <h2>How clinicians ranked the models</h2>
-      <p class="lead">At MOOVE events, clinicians read two anonymous answers to the same question and vote for the better one. Thousands of votes add up to a ranking: the share of matchups each model would win against an average model at that event.</p>
+      <h3>How clinicians ranked the models</h3>
+      <p>At MOOVE events, clinicians read two anonymous answers to the same question and vote for the better one. Thousands of votes add up to a ranking: the share of matchups each model would win against an average model at that event.</p>
       <div class="board-tabs" role="group" aria-label="Choose a leaderboard">
         <button type="button" data-board="chuv" aria-pressed="true">Swiss MOOVE</button>
         <button type="button" data-board="phc" aria-pressed="false">East Africa MOOVE</button>
