@@ -106,3 +106,7 @@ tr.sum.first td { border-top: 2px solid var(--rule); }
 .heat th.rh { text-align: right; white-space: nowrap; }
 .h3 { font-size: 0.85rem; margin: 0 0 6px; font-weight: 800; }
 .pairs { margin: 0; padding-left: 1.2rem; font-size: 0.78rem; display: grid; gap: 4px; }
+.adaptive { margin-top: 10px; font-size: var(--t-sm); }
+.adaptive summary { cursor: pointer; color: var(--muted); }
+.adaptive ul { margin: 6px 0 0; padding-left: 18px; }
+.adaptive li { margin: 4px 0; line-height: 1.45; }

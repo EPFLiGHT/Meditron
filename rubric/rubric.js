@@ -1,4 +1,5 @@
-// Rubric reward viewer: untrained Llama-3.1-8B vs one GRPO checkpoint, per question and per criterion.
+// Rubric reward viewer: an untrained model (Llama-3.1-8B, or the run's own starting model) vs one GRPO checkpoint,
+// per question and per criterion.
 // merged.json = 10-08 run (its own 58 questions); rubric.json = rubric-design checks (64 questions, one entry per checkpoint).
 // The question texts are not published (MOOVE data): a question is shown by its number and theme labels.
 const CKPTS = [
@@ -10,6 +11,10 @@ const CKPTS = [
     note: 'Run 3636914: merged criteria, points set so each aspect weighs the same, with the length term. Graded here on the merged criteria; 64 training questions, checked 10-11.' },
   { key: 'nolen', file: 'rubric.json', label: 'Aspects, no length term', step: 'step 60',
     note: 'Run 3640084: as aspects, without the length term. Graded here on the merged criteria; 64 training questions, checked 10-12. Its answers later grow to ~1,750 tokens by step 200.' },
+  { key: 'drtulu', file: 'rubric.json', label: 'Evolving rubrics', step: 'step 200',
+    note: 'Run 3664722 (DR Tulu): merged criteria plus up to five criteria per question that Gemma-4 writes from each group of answers, no length term. Graded here on the merged criteria; 64 training questions, checked 10-15, against fresh untrained answers. The criteria the run wrote for a question are listed under its labels.' },
+  { key: 'mfo', file: 'rubric.json', label: 'Apertus-8B MeditronFO', step: 'step 200', baseLabel: 'Untrained MeditronFO',
+    note: 'Run 3664777: the ICLR Apertus-8B MeditronFO model (not Llama) with the merged criteria and the length term. Compared with its own starting model; graded on the merged criteria, 64 training questions, checked 10-15.' },
 ];
 
 const mean = a => a.reduce((s, x) => s + x, 0) / a.length;
@@ -37,11 +42,12 @@ async function setCkpt(key) {
   const raw = await fetchJSON(C.file);
   D = raw.map((q, i) => {
     const step = q.runs ? q.runs[C.key] : q.step;
-    const o = { ...q, step, i, all: q.base.concat(step).map(a => a.text).join('\n').toLowerCase() };
-    o.bS = mean(q.base.map(a => a.score)); o.aS = mean(step.map(a => a.score));
-    o.bG = mean(q.base.map(a => a.gemma)); o.aG = mean(step.map(a => a.gemma));
-    o.bT = mean(q.base.map(a => a.tokens)); o.aT = mean(step.map(a => a.tokens));
-    o.bR = mean(q.base.map(a => a.reward)); o.aR = mean(step.map(a => a.reward));
+    const base = (q.bases && q.bases[C.key]) || q.base;  // a run's own starting model, else untrained Llama
+    const o = { ...q, base, step, i, all: base.concat(step).map(a => a.text).join('\n').toLowerCase() };
+    o.bS = mean(base.map(a => a.score)); o.aS = mean(step.map(a => a.score));
+    o.bG = mean(base.map(a => a.gemma)); o.aG = mean(step.map(a => a.gemma));
+    o.bT = mean(base.map(a => a.tokens)); o.aT = mean(step.map(a => a.tokens));
+    o.bR = mean(base.map(a => a.reward)); o.aR = mean(step.map(a => a.reward));
     o.dS = o.aS - o.bS; o.dG = o.aG - o.bG; o.hack = o.dS - o.dG;
     return o;
   });
@@ -105,7 +111,9 @@ function renderQ() {
       <span class="note">Plumb <span class="b">${f2(q.bS)}</span> → <span class="a">${f2(q.aS)}</span> ·
       Gemma-4 <span class="b">${f2(q.bG)}</span> → <span class="a">${f2(q.aG)}</span> ·
       tokens <span class="b">${Math.round(q.bT)}</span> → <span class="a">${Math.round(q.aT)}</span></span></div>
-    <p class="qhidden">The MOOVE question text is not published here; Gemma-4's labels of it below.</p><div class="chips">${labels}</div>`;
+    <p class="qhidden">The MOOVE question text is not published here; Gemma-4's labels of it below.</p><div class="chips">${labels}</div>
+    ${C.key === 'drtulu' && q.adaptive && q.adaptive.length ? `<details class="adaptive"><summary>Criteria the run wrote for this question (${q.adaptive.length}, active at its last step)</summary><ul>${
+      q.adaptive.map(c => `<li><b class="${c.points > 0 ? 'up' : 'down'}">${c.points > 0 ? '+' : '−'}${Math.abs(c.points)}</b> <b>${esc(c.title)}</b>: ${esc(c.criterion)}</li>`).join('')}</ul></details>` : ''}`;
 
   const nb = q.base.length, na = q.step.length;
   state.bSel = Math.min(state.bSel, nb - 1); state.aSel = Math.min(state.aSel, na - 1);
@@ -114,7 +122,7 @@ function renderQ() {
   if (state.csort === 'delta') rows = rows.slice().sort((x, y) => y.d - x.d);
   const colH = (side, j) => `<th class="col ${side === 'b' ? (j === state.bSel ? 'sel-b' : '') : (j === state.aSel ? 'sel-a' : '')}" data-side="${side}" data-j="${j}" tabindex="0" title="Read this answer">#${j + 1}</th>`;
   let h = `<thead><tr><th rowspan="2" style="text-align:left">Criterion</th>
-      <th class="grp b" colspan="${nb}">Untrained</th><th class="grp a" colspan="${na}">${esc(stepName)}</th><th rowspan="2" style="text-align:right">Δ mean</th></tr>
+      <th class="grp b" colspan="${nb}">${esc(C.baseLabel || 'Untrained')}</th><th class="grp a" colspan="${na}">${esc(stepName)}</th><th rowspan="2" style="text-align:right">Δ mean</th></tr>
       <tr>${q.base.map((_, j) => colH('b', j)).join('')}${q.step.map((_, j) => colH('a', j)).join('')}</tr></thead><tbody>`;
   for (const r of rows) {
     const cl = splitCluster(r.c.cluster);
@@ -129,7 +137,7 @@ function renderQ() {
   h += sumRow('Plumb score', 'score', f2, 'first') + sumRow('Reward (+ length)', 'reward') + sumRow('Gemma-4 score', 'gemma') + sumRow('Tokens', 'tokens', x => x) + '</tbody>';
   document.getElementById('grid').innerHTML = h;
 
-  const A = (side, a, j) => `<div class="ans ${side}"><h3>${side === 'b' ? 'Untrained' : esc(stepName)} · answer #${j + 1}</h3>
+  const A = (side, a, j) => `<div class="ans ${side}"><h3>${side === 'b' ? esc(C.baseLabel || 'Untrained') : esc(stepName)} · answer #${j + 1}</h3>
       <div class="meta">Plumb ${f2(a.score)} · reward ${f2(a.reward)} · Gemma-4 ${f2(a.gemma)} · ${a.tokens} tokens</div>
       <div class="body">${esc(a.text)}</div></div>`;
   document.getElementById('answers').innerHTML = A('b', q.base[state.bSel], state.bSel) + A('a', q.step[state.aSel], state.aSel);
