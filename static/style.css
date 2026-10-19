@@ -142,6 +142,12 @@ button { font: inherit; color: inherit; }
   pointer-events: auto; touch-action: none; user-select: none;
   filter: drop-shadow(5px 5px 0 var(--sky));
 }
+/* hover or keyboard focus: the card darkens like the Talk to Meditron button */
+.folder:hover .folder-tab, .folder:focus-visible .folder-tab,
+.folder:hover .folder-cta, .folder:focus-visible .folder-cta { background: var(--ink); border-color: var(--ink); }
+.folder:hover .folder-body, .folder:focus-visible .folder-body { border-color: var(--ink); }
+.folder:hover, .folder:focus-visible { filter: drop-shadow(5px 5px 0 var(--blue)); }
+.folder-tab, .folder-body, .folder-cta { transition: background-color 0.15s, border-color 0.15s; }
 .folder.dragging { cursor: grabbing; filter: drop-shadow(10px 10px 0 var(--sky)); }
 .folder:focus-visible { outline-offset: 5px; }
 .folder-tab {
