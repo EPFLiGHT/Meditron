@@ -113,6 +113,18 @@ button { font: inherit; color: inherit; }
 }
 .globe-key .dot { width: 0.6rem; height: 0.6rem; background: var(--marker); }
 
+/* the three commitments float around the globe; threads (drawn in app.js) tie each to its folders */
+.threads { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; overflow: visible; }
+.threads path { fill: none; stroke: var(--blue); stroke-width: 2; stroke-dasharray: 6 5; stroke-linecap: round; }
+.commitments { list-style: none; margin: 0; padding: 0; position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+.commitments li {
+  position: absolute; left: var(--cl); top: var(--ct); transform: translate(-50%, -50%);
+  display: flex; align-items: center; gap: 0.45rem; white-space: nowrap;
+  padding: 0.3rem 0.85rem; border: 1.5px solid var(--blue); border-radius: 999px;
+  background: var(--paper); color: var(--blue); font-size: var(--t-sm); font-weight: 700;
+}
+.commitments li::before { content: ''; width: 0.45rem; height: 0.45rem; border-radius: 50%; background: var(--sky); }
+
 /* folders */
 .folders { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
 .folder {
@@ -177,6 +189,9 @@ button { font: inherit; color: inherit; }
   #globe { position: relative; left: auto; top: auto; transform: none; margin: 0 auto; width: min(92vw, 30rem); height: min(92vw, 30rem); }
   .hero-center { margin-top: calc(-1 * min(92vw, 30rem) / 2 - 3.5rem); }
   .globe-key { position: static; justify-content: center; margin: 3rem 0 0; }
+  .threads { display: none; }
+  .commitments { position: static; display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; padding: 1.25rem 16px 0; }
+  .commitments li { position: static; transform: none; }
   .folders { position: static; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(16rem, 100%), 1fr)); gap: 1.25rem; padding: 2rem 16px 0; }
   .folder { position: relative; left: auto; top: auto; width: auto; transform: none; cursor: pointer; touch-action: auto; }
 }
@@ -198,6 +213,12 @@ button { font: inherit; color: inherit; }
 }
 .site-tip strong { display: block; font-size: 0.95rem; font-weight: 800; }
 .site-tip span { display: block; color: var(--muted); }
+
+/* ---------- why Meditron ---------- */
+.why-section { padding: 4.5rem 16px 1rem; border-top: 1px solid var(--rule); }
+.why-wrap { max-width: var(--measure); margin: 0 auto; }
+.why-section h2 { font-size: var(--t-xl); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.75rem; }
+.why-section p { font-size: var(--t-md); line-height: 1.5; }
 
 /* ---------- chat ---------- */
 .chat-section { padding: 5rem 16px 4rem; border-top: 1px solid var(--rule); }

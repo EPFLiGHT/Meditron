@@ -42,14 +42,22 @@
 
       <div class="hero-center">
         <h1 class="wordmark"><span class="cube" aria-hidden="true"><img class="cube-light" src="static/img/cube.png" alt=""><img class="cube-dark" src="static/img/cube-dark.png" alt=""></span><span>Meditron</span></h1>
-        <p class="tagline">Open medical AI, built with clinicians and tested by them.</p>
+        <p class="tagline">Fully Open Medical foundation models, now in your hands.</p>
         <a class="talk" href="#chat">Talk to Meditron</a>
       </div>
 
       <p class="globe-key"><span class="dot" aria-hidden="true"></span>Where clinicians tested Meditron</p>
 
+      <!-- the three commitments, each tied by a thread to the folders that show it -->
+      <svg class="threads" aria-hidden="true"></svg>
+      <ul class="commitments" aria-label="Meditron is built on three commitments">
+        <li data-to="f-open" style="--cl:38%;--ct:23%">Openness</li>
+        <li data-to="f-paper" style="--cl:62%;--ct:23%">Clinical grounding</li>
+        <li data-to="f-moove f-automoove" style="--cl:50%;--ct:80%">Real-world evaluation</li>
+      </ul>
+
       <div class="folders" aria-label="The parts of Meditron">
-        <button class="folder folder-portal" type="button" data-href="https://huggingface.co/datasets/EPFLiGHT/fully-open-meditron" style="--l:5%;--t:8%;--r:-3deg">
+        <button id="f-open" class="folder folder-portal" type="button" data-href="https://huggingface.co/datasets/EPFLiGHT/fully-open-meditron" style="--l:5%;--t:8%;--r:-3deg">
           <span class="folder-tab">Open</span>
           <span class="folder-body">
             <strong class="folder-title">Open down to the data</strong>
@@ -57,7 +65,7 @@
             <span class="folder-cta">Get the data</span>
           </span>
         </button>
-        <button class="folder folder-portal" type="button" data-href="https://jointhemoove.org/" style="--l:6%;--t:58%;--r:2deg">
+        <button id="f-moove" class="folder folder-portal" type="button" data-href="https://jointhemoove.org/" style="--l:6%;--t:58%;--r:2deg">
           <span class="folder-tab">MOOVE</span>
           <span class="folder-body">
             <strong class="folder-title">Tested by clinicians</strong>
@@ -65,7 +73,7 @@
             <span class="folder-cta">Visit MOOVE</span>
           </span>
         </button>
-        <button class="folder folder-portal" type="button" data-href="https://arxiv.org/abs/2605.16215" style="--l:72%;--t:8%;--r:2.5deg">
+        <button id="f-paper" class="folder folder-portal" type="button" data-href="https://arxiv.org/abs/2605.16215" style="--l:72%;--t:8%;--r:2.5deg">
           <span class="folder-tab">Paper</span>
           <span class="folder-body">
             <strong class="folder-title">Read the paper</strong>
@@ -73,7 +81,7 @@
             <span class="folder-cta">Read</span>
           </span>
         </button>
-        <button class="folder folder-portal folder-play" type="button" data-open="automoove" style="--l:75%;--t:58%;--r:-2.5deg">
+        <button id="f-automoove" class="folder folder-portal folder-play" type="button" data-open="automoove" style="--l:75%;--t:58%;--r:-2.5deg">
           <span class="folder-tab">AutoMOOVE</span>
           <span class="folder-body">
             <strong class="folder-title">Judge like a clinician</strong>
@@ -81,6 +89,13 @@
             <span class="folder-cta">Play</span>
           </span>
         </button>
+      </div>
+    </section>
+
+    <section class="why-section" aria-labelledby="why-title">
+      <div class="why-wrap">
+        <h2 id="why-title">Why Meditron</h2>
+        <p>Most &ldquo;open&rdquo; medical LLMs release only model weights, withholding the data provenance, curation procedures, and synthetic pipelines that determine model behavior. In high-stakes clinical settings &ndash; where clinicians, regulators, and patients may reasonably need to audit what a model has learned &ndash; this opacity is a fundamental limitation.</p>
       </div>
     </section>
 

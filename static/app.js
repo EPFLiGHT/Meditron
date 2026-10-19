@@ -188,6 +188,37 @@ const SITES = [
   });
 })();
 
+/* -------------------------------------------------------------- threads */
+
+// Each commitment is tied to its folders by a thread from centre to centre; the folder and the
+// commitment pill sit above the thread, so only the stretch between them shows. Redrawn every
+// frame while the layout changes (folders drop in, tilt on hover and can be dragged).
+(function threads() {
+  const svg = document.querySelector('.threads');
+  if (!svg) return;
+  const hero = svg.parentElement;
+  const desktop = matchMedia('(min-width: 901px)');
+  const links = [...document.querySelectorAll('.commitments [data-to]')]
+    .flatMap((c) => c.dataset.to.split(' ').map((id) => [c, document.getElementById(id)]));
+  const paths = links.map(() => svg.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'path')));
+  let last = '';
+  function draw() {
+    if (desktop.matches) {
+      const h = hero.getBoundingClientRect();
+      const mid = (el) => { const r = el.getBoundingClientRect(); return [r.left + r.width / 2 - h.left, r.top + r.height / 2 - h.top]; };
+      const d = links.map(([a, b]) => {
+        const [x1, y1] = mid(a), [x2, y2] = mid(b);
+        // a little slack: the thread sags below both ends
+        return `M${x1.toFixed(1)} ${y1.toFixed(1)} Q${((x1 + x2) / 2).toFixed(1)} ${(Math.max(y1, y2) + 40).toFixed(1)} ${x2.toFixed(1)} ${y2.toFixed(1)}`;
+      });
+      const key = d.join();
+      if (key !== last) { d.forEach((p, i) => paths[i].setAttribute('d', p)); last = key; }
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
 /* ---------------------------------------------------------------- panel */
 
 const panel = document.getElementById('panel');
