@@ -86,7 +86,7 @@ button { font: inherit; color: inherit; }
   width: min(86vmin, 46rem); height: min(86vmin, 46rem);
   image-rendering: pixelated;
 }
-.hero-center { position: relative; z-index: 2; text-align: center; padding: 0 16px; pointer-events: none; }
+.hero-center { position: relative; z-index: 3; text-align: center; padding: 0 16px; pointer-events: none; }
 .hero-center a { pointer-events: auto; }
 .wordmark {
   /* the cube in front of the name, at about cap height */
@@ -114,12 +114,22 @@ button { font: inherit; color: inherit; }
 .globe-key .dot { width: 0.6rem; height: 0.6rem; background: var(--marker); }
 
 /* the three commitments float around the globe; threads (drawn in app.js) tie each to its folders */
-.threads { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; overflow: visible; }
-.threads path { fill: none; stroke: var(--blue); stroke-width: 1.5; marker-start: url(#thread-dot); marker-end: url(#thread-dot); }
+.threads { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; overflow: visible; }
+/* each connector starts as its commitment's underline and ends in a dot on the folder */
+.threads path { fill: none; stroke: var(--blue); stroke-width: 1.5; marker-end: url(#thread-dot); transition: opacity 0.2s, stroke-width 0.2s; }
 .threads marker circle { fill: var(--blue); }
+/* hovering or focusing a commitment (or a folder) brings out what it is linked to and fades the rest */
+.hero.focus .threads path:not(.is-linked) { opacity: 0.12; }
+.hero.focus .threads path.is-linked { stroke-width: 2.5; }
+.hero.focus .folder:not(.is-linked) { opacity: 0.35; }
+.hero.focus .folder.is-linked { filter: drop-shadow(8px 8px 0 var(--blue)); }
+.hero.focus .commitments li:not(.is-linked) { opacity: 0.4; }
+.folder { transition: opacity 0.2s, filter 0.2s; }
+.commitments li { transition: opacity 0.2s; cursor: default; }
+.commitments li:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
 .commitments {
   /* above the fold even when the hero is taller than the window */
-  position: absolute; left: 50%; bottom: max(3%, calc(100% - 100svh + 0.75rem)); transform: translateX(-50%); z-index: 2;
+  position: absolute; left: 50%; bottom: max(3%, calc(100% - 100svh + 0.75rem)); transform: translateX(-50%); z-index: 1;
   padding: 1rem 1.5rem 1.15rem; background: var(--paper); border: 1.5px solid var(--blue);
   filter: drop-shadow(5px 5px 0 var(--sky));
 }
@@ -198,6 +208,7 @@ button { font: inherit; color: inherit; }
   .globe-key { position: static; justify-content: center; margin: 3rem 0 0; }
   .threads { display: none; }
   .commitments { position: static; transform: none; width: fit-content; margin: 1.5rem auto 0; }
+  .commitments li span { text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 0.25em; }
   .folders { position: static; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(16rem, 100%), 1fr)); gap: 1.25rem; padding: 2rem 16px 0; }
   .folder { position: relative; left: auto; right: auto; top: auto; width: auto; transform: none; cursor: pointer; touch-action: auto; }
 }

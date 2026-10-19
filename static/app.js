@@ -190,18 +190,18 @@ const SITES = [
 
 /* -------------------------------------------------------------- threads */
 
-// Each commitment is wired to its folders by a right-angled connector: out of the panel's side at
-// the commitment's line, along to a lane beside the folder column, up or down that lane, and into the
-// folder's inner edge. Lanes are staggered so connectors on the same side never cross. Redrawn every
-// frame while the layout changes (folders drop in and can be dragged).
+// Each commitment is wired to its folders by a right-angled connector that starts as the word's
+// underline, leaves the panel's side, runs along a lane beside the folder column and ends on the
+// folder's inner edge. Per side, lower lines take inner lanes, so connectors nest instead of crossing.
+// Redrawn every frame while the layout changes (folders drop in and can be dragged).
 (function threads() {
   const svg = document.querySelector('.threads');
   if (!svg) return;
   const hero = svg.parentElement;
   const desktop = matchMedia('(min-width: 901px)');
-  const links = [...document.querySelectorAll('.commitments [data-to]')]
-    .flatMap((c) => c.dataset.to.split(' ').map((id) => [c, document.getElementById(id)]));
-  const paths = links.map(() => svg.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'path')));
+  const items = [...document.querySelectorAll('.commitments [data-to]')];
+  const links = items.flatMap((li) => li.dataset.to.split(' ').map((id) => ({ li, folder: document.getElementById(id) })));
+  links.forEach((l) => { l.path = svg.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'path')); });
   const RADIUS = 10;
   // a polyline with its corners rounded
   function rounded(pts) {
@@ -209,9 +209,7 @@ const SITES = [
     for (let i = 1; i < pts.length - 1; i++) {
       const [px, py] = pts[i - 1], [x, y] = pts[i], [nx, ny] = pts[i + 1];
       const r = Math.min(RADIUS, Math.hypot(x - px, y - py) / 2, Math.hypot(nx - x, ny - y) / 2);
-      const ax = x + Math.sign(px - x) * r, ay = y + Math.sign(py - y) * r;
-      const bx = x + Math.sign(nx - x) * r, by = y + Math.sign(ny - y) * r;
-      d += ` L${ax} ${ay} Q${x} ${y} ${bx} ${by}`;
+      d += ` L${x + Math.sign(px - x) * r} ${y + Math.sign(py - y) * r} Q${x} ${y} ${x + Math.sign(nx - x) * r} ${y + Math.sign(ny - y) * r}`;
     }
     const [lx, ly] = pts[pts.length - 1];
     return `${d} L${lx} ${ly}`;
@@ -222,30 +220,46 @@ const SITES = [
       const h = hero.getBoundingClientRect();
       const box = (el) => {
         const r = el.getBoundingClientRect();
-        return { l: r.left - h.left, r: r.right - h.left, t: r.top - h.top, b: r.bottom - h.top, cx: r.left + r.width / 2 - h.left, cy: r.top + r.height / 2 - h.top };
+        return { l: r.left - h.left, r: r.right - h.left, t: r.top - h.top, b: r.bottom - h.top, cx: r.left + r.width / 2 - h.left };
       };
       const panel = box(document.querySelector('.commitments'));
-      const runs = links.map(([a, b]) => {
-        const item = box(a), to = box(b);
+      const runs = links.map(({ li, folder }) => {
+        const word = box(li.querySelector('span')), to = box(folder);
         const left = to.cx < panel.cx;
-        const y1 = Math.round(item.cy);
-        return { left, y1, x1: Math.round(left ? panel.l : panel.r), edge: Math.round(left ? to.r : to.l),
-          ty: Math.round(Math.min(Math.max(y1, to.t + 24), to.b - 24)) };
+        const y1 = Math.round(word.b + 3);
+        return { left, y1, x0: Math.round(left ? word.r : word.l), x1: Math.round(left ? panel.l : panel.r),
+          edge: Math.round(left ? to.r : to.l), ty: Math.round(Math.min(Math.max(y1, to.t + 24), to.b - 24)) };
       });
-      // per side, the lowest commitment line takes the innermost lane, so connectors nest instead of crossing
-      const d = runs.map((run) => {
-        const { left, y1, x1, edge, ty } = run;
-        if (ty === y1) return rounded([[x1, y1], [edge, y1]]);
-        const lane = runs.filter((o) => o.left === left && o.ty !== o.y1 && o.y1 > y1).length;
-        const lx = left ? edge + 22 + 16 * lane : edge - 22 - 16 * lane;
-        return rounded([[x1, y1], [lx, y1], [lx, ty], [edge, ty]]);
+      const d = runs.map(({ left, y1, x0, x1, edge, ty }) => {
+        if (ty === y1) return rounded([[x0, y1], [edge, y1]]);
+        const lower = new Set(runs.filter((o) => o.left === left && o.ty !== o.y1 && o.y1 > y1).map((o) => o.y1)).size;
+        const lx = left ? edge + 22 + 16 * lower : edge - 22 - 16 * lower;
+        return rounded([[x0, y1], [x1, y1], [lx, y1], [lx, ty], [edge, ty]]);
       });
       const key = d.join();
-      if (key !== last) { d.forEach((p, i) => paths[i].setAttribute('d', p)); last = key; }
+      if (key !== last) { d.forEach((p, i) => links[i].path.setAttribute('d', p)); last = key; }
     }
     requestAnimationFrame(draw);
   }
   draw();
+
+  // focus: a commitment lights up its folders and connectors; a folder lights up its commitments
+  function focus(on) {
+    hero.classList.toggle('focus', Boolean(on));
+    links.forEach((l) => {
+      const hit = on && (on === l.li || on === l.folder);
+      l.path.classList.toggle('is-linked', Boolean(hit));
+      if (hit) { l.li.classList.add('is-linked'); l.folder.classList.add('is-linked'); }
+    });
+    if (!on) hero.querySelectorAll('.is-linked').forEach((el) => el.classList.remove('is-linked'));
+  }
+  const targets = [...items, ...new Set(links.map((l) => l.folder))];
+  targets.forEach((el) => {
+    el.addEventListener('pointerenter', () => { if (desktop.matches) { focus(null); focus(el); } });
+    el.addEventListener('pointerleave', () => focus(null));
+    el.addEventListener('focus', () => { if (desktop.matches) { focus(null); focus(el); } });
+    el.addEventListener('blur', () => focus(null));
+  });
 })();
 
 /* ---------------------------------------------------------------- panel */
