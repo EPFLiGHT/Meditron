@@ -188,76 +188,26 @@ const SITES = [
   });
 })();
 
-/* -------------------------------------------------------------- threads */
+/* ---------------------------------------------------------- commitments */
 
-// Each commitment is wired to its folders by a right-angled connector that starts at the side of
-// the word facing the folder, at mid-height, leaves the panel, runs along a lane beside the folder
-// column and ends on the folder's inner edge. Per side, lower lines take inner lanes, so connectors nest instead of crossing.
-// Redrawn every frame while the layout changes (folders drop in and can be dragged).
-(function threads() {
-  const svg = document.querySelector('.threads');
-  if (!svg) return;
-  const hero = svg.parentElement;
-  const desktop = matchMedia('(min-width: 901px)');
+// Hovering or focusing a commitment brings out the folders that show it and fades the rest;
+// hovering a folder brings out its commitments.
+(function commitments() {
   const items = [...document.querySelectorAll('.commitments [data-to]')];
+  if (!items.length) return;
+  const hero = items[0].closest('.hero');
+  const desktop = matchMedia('(min-width: 901px)');
   const links = items.flatMap((li) => li.dataset.to.split(' ').map((id) => ({ li, folder: document.getElementById(id) })));
-  links.forEach((l) => { l.path = svg.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'path')); });
-  const RADIUS = 10;
-  // a polyline with its corners rounded
-  function rounded(pts) {
-    let d = `M${pts[0][0]} ${pts[0][1]}`;
-    for (let i = 1; i < pts.length - 1; i++) {
-      const [px, py] = pts[i - 1], [x, y] = pts[i], [nx, ny] = pts[i + 1];
-      const r = Math.min(RADIUS, Math.hypot(x - px, y - py) / 2, Math.hypot(nx - x, ny - y) / 2);
-      d += ` L${x + Math.sign(px - x) * r} ${y + Math.sign(py - y) * r} Q${x} ${y} ${x + Math.sign(nx - x) * r} ${y + Math.sign(ny - y) * r}`;
-    }
-    const [lx, ly] = pts[pts.length - 1];
-    return `${d} L${lx} ${ly}`;
-  }
-  let last = '';
-  function draw() {
-    if (desktop.matches) {
-      const h = hero.getBoundingClientRect();
-      const box = (el) => {
-        const r = el.getBoundingClientRect();
-        return { l: r.left - h.left, r: r.right - h.left, t: r.top - h.top, b: r.bottom - h.top, cx: r.left + r.width / 2 - h.left };
-      };
-      const panel = box(document.querySelector('.commitments'));
-      const runs = links.map(({ li, folder }) => {
-        const word = box(li.querySelector('span')), to = box(folder);
-        const left = to.cx < panel.cx;
-        const y1 = Math.round((word.t + word.b) / 2);
-        return { left, y1, x0: Math.round(left ? word.l - 8 : word.r + 8),
-          edge: Math.round(left ? to.r : to.l), ty: Math.round(Math.min(Math.max(y1, to.t + 24), to.b - 24)) };
-      });
-      const d = runs.map(({ left, y1, x0, edge, ty }) => {
-        if (ty === y1) return rounded([[x0, y1], [edge, y1]]);
-        const lower = new Set(runs.filter((o) => o.left === left && o.ty !== o.y1 && o.y1 > y1).map((o) => o.y1)).size;
-        const lx = left ? edge + 22 + 16 * lower : edge - 22 - 16 * lower;
-        return rounded([[x0, y1], [lx, y1], [lx, ty], [edge, ty]]);
-      });
-      const key = d.join();
-      if (key !== last) { d.forEach((p, i) => links[i].path.setAttribute('d', p)); last = key; }
-    }
-    requestAnimationFrame(draw);
-  }
-  draw();
-
-  // focus: a commitment lights up its folders and connectors; a folder lights up its commitments
   function focus(on) {
+    hero.querySelectorAll('.is-linked').forEach((el) => el.classList.remove('is-linked'));
     hero.classList.toggle('focus', Boolean(on));
-    links.forEach((l) => {
-      const hit = on && (on === l.li || on === l.folder);
-      l.path.classList.toggle('is-linked', Boolean(hit));
-      if (hit) { l.li.classList.add('is-linked'); l.folder.classList.add('is-linked'); }
-    });
-    if (!on) hero.querySelectorAll('.is-linked').forEach((el) => el.classList.remove('is-linked'));
+    if (!on) return;
+    links.filter((l) => on === l.li || on === l.folder).forEach((l) => { l.li.classList.add('is-linked'); l.folder.classList.add('is-linked'); });
   }
-  const targets = [...items, ...new Set(links.map((l) => l.folder))];
-  targets.forEach((el) => {
-    el.addEventListener('pointerenter', () => { if (desktop.matches) { focus(null); focus(el); } });
+  [...items, ...new Set(links.map((l) => l.folder))].forEach((el) => {
+    el.addEventListener('pointerenter', () => { if (desktop.matches) focus(el); });
     el.addEventListener('pointerleave', () => focus(null));
-    el.addEventListener('focus', () => { if (desktop.matches) { focus(null); focus(el); } });
+    el.addEventListener('focus', () => { if (desktop.matches) focus(el); });
     el.addEventListener('blur', () => focus(null));
   });
 })();
