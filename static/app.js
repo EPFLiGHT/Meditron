@@ -190,9 +190,9 @@ const SITES = [
 
 /* -------------------------------------------------------------- threads */
 
-// Each commitment is wired to its folders by a right-angled connector that starts as the word's
-// underline, leaves the panel's side, runs along a lane beside the folder column and ends on the
-// folder's inner edge. Per side, lower lines take inner lanes, so connectors nest instead of crossing.
+// Each commitment is wired to its folders by a right-angled connector that starts at the side of
+// the word facing the folder, at mid-height, leaves the panel, runs along a lane beside the folder
+// column and ends on the folder's inner edge. Per side, lower lines take inner lanes, so connectors nest instead of crossing.
 // Redrawn every frame while the layout changes (folders drop in and can be dragged).
 (function threads() {
   const svg = document.querySelector('.threads');
@@ -226,15 +226,15 @@ const SITES = [
       const runs = links.map(({ li, folder }) => {
         const word = box(li.querySelector('span')), to = box(folder);
         const left = to.cx < panel.cx;
-        const y1 = Math.round(word.b + 3);
-        return { left, y1, x0: Math.round(left ? word.r : word.l), x1: Math.round(left ? panel.l : panel.r),
+        const y1 = Math.round((word.t + word.b) / 2);
+        return { left, y1, x0: Math.round(left ? word.l - 8 : word.r + 8),
           edge: Math.round(left ? to.r : to.l), ty: Math.round(Math.min(Math.max(y1, to.t + 24), to.b - 24)) };
       });
-      const d = runs.map(({ left, y1, x0, x1, edge, ty }) => {
+      const d = runs.map(({ left, y1, x0, edge, ty }) => {
         if (ty === y1) return rounded([[x0, y1], [edge, y1]]);
         const lower = new Set(runs.filter((o) => o.left === left && o.ty !== o.y1 && o.y1 > y1).map((o) => o.y1)).size;
         const lx = left ? edge + 22 + 16 * lower : edge - 22 - 16 * lower;
-        return rounded([[x0, y1], [x1, y1], [lx, y1], [lx, ty], [edge, ty]]);
+        return rounded([[x0, y1], [lx, y1], [lx, ty], [edge, ty]]);
       });
       const key = d.join();
       if (key !== last) { d.forEach((p, i) => links[i].path.setAttribute('d', p)); last = key; }

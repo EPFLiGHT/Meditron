@@ -115,8 +115,8 @@ button { font: inherit; color: inherit; }
 
 /* the three commitments float around the globe; threads (drawn in app.js) tie each to its folders */
 .threads { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; overflow: visible; }
-/* each connector starts as its commitment's underline and ends in a dot on the folder */
-.threads path { fill: none; stroke: var(--blue); stroke-width: 1.5; marker-end: url(#thread-dot); transition: opacity 0.2s, stroke-width 0.2s; }
+/* each connector runs from the side of its commitment, at mid-height, to a dot on the folder */
+.threads path { fill: none; stroke: var(--blue); stroke-width: 1.5; marker-start: url(#thread-dot); marker-end: url(#thread-dot); transition: opacity 0.2s, stroke-width 0.2s; }
 .threads marker circle { fill: var(--blue); }
 /* hovering or focusing a commitment (or a folder) brings out what it is linked to and fades the rest */
 .hero.focus .threads path:not(.is-linked) { opacity: 0.12; }
@@ -136,7 +136,7 @@ button { font: inherit; color: inherit; }
 .commitments-title { margin: 0 0 0.6rem; font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
 .commitments ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.45rem; }
 .commitments li { display: flex; align-items: center; gap: 0.6rem; white-space: nowrap; color: var(--blue); font-size: 1.15rem; font-weight: 700; }
-.commitments li::before { content: ''; width: 0.55rem; height: 0.55rem; background: var(--sky); }
+.commitments li span { text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 0.25em; }
 
 /* folders */
 .folders { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
@@ -208,7 +208,6 @@ button { font: inherit; color: inherit; }
   .globe-key { position: static; justify-content: center; margin: 3rem 0 0; }
   .threads { display: none; }
   .commitments { position: static; transform: none; width: fit-content; margin: 1.5rem auto 0; }
-  .commitments li span { text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 0.25em; }
   .folders { position: static; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(16rem, 100%), 1fr)); gap: 1.25rem; padding: 2rem 16px 0; }
   .folder { position: relative; left: auto; right: auto; top: auto; width: auto; transform: none; cursor: pointer; touch-action: auto; }
 }
