@@ -1,2 +1,8 @@
 __pycache__/
 core*
+
+# pages kept local only (not published)
+rubric/
+tracker/
+leaderboard/
+persample/
