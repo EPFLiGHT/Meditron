@@ -181,7 +181,9 @@ const SITES = [
     // click also fires for Enter/Space; a drag that just ended is not a click
     el.addEventListener('click', () => {
       if (moved) { moved = false; return; }
-      location.hash = el.dataset.open;
+      // the paper folder leaves the site; the others open a panel
+      if (el.dataset.href) window.open(el.dataset.href, '_blank', 'noopener');
+      else location.hash = el.dataset.open;
     });
   });
 })();
