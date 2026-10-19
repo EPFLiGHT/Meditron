@@ -136,7 +136,7 @@ button { font: inherit; color: inherit; }
 .folders { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
 .folder {
   --x: 0px; --y: 0px;
-  position: absolute; left: var(--l); right: var(--rr, auto); top: var(--t); width: 16rem;
+  position: absolute; left: var(--l); right: var(--rr, auto); top: var(--t); bottom: var(--bb, auto); width: 16rem;
   transform: translate(var(--x), var(--y));
   background: none; border: 0; padding: 0; text-align: left; cursor: grab;
   pointer-events: auto; touch-action: none; user-select: none;
@@ -166,6 +166,11 @@ button { font: inherit; color: inherit; }
 }
 /* each folder is a portal: a snapshot of where it leads; light snapshots, so a rule keeps their edge on dark */
 .folder-portal { width: 18rem; }
+/* corner layout (default, and the fallback below 1280px wide) */
+#f-open { --l: 4%; --t: 8%; }
+#f-moove { --l: 4%; --t: 58%; }
+#f-paper { --l: auto; --rr: 4%; --t: 8%; }
+#f-automoove { --l: auto; --rr: 4%; --t: 58%; }
 /* laptop-height windows: smaller portals showing the top strip of each snapshot, so they clear the wordmark */
 @media (min-width: 901px) and (max-height: 940px) {
   .folder-portal { width: 14.5rem; }
@@ -194,6 +199,26 @@ button { font: inherit; color: inherit; }
   @keyframes drop-in { from { opacity: 0; translate: 0 -1.5rem; } }
 }
 
+/* Wide screens: the folders form a row along the bottom of the hero, either side of the commitments
+   panel, outer pair raised a step so the row follows the curve of the globe. */
+@media (min-width: 1280px) {
+  .hero {
+    --pw: 16rem; --g: 1.25rem; --step: 5rem;
+    --w: clamp(13rem, calc((100vw - var(--pw) - 4 * var(--g) - 3rem) / 4), 18rem);
+    --bb0: max(3%, calc(100% - 100svh + 0.75rem));
+  }
+  .commitments { width: var(--pw); bottom: var(--bb0); }
+  .folders .folder-portal { width: var(--w); }
+  #f-open, #f-moove, #f-automoove, #f-paper { --t: auto; --rr: auto; }
+  #f-open { --l: calc(50% - var(--pw) / 2 - 2 * var(--g) - 2 * var(--w)); --bb: calc(var(--bb0) + var(--step)); }
+  #f-moove { --l: calc(50% - var(--pw) / 2 - var(--g) - var(--w)); --bb: var(--bb0); }
+  #f-automoove { --l: calc(50% + var(--pw) / 2 + var(--g)); --bb: var(--bb0); }
+  #f-paper { --l: calc(50% + var(--pw) / 2 + 2 * var(--g) + var(--w)); --bb: calc(var(--bb0) + var(--step)); }
+}
+@media (min-width: 1280px) and (max-height: 940px) {
+  .hero { --pw: 14rem; --step: 3rem; }
+}
+
 /* Small screens: the folders become a plain stack under the globe. */
 @media (max-width: 900px) {
   .hero { display: block; place-items: normal; min-height: 0; padding: 4.5rem 0 2rem; }
@@ -202,7 +227,7 @@ button { font: inherit; color: inherit; }
   .globe-key { position: static; justify-content: center; margin: 3rem 0 0; }
   .commitments { position: static; transform: none; width: fit-content; margin: 1.5rem auto 0; }
   .folders { position: static; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(16rem, 100%), 1fr)); gap: 1.25rem; padding: 2rem 16px 0; }
-  .folder { position: relative; left: auto; right: auto; top: auto; width: auto; transform: none; cursor: pointer; touch-action: auto; }
+  .folder { position: relative; left: auto; right: auto; top: auto; bottom: auto; width: auto; transform: none; cursor: pointer; touch-action: auto; }
 }
 
 .hosts img { filter: brightness(0) invert(1); width: auto; }
