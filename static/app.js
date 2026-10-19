@@ -190,9 +190,9 @@ const SITES = [
 
 /* -------------------------------------------------------------- threads */
 
-// Each commitment is tied to its folders by a thread from centre to centre; the folder and the
-// commitment pill sit above the thread, so only the stretch between them shows. Redrawn every
-// frame while the layout changes (folders drop in, tilt on hover and can be dragged).
+// Each commitment is tied to its folders by a thread. It leaves from the side of the line facing
+// the folder and ends at the folder's centre, under the folder, so only the open stretch shows.
+// Redrawn every frame while the layout changes (folders drop in, tilt on hover and can be dragged).
 (function threads() {
   const svg = document.querySelector('.threads');
   if (!svg) return;
@@ -205,11 +205,14 @@ const SITES = [
   function draw() {
     if (desktop.matches) {
       const h = hero.getBoundingClientRect();
-      const mid = (el) => { const r = el.getBoundingClientRect(); return [r.left + r.width / 2 - h.left, r.top + r.height / 2 - h.top]; };
+      const box = (el) => { const r = el.getBoundingClientRect(); return { l: r.left - h.left, r: r.right - h.left, cx: r.left + r.width / 2 - h.left, cy: r.top + r.height / 2 - h.top }; };
+      const panel = box(document.querySelector('.commitments'));
       const d = links.map(([a, b]) => {
-        const [x1, y1] = mid(a), [x2, y2] = mid(b);
-        // a little slack: the thread sags below both ends
-        return `M${x1.toFixed(1)} ${y1.toFixed(1)} Q${((x1 + x2) / 2).toFixed(1)} ${(Math.max(y1, y2) + 40).toFixed(1)} ${x2.toFixed(1)} ${y2.toFixed(1)}`;
+        const item = box(a), to = box(b);
+        const x1 = to.cx < item.cx ? panel.l : panel.r, y1 = item.cy, x2 = to.cx, y2 = to.cy;
+        // level runs sag a little; climbs go out sideways first, then up to the folder
+        const [qx, qy] = Math.abs(y2 - y1) < 120 ? [(x1 + x2) / 2, Math.max(y1, y2) + 30] : [x2, y1];
+        return `M${x1.toFixed(1)} ${y1.toFixed(1)} Q${qx.toFixed(1)} ${qy.toFixed(1)} ${x2.toFixed(1)} ${y2.toFixed(1)}`;
       });
       const key = d.join();
       if (key !== last) { d.forEach((p, i) => paths[i].setAttribute('d', p)); last = key; }

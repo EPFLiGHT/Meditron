@@ -116,13 +116,13 @@ button { font: inherit; color: inherit; }
 /* the three commitments float around the globe; threads (drawn in app.js) tie each to its folders */
 .threads { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; overflow: visible; }
 .threads path { fill: none; stroke: var(--blue); stroke-width: 2; stroke-dasharray: 6 5; stroke-linecap: round; }
-.commitments { list-style: none; margin: 0; padding: 0; position: absolute; inset: 0; z-index: 2; pointer-events: none; }
-.commitments li {
-  position: absolute; left: var(--cl); top: var(--ct); transform: translate(-50%, -50%);
-  display: flex; align-items: center; gap: 0.45rem; white-space: nowrap;
-  padding: 0.3rem 0.85rem; border: 1.5px solid var(--blue); border-radius: 999px;
-  background: var(--paper); color: var(--blue); font-size: var(--t-sm); font-weight: 700;
+.commitments {
+  position: absolute; left: 50%; top: 80%; transform: translate(-50%, -50%); z-index: 2;
+  padding: 0.6rem 1rem 0.7rem; background: var(--paper); border: 1.5px solid var(--blue); border-radius: 10px;
 }
+.commitments-title { margin: 0 0 0.35rem; font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.commitments ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.25rem; }
+.commitments li { display: flex; align-items: center; gap: 0.45rem; white-space: nowrap; color: var(--blue); font-size: var(--t-sm); font-weight: 700; }
 .commitments li::before { content: ''; width: 0.45rem; height: 0.45rem; border-radius: 50%; background: var(--sky); }
 
 /* folders */
@@ -190,8 +190,7 @@ button { font: inherit; color: inherit; }
   .hero-center { margin-top: calc(-1 * min(92vw, 30rem) / 2 - 3.5rem); }
   .globe-key { position: static; justify-content: center; margin: 3rem 0 0; }
   .threads { display: none; }
-  .commitments { position: static; display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; padding: 1.25rem 16px 0; }
-  .commitments li { position: static; transform: none; }
+  .commitments { position: static; transform: none; width: fit-content; margin: 1.5rem auto 0; }
   .folders { position: static; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(16rem, 100%), 1fr)); gap: 1.25rem; padding: 2rem 16px 0; }
   .folder { position: relative; left: auto; top: auto; width: auto; transform: none; cursor: pointer; touch-action: auto; }
 }
