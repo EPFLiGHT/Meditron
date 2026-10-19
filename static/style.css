@@ -114,7 +114,7 @@ button { font: inherit; color: inherit; }
 .globe-key .dot { width: 0.6rem; height: 0.6rem; background: var(--marker); }
 
 /* the three commitments sit under the call to action; hovering one brings out its folders (app.js) */
-/* hovering or focusing a commitment (or a folder) brings out what it is linked to and fades the rest */
+/* hovering or focusing a commitment brings out the folders it is linked to and fades the rest */
 .hero.focus .folder:not(.is-linked) { opacity: 0.35; }
 .hero.focus .folder.is-linked { filter: drop-shadow(8px 8px 0 var(--blue)); }
 .hero.focus .commitments li:not(.is-linked) { opacity: 0.4; }
@@ -138,11 +138,10 @@ button { font: inherit; color: inherit; }
   --x: 0px; --y: 0px;
   position: absolute; left: var(--l); right: var(--rr, auto); top: var(--t); bottom: var(--bb, auto); width: 16rem;
   transform: translate(var(--x), var(--y));
-  background: none; border: 0; padding: 0; text-align: left; cursor: grab;
+  background: none; border: 0; padding: 0; text-align: left; cursor: pointer;
   pointer-events: auto; touch-action: none; user-select: none;
   filter: drop-shadow(5px 5px 0 var(--sky));
 }
-.folder:hover, .folder:focus-visible { filter: drop-shadow(8px 8px 0 var(--sky)); }
 .folder.dragging { cursor: grabbing; filter: drop-shadow(10px 10px 0 var(--sky)); }
 .folder:focus-visible { outline-offset: 5px; }
 .folder-tab {

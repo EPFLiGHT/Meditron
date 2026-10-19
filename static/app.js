@@ -190,8 +190,7 @@ const SITES = [
 
 /* ---------------------------------------------------------- commitments */
 
-// Hovering or focusing a commitment brings out the folders that show it and fades the rest;
-// hovering a folder brings out its commitments.
+// Hovering or focusing a commitment brings out the folders that show it and fades the rest.
 (function commitments() {
   const items = [...document.querySelectorAll('.commitments [data-to]')];
   if (!items.length) return;
@@ -202,9 +201,9 @@ const SITES = [
     hero.querySelectorAll('.is-linked').forEach((el) => el.classList.remove('is-linked'));
     hero.classList.toggle('focus', Boolean(on));
     if (!on) return;
-    links.filter((l) => on === l.li || on === l.folder).forEach((l) => { l.li.classList.add('is-linked'); l.folder.classList.add('is-linked'); });
+    links.filter((l) => on === l.li).forEach((l) => { l.li.classList.add('is-linked'); l.folder.classList.add('is-linked'); });
   }
-  [...items, ...new Set(links.map((l) => l.folder))].forEach((el) => {
+  items.forEach((el) => {
     el.addEventListener('pointerenter', () => { if (desktop.matches) focus(el); });
     el.addEventListener('pointerleave', () => focus(null));
     el.addEventListener('focus', () => { if (desktop.matches) focus(el); });
