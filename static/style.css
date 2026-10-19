@@ -114,16 +114,19 @@ button { font: inherit; color: inherit; }
 .globe-key .dot { width: 0.6rem; height: 0.6rem; background: var(--marker); }
 
 /* the three commitments float around the globe; threads (drawn in app.js) tie each to its folders */
-.threads { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; overflow: visible; }
-.threads path { fill: none; stroke: var(--blue); stroke-width: 2; stroke-dasharray: 6 5; stroke-linecap: round; }
+.threads { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; overflow: visible; }
+.threads path { fill: none; stroke: var(--blue); stroke-width: 1.5; marker-start: url(#thread-dot); marker-end: url(#thread-dot); }
+.threads marker circle { fill: var(--blue); }
 .commitments {
-  position: absolute; left: 50%; top: 80%; transform: translate(-50%, -50%); z-index: 2;
-  padding: 0.6rem 1rem 0.7rem; background: var(--paper); border: 1.5px solid var(--blue); border-radius: 10px;
+  /* above the fold even when the hero is taller than the window */
+  position: absolute; left: 50%; bottom: max(3%, calc(100% - 100svh + 0.75rem)); transform: translateX(-50%); z-index: 2;
+  padding: 1rem 1.5rem 1.15rem; background: var(--paper); border: 1.5px solid var(--blue);
+  filter: drop-shadow(5px 5px 0 var(--sky));
 }
-.commitments-title { margin: 0 0 0.35rem; font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
-.commitments ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.25rem; }
-.commitments li { display: flex; align-items: center; gap: 0.45rem; white-space: nowrap; color: var(--blue); font-size: var(--t-sm); font-weight: 700; }
-.commitments li::before { content: ''; width: 0.45rem; height: 0.45rem; border-radius: 50%; background: var(--sky); }
+.commitments-title { margin: 0 0 0.6rem; font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.commitments ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.45rem; }
+.commitments li { display: flex; align-items: center; gap: 0.6rem; white-space: nowrap; color: var(--blue); font-size: 1.15rem; font-weight: 700; }
+.commitments li::before { content: ''; width: 0.55rem; height: 0.55rem; background: var(--sky); }
 
 /* folders */
 .folders { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
@@ -166,6 +169,10 @@ button { font: inherit; color: inherit; }
   .folder-portal .folder-fig { aspect-ratio: 960 / 330; object-fit: cover; object-position: top; }
   .folder-portal .fig-low { object-position: 50% 90%; }
   .folder-portal .folder-cta { margin-top: 0.5rem; font-size: 0.85rem; }
+  .commitments { padding: 0.7rem 1.15rem 0.8rem; }
+  .commitments-title { font-size: 0.72rem; margin-bottom: 0.4rem; }
+  .commitments ul { gap: 0.25rem; }
+  .commitments li { font-size: 1rem; }
 }
 .folder-fig { display: block; width: 100%; height: auto; border: 1px solid var(--rule); background: #fff; }
 .mini-bars { display: grid; gap: 0.35rem; margin-top: 0.4rem; font-size: 0.85rem; }
