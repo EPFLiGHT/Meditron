@@ -129,14 +129,14 @@ button { font: inherit; color: inherit; }
 .folders { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
 .folder {
   --x: 0px; --y: 0px;
-  position: absolute; left: var(--l); top: var(--t); width: 16rem;
-  transform: translate(var(--x), var(--y)) rotate(var(--r));
+  position: absolute; left: var(--l); right: var(--rr, auto); top: var(--t); width: 16rem;
+  transform: translate(var(--x), var(--y));
   background: none; border: 0; padding: 0; text-align: left; cursor: grab;
   pointer-events: auto; touch-action: none; user-select: none;
   filter: drop-shadow(5px 5px 0 var(--sky));
 }
+.folder:hover, .folder:focus-visible { filter: drop-shadow(8px 8px 0 var(--sky)); }
 .folder.dragging { cursor: grabbing; filter: drop-shadow(10px 10px 0 var(--sky)); }
-.folder:hover, .folder:focus-visible, .folder.dragging { --r: 0deg; }
 .folder:focus-visible { outline-offset: 5px; }
 .folder-tab {
   display: inline-block; position: relative; top: 1.5px;
@@ -192,7 +192,7 @@ button { font: inherit; color: inherit; }
   .threads { display: none; }
   .commitments { position: static; transform: none; width: fit-content; margin: 1.5rem auto 0; }
   .folders { position: static; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(16rem, 100%), 1fr)); gap: 1.25rem; padding: 2rem 16px 0; }
-  .folder { position: relative; left: auto; top: auto; width: auto; transform: none; cursor: pointer; touch-action: auto; }
+  .folder { position: relative; left: auto; right: auto; top: auto; width: auto; transform: none; cursor: pointer; touch-action: auto; }
 }
 
 .hosts img { filter: brightness(0) invert(1); width: auto; }
