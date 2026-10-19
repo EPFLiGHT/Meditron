@@ -74,7 +74,7 @@ button { font: inherit; color: inherit; }
 :root[data-theme="dark"] .top-lab .logo-mono { display: block; }
 @media (max-width: 560px) { .top-lab img { height: 1.35rem; } .top-links { gap: 0.8rem; } .top-links a { font-size: 0.8rem; } .top-code { display: none; } }
 @media (max-width: 360px) { .top-lab img { height: 1.1rem; } .top-links { gap: 0.7rem; } }
-.top-links { display: flex; gap: 1.25rem; }
+.top-links { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0.4rem 1.25rem; }
 
 /* ---------- hero: globe, wordmark, folders ---------- */
 .hero {
@@ -89,11 +89,15 @@ button { font: inherit; color: inherit; }
 .hero-center { position: relative; z-index: 2; text-align: center; padding: 0 16px; pointer-events: none; }
 .hero-center a { pointer-events: auto; }
 .wordmark {
-  font-size: clamp(3.25rem, 14.5vw, 12.5rem); font-weight: 800; letter-spacing: -0.035em; line-height: 0.9;
+  /* the cube in front of the name, at about cap height */
+  display: flex; align-items: center; justify-content: center; gap: 0.12em;
+  font-size: clamp(3rem, 12.5vw, 11rem); font-weight: 800; letter-spacing: -0.035em; line-height: 0.9;
   color: var(--ink);
   /* paper-coloured halo keeps the letters legible on the dither */
   text-shadow: 0 0 0.04em var(--paper), 0 0 0.12em var(--paper);
 }
+.wordmark .cube { height: 0.8em; flex: none; filter: drop-shadow(0 0 0.02em var(--paper)) drop-shadow(0 0 0.06em var(--paper)); }
+.wordmark .cube img { height: 100%; width: auto; }
 .tagline {
   margin: 1.1rem auto 1.5rem; max-width: 26rem; font-size: var(--t-md); font-weight: 600; line-height: 1.35;
   background: var(--paper); padding: 0.35rem 0.8rem; border-radius: 6px; width: fit-content;
@@ -161,7 +165,7 @@ button { font: inherit; color: inherit; }
   .hero { display: block; place-items: normal; min-height: 0; padding: 4.5rem 0 2rem; }
   #globe { position: relative; left: auto; top: auto; transform: none; margin: 0 auto; width: min(92vw, 30rem); height: min(92vw, 30rem); }
   .hero-center { margin-top: calc(-1 * min(92vw, 30rem) / 2 - 3.5rem); }
-  .globe-key { position: static; justify-content: center; margin: 1.5rem 0 0; }
+  .globe-key { position: static; justify-content: center; margin: 3rem 0 0; }
   .folders { position: static; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(16rem, 100%), 1fr)); gap: 1.25rem; padding: 2rem 16px 0; }
   .folder { position: relative; left: auto; top: auto; width: auto; transform: none; cursor: pointer; touch-action: auto; }
 }
