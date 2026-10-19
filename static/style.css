@@ -202,8 +202,8 @@ button { font: inherit; color: inherit; }
    panel, outer pair raised a step so the row follows the curve of the globe. */
 @media (min-width: 1280px) {
   .hero {
-    --pw: 16rem; --g: 1.25rem; --step: 5rem;
-    --w: clamp(13rem, calc((100vw - var(--pw) - 4 * var(--g) - 3rem) / 4), 18rem);
+    --pw: 16rem; --g: clamp(1rem, calc(6vw - 3.5rem), 3.5rem); --step: 5rem;
+    --w: clamp(13rem, calc((100vw - var(--pw) - 4 * var(--g) - 2rem) / 4), 18rem);
     --bb0: max(3%, calc(100% - 100svh + 0.75rem));
   }
   .commitments { width: var(--pw); bottom: var(--bb0); }
