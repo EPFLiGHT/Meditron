@@ -30,7 +30,7 @@
     <a class="top-lab" href="https://www.light-laboratory.org/" target="_blank" rel="noopener"><img class="logo-color" src="static/img/light-logo-color.png" alt="LiGHT, EPFL"><img class="logo-mono" src="static/img/light-logo.png" alt=""></a>
     <nav class="top-links" aria-label="Project links">
       <a href="https://arxiv.org/abs/2605.16215" target="_blank" rel="noopener">Paper</a>
-      <a href="https://huggingface.co/collections/EPFLiGHT/meditronfo" target="_blank" rel="noopener">Models</a>
+      <a href="https://huggingface.co/collections/EPFLiGHT/meditronfo" target="_blank" rel="noopener">Download</a>
       <a class="top-code" href="https://github.com/EPFLiGHT/FullyOpenMeditron" target="_blank" rel="noopener">Code</a>
       <a href="#contact">Contact</a>
     </nav>
@@ -63,6 +63,7 @@
           <span class="folder-tab">Open</span>
           <span class="folder-body">
             <strong class="folder-title">Open down to the data</strong>
+            <span class="folder-desc"><span>All 533,888 training examples, Apache-2.0: public medical QA, questions built from 14,192 clinical guidelines and vignettes modelled on MOOVE, with generation prompts co-authored by four clinicians.</span></span>
             <img class="folder-fig" src="static/img/portal-hf.jpg" alt="The training data on Hugging Face: 534k rows, Apache-2.0" width="960" height="453">
             <span class="folder-cta">Get the data</span>
           </span>
@@ -71,6 +72,7 @@
           <span class="folder-tab">MOOVE</span>
           <span class="folder-body">
             <strong class="folder-title">Tested by clinicians</strong>
+            <span class="folder-desc"><span>A global, expert-led initiative: clinicians and humanitarian experts probe the models with tough questions from their own practice, then compare two anonymous answers and vote for the better one.</span></span>
             <img class="folder-fig fig-low" src="static/img/portal-moove.jpg" alt="The MOOVE platform, where clinicians write questions and judge the answers" width="960" height="453">
             <span class="folder-cta">Visit MOOVE</span>
           </span>
@@ -79,6 +81,7 @@
           <span class="folder-tab">Paper</span>
           <span class="folder-body">
             <strong class="folder-title">Read the paper</strong>
+            <span class="folder-desc"><span>Fully Open Meditron: an auditable pipeline for clinical LLMs. A clinician-vetted corpus, decontamination and training code, applied to five fully-open base models; every finetune is preferred over its base.</span></span>
             <img class="folder-fig" src="static/img/paper-fig1.jpg" alt="Figure 1 of the paper: the Meditron pipeline, from data and model to clinical evaluation" width="960" height="453">
             <span class="folder-cta">Read</span>
           </span>
@@ -87,8 +90,35 @@
           <span class="folder-tab">AutoMOOVE</span>
           <span class="folder-body">
             <strong class="folder-title">Judge like a clinician</strong>
+            <span class="folder-desc"><span>An LLM judge reads a MOOVE vignette and two answers and picks the better one, the way clinicians do, and agrees with blinded clinicians' votes. Try the clinicians' job yourself.</span></span>
             <img class="folder-fig" src="static/img/portal-game.jpg" alt="A round of the AutoMOOVE game: a clinician's question and two answers to compare" width="960" height="453">
             <span class="folder-cta">Play</span>
+          </span>
+        </button>
+        <!-- second row, below the fold: it peeks out under the outer cards and invites a scroll -->
+        <!-- TODO: replace the placeholder with the sign-up form, whose confirmation page gives the Slack invite -->
+        <button id="f-community" class="folder folder-portal" type="button" data-href="https://example.org/meditron-community-form">
+          <span class="folder-tab">Community</span>
+          <span class="folder-body">
+            <strong class="folder-title">Join the community</strong>
+            <span class="folder-desc"><span>Clinicians, researchers and engineers building open medical AI together. Fill in a short form and we send you an invite to our Slack.</span></span>
+            <span class="folder-cta">Join</span>
+          </span>
+        </button>
+        <button id="f-projects" class="folder folder-portal" type="button" data-href="https://epflight.github.io/MeditronFO/">
+          <span class="folder-tab">Projects</span>
+          <span class="folder-body">
+            <strong class="folder-title">Latest projects</strong>
+            <span class="folder-desc"><span>MeditronFO: the first medical AI where every step is open, from the data to the evaluation, and it still beats leading partially open systems.</span></span>
+            <span class="folder-cta">Read the blog</span>
+          </span>
+        </button>
+        <button id="f-team" class="folder folder-portal" type="button" data-open="team">
+          <span class="folder-tab">Team</span>
+          <span class="folder-body">
+            <strong class="folder-title">The team</strong>
+            <span class="folder-desc"><span>The people behind Meditron at LiGHT, EPFL's lab for AI in global health and humanitarian response.</span></span>
+            <span class="folder-cta">Meet the team</span>
           </span>
         </button>
       </div>
@@ -116,6 +146,7 @@
           <textarea id="chat-input" rows="2" placeholder="Ask Meditron a question"></textarea>
           <button type="submit" class="send" id="chat-send">Send</button>
         </form>
+        <p class="chat-disclaimer"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/></svg>Meditron can be wrong. It is a research model, not a doctor. Use with care.</p>
         <p class="chat-status" id="chat-status" role="status"></p>
       </div>
     </section>
@@ -142,7 +173,7 @@
     <section class="credits" id="contact" aria-label="Contact and credits">
       <div>
         <h2>Contact</h2>
-        <p>Questions about Meditron? Write to <a href="mailto:xavier.theimer-lienhard@epfl.ch?subject=Meditron">xavier.theimer-lienhard@epfl.ch</a>.</p>
+        <p>Questions about Meditron? Write to <a href="mailto:admin-light@epfl.ch?subject=Meditron">admin-light@epfl.ch</a>.</p>
       </div>
       <div>
         <h2>Credits</h2>
@@ -238,6 +269,38 @@
     </ol>
     <p class="note">Not perfect: AI reviewers still flag about 1 in 10 sampled rows. You can check them yourself.</p>
     <p class="links"><a href="https://huggingface.co/swiss-ai" target="_blank" rel="noopener">Apertus on Hugging Face</a><a href="https://huggingface.co/collections/EPFLiGHT/meditronfo" target="_blank" rel="noopener">Meditron models</a><a href="https://huggingface.co/datasets/EPFLiGHT/fully-open-meditron" target="_blank" rel="noopener">Browse the training data</a></p>
+  </template>
+
+  <template id="tpl-team" data-title="The team">
+    <h2>The team</h2>
+    <div class="people-cols">
+    <div>
+    <h3>Lead</h3>
+    <ul class="people">
+      <li><a href="https://xaviertheimerlienhard.com/" target="_blank" rel="noopener">Xavier Theimer-Lienhard</a><span>PhD Candidate</span></li>
+    </ul>
+    <h3>Directors</h3>
+    <ul class="people">
+      <li><a href="https://www.linkedin.com/in/anniehartley/" target="_blank" rel="noopener">Mary-Anne Hartley</a><span>Director</span></li>
+      <li><a href="https://www.linkedin.com/in/kristinakeitel/" target="_blank" rel="noopener">Kristina Keitel</a><span>Clinical Director</span></li>
+      <li><a href="https://www.linkedin.com/in/lars-henning-klein/" target="_blank" rel="noopener">Lars Klein</a><span>Academic Director</span></li>
+      <li><a href="https://sasudavid.github.io/dsasu/" target="_blank" rel="noopener">David Sasu</a><span>Technology Director</span></li>
+      <li><a href="https://www.linkedin.com/in/trevorbrokowski/" target="_blank" rel="noopener">Trevor Brokowski</a><span>Innovation Director</span></li>
+    </ul>
+    </div>
+    <div>
+    <h3>Team</h3>
+    <ul class="people">
+      <li><a href="https://people.epfl.ch/victor.cartier-negadi" target="_blank" rel="noopener">Victor Cartier-Negadi</a><span>EPFL</span></li>
+      <li><a href="https://people.epfl.ch/vadim.elguedj" target="_blank" rel="noopener">Vadim El Guedj</a><span>EPFL</span></li>
+      <li><span class="name">Mushtaha El-Amin</span><span>LiGHT</span></li>
+      <li><a href="https://people.epfl.ch/fay.elhassan" target="_blank" rel="noopener">Fay Elhassan</a><span>PhD Candidate</span></li>
+      <li><a href="https://people.epfl.ch/yusuf.kesmen" target="_blank" rel="noopener">Yusuf Kesmen</a><span>EPFL AI Center PhD Fellow</span></li>
+      <li><span class="name">Sahaj Vaidya</span><span>Visiting Researcher</span></li>
+    </ul>
+    </div>
+    </div>
+    <p class="links"><a href="https://www.light-laboratory.org/who-we-are" target="_blank" rel="noopener">Everyone at LiGHT</a></p>
   </template>
 
   <template id="tpl-moove" data-title="MOOVE, clinician testing">
