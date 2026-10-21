@@ -22,15 +22,24 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400..800&display=swap">
   <link rel="stylesheet" href="static/style.css">
+  <link rel="preload" href="static/data/land-110m.json" as="fetch" crossorigin>
 </head>
 <body>
   <a class="skip" href="#chat">Skip to the chat</a>
 
   <header class="top">
-    <a class="top-lab" href="https://www.light-laboratory.org/" target="_blank" rel="noopener"><img class="logo-color" src="static/img/light-logo-color.png" alt="LiGHT, EPFL"><img class="logo-mono" src="static/img/light-logo.png" alt=""></a>
+    <div class="top-brand">
+      <a class="top-lab" href="https://www.light-laboratory.org/" target="_blank" rel="noopener"><img class="logo-color" src="static/img/light-logo-color.png" alt="LiGHT"><img class="logo-mono" src="static/img/light-logo.png" alt=""></a>
+      <ul class="top-hosts" aria-label="LiGHT is hosted by">
+        <li><a href="https://www.epfl.ch/" target="_blank" rel="noopener"><img class="th-epfl" src="static/img/hosts/epfl.png" alt="EPFL"></a></li>
+        <li class="th-more"><a href="https://www.ariadnelabs.org/" target="_blank" rel="noopener"><img class="th-ariadne" src="static/img/hosts/ariadne.png" alt="Ariadne Labs, Harvard"></a></li>
+        <li class="th-more"><a href="https://www.ashoka.edu.in/" target="_blank" rel="noopener"><img class="th-ashoka" src="static/img/hosts/ashoka.png" alt="Ashoka University"></a></li>
+        <li class="th-more"><a href="https://c4ir.rw/" target="_blank" rel="noopener"><img class="th-c4ir" src="static/img/hosts/c4ir.png" alt="World Economic Forum, Rwanda Centre for the Fourth Industrial Revolution"></a></li>
+      </ul>
+    </div>
     <nav class="top-links" aria-label="Project links">
       <a href="https://arxiv.org/abs/2605.16215" target="_blank" rel="noopener">Paper</a>
-      <a href="https://huggingface.co/collections/EPFLiGHT/meditronfo" target="_blank" rel="noopener">Download</a>
+      <a class="top-download" href="https://huggingface.co/collections/EPFLiGHT/meditronfo" target="_blank" rel="noopener">Download</a>
       <a class="top-code" href="https://github.com/EPFLiGHT/FullyOpenMeditron" target="_blank" rel="noopener">Code</a>
       <a href="#contact">Contact</a>
     </nav>
@@ -42,7 +51,7 @@
 
       <div class="hero-center">
         <h1 class="wordmark"><span class="cube" aria-hidden="true"><img class="cube-light" src="static/img/cube.png" alt=""><img class="cube-dark" src="static/img/cube-dark.png" alt=""></span><span>Meditron</span></h1>
-        <p class="tagline">Fully Open Medical foundation models, now in your hands.</p>
+        <p class="tagline">An open research project from the LiGHT lab.</p>
         <a class="talk" href="#chat">Talk to Meditron</a>
       </div>
 
@@ -102,14 +111,16 @@
           <span class="folder-body">
             <strong class="folder-title">Join the community</strong>
             <span class="folder-desc"><span>Clinicians, researchers and engineers building open medical AI together. Fill in a short form and we send you an invite to our Slack.</span></span>
+            <img class="folder-fig" src="static/img/portal-community.jpg" alt="The globe with the places where clinicians have tested Meditron" width="960" height="453">
             <span class="folder-cta">Join</span>
           </span>
         </button>
-        <button id="f-projects" class="folder folder-portal" type="button" data-href="https://epflight.github.io/MeditronFO/">
+        <button id="f-projects" class="folder folder-portal" type="button" data-href="meditronfo/">
           <span class="folder-tab">Projects</span>
           <span class="folder-body">
             <strong class="folder-title">Latest projects</strong>
             <span class="folder-desc"><span>MeditronFO: the first medical AI where every step is open, from the data to the evaluation, and it still beats leading partially open systems.</span></span>
+            <img class="folder-fig" src="static/img/portal-projects.jpg" alt="The MeditronFO project page: the title over a globe rising at dawn" width="960" height="453">
             <span class="folder-cta">Read the blog</span>
           </span>
         </button>
@@ -118,6 +129,7 @@
           <span class="folder-body">
             <strong class="folder-title">The team</strong>
             <span class="folder-desc"><span>The people behind Meditron at LiGHT, EPFL's lab for AI in global health and humanitarian response.</span></span>
+            <img class="folder-fig" src="static/img/portal-team.jpg" alt="The team panel: the people behind Meditron and their roles" width="960" height="434">
             <span class="folder-cta">Meet the team</span>
           </span>
         </button>
@@ -135,6 +147,7 @@
       <div class="chat-wrap">
         <h2 id="chat-title">Talk to Meditron</h2>
         <p class="chat-intro">Ask a medical question. It is a research model, not a doctor: it can be wrong, and it knows nothing about you beyond what you type.</p>
+        <p class="chat-model" id="chat-model" hidden></p>
         <div class="chat-log" id="chat-log" aria-live="polite"></div>
         <div class="chat-suggest" id="chat-suggest">
           <button type="button">A 2-year-old has sunken eyes and drinks eagerly. How should a health post manage this?</button>
@@ -186,6 +199,7 @@
     <div class="foot-inner">
       <div class="foot-row">
         <a href="https://www.light-laboratory.org/" target="_blank" rel="noopener"><img class="foot-logo" src="static/img/light-logo.png" alt="LiGHT, Laboratory for intelligent Global Health and Humanitarian Response Technologies"></a>
+        <div class="foot-logos">
         <section class="hosts" aria-label="LiGHT is hosted by">
           <p class="hosts-label">Hosted by</p>
           <ul class="hosts-list">
@@ -195,6 +209,15 @@
             <li><a href="https://c4ir.rw/" target="_blank" rel="noopener"><img class="h-c4ir" src="static/img/hosts/c4ir.png" alt="World Economic Forum, Rwanda Centre for the Fourth Industrial Revolution"></a></li>
           </ul>
         </section>
+        <section class="hosts" aria-label="Built with the Swiss AI Initiative">
+          <p class="hosts-label">Swiss AI Initiative</p>
+          <ul class="hosts-list">
+            <li><a href="https://ai.epfl.ch/" target="_blank" rel="noopener"><img class="h-epfl-ai" src="static/img/hosts/epfl-ai-center.png" alt="EPFL AI Center"></a></li>
+            <li><a href="https://ai.ethz.ch/" target="_blank" rel="noopener"><img class="h-eth-ai" src="static/img/hosts/eth-ai-center.png" alt="ETH AI Center"></a></li>
+            <li><a href="https://www.cscs.ch/" target="_blank" rel="noopener"><img class="h-cscs" src="static/img/hosts/cscs.svg" alt="CSCS, Swiss National Supercomputing Centre"></a></li>
+          </ul>
+        </section>
+        </div>
         <nav class="foot-links" aria-label="Links">
           <a href="https://arxiv.org/abs/2605.16215" target="_blank" rel="noopener">Paper</a>
           <a href="https://huggingface.co/collections/EPFLiGHT/meditronfo" target="_blank" rel="noopener">Models</a>

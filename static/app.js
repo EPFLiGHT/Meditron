@@ -32,63 +32,77 @@ const SITES = [
 (function globe() {
   const canvas = document.getElementById('globe');
   const ctx = canvas.getContext('2d');
-  const mask = document.createElement('canvas');
-  const mctx = mask.getContext('2d', { willReadFrequently: true });
-  let land = null, size = 0, noise = null, out = null, ink = [12, 67, 160], marker = '#e08a12';
+  // the globe all sea and all land, drawn once per size; a frame lays the land layer over the sea one, clipped to the coasts
+  const seaLayer = document.createElement('canvas'), landLayer = document.createElement('canvas');
+  let land = null, size = 0, ink = [12, 67, 160], marker = '#efcd5f';
   let lon = -25, last = 0, visible = true, hovered = null, shown = [];
 
+  // the MeditronFO page's globe: a navy night side, light blue land and a warm limb
+  const NIGHT = [13, 29, 64], LAND = [104, 175, 231], RIM = [255, 222, 172], LIMB = [255, 240, 210];
+
   const projection = d3.geoOrthographic().clipAngle(90).precision(0.5);
-  const path = d3.geoPath(projection, mctx);
+  const path = d3.geoPath(projection, ctx);
 
   function hexToRgb(h) {
     const n = parseInt(h.replace('#', ''), 16);
     return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
   }
-  function readColors() { ink = hexToRgb(css('--globe-ink') || '#0c43a0'); marker = css('--marker') || '#e08a12'; }
+  function readColors() {
+    ink = hexToRgb(css('--globe-ink') || '#0c43a0');
+    marker = css('--marker') || '#efcd5f';
+  }
 
   function resize() {
     const cssSize = canvas.getBoundingClientRect().width;
-    // one buffer pixel per CSS pixel: fine stipple at any density
-    const s = Math.max(160, Math.min(760, Math.round(cssSize)));
+    // 1.5 to 2 buffer pixels per CSS pixel, smoothed down by the browser: a fine, soft stipple
+    const k = Math.min(2, Math.max(1.5, devicePixelRatio || 1));
+    const s = Math.max(240, Math.min(1200, Math.round(cssSize * k)));
     if (s === size) return;
     size = s;
-    canvas.width = canvas.height = mask.width = mask.height = size;
+    canvas.width = canvas.height = seaLayer.width = seaLayer.height = landLayer.width = landLayer.height = size;
     projection.scale(size / 2 - 1).translate([size / 2, size / 2]);
-    noise = new Float32Array(size * size);
+    // light, limb and dither don't move as the globe turns, only the land does: each pixel's colour as sea and as
+    // land is worked out once here (little-endian RGBA words) into the two layers
+    const noise = new Float32Array(size * size);
     for (let i = 0; i < noise.length; i++) noise[i] = Math.random();
-    out = ctx.createImageData(size, size);
+    const word = (col) => (255 << 24 | col[2] << 16 | col[1] << 8 | col[0]) >>> 0;
+    const nightW = word(NIGHT), landW = word(LAND), rimW = word(RIM), limbW = word(LIMB);
+    const sea = new ImageData(size, size), landImg = new ImageData(size, size);
+    const seaPx = new Uint32Array(sea.data.buffer), landPx = new Uint32Array(landImg.data.buffer);
+    const c = size / 2, R = size / 2 - 1;
+    for (let y = 0; y < size; y++) {
+      const dy = (y + 0.5 - c) / R;
+      for (let x = 0; x < size; x++) {
+        const i = y * size + x, dx = (x + 0.5 - c) / R, r2 = dx * dx + dy * dy;
+        if (r2 > 1) continue;   // outside the disk: transparent
+        const shade = Math.max(0, -0.42 * dx - 0.5 * dy + 0.76 * Math.sqrt(1 - r2));   // light from the upper left
+        // navy, light blue land dots, a few warm dots just inside a crisp limb
+        const rim = Math.max(0, (r2 - 0.92) / 0.068), n2 = noise[(i * 7919) % noise.length];
+        const edge = r2 > 0.988 ? limbW : n2 < 0.3 * rim * rim ? rimW : 0;
+        seaPx[i] = edge || nightW;
+        landPx[i] = edge || (noise[i] < 0.22 + 0.3 * shade ? landW : nightW);
+      }
+    }
+    seaLayer.getContext('2d').putImageData(sea, 0, 0);
+    landLayer.getContext('2d').putImageData(landImg, 0, 0);
   }
 
   function draw() {
     projection.rotate([lon, -12]);
-    mctx.clearRect(0, 0, size, size);
-    if (land) { mctx.beginPath(); path(land); mctx.fillStyle = '#000'; mctx.fill(); }
-    const m = mctx.getImageData(0, 0, size, size).data;
-    const o = out.data, c = size / 2, R = size / 2 - 1;
-    for (let y = 0; y < size; y++) {
-      const dy = (y + 0.5 - c) / R;
-      for (let x = 0; x < size; x++) {
-        const i = y * size + x, p = i * 4;
-        const dx = (x + 0.5 - c) / R, r2 = dx * dx + dy * dy;
-        if (r2 > 1) { o[p + 3] = 0; continue; }
-        const nz = Math.sqrt(1 - r2);
-        const shade = Math.max(0, -0.42 * dx - 0.5 * dy + 0.76 * nz);   // light from the upper left
-        let v = m[p + 3] > 100 ? 0.3 + 0.7 * shade : 0.015 + 0.09 * shade * shade;
-        if (r2 > 0.988) v = 0.85;                                          // crisp limb
-        const on = v > noise[i];
-        o[p] = ink[0]; o[p + 1] = ink[1]; o[p + 2] = ink[2]; o[p + 3] = on ? 255 : 0;
-      }
-    }
-    ctx.putImageData(out, 0, 0);
-    // event sites on the near side, as solid squares so they sit in the dither's pixel grid
-    const center = [-lon, 12], d = Math.max(3, Math.round(size / 95));
-    ctx.fillStyle = marker;
+    ctx.clearRect(0, 0, size, size);
+    ctx.drawImage(seaLayer, 0, 0);
+    if (land) { ctx.save(); ctx.beginPath(); path(land); ctx.clip(); ctx.drawImage(landLayer, 0, 0); ctx.restore(); }
+    // event sites on the near side, as solid squares so they sit in the dither's pixel grid;
+    // a globe-ink rim sets the yellow off from the light blue land
+    const center = [-lon, 12], d = Math.max(3, Math.round(size / 95)), b = Math.max(1, Math.round(size / 500));
     shown = [];
     for (const s of SITES) {
       if (d3.geoDistance(s.at, center) > Math.PI / 2 - 0.08) continue;
       const [px, py] = projection(s.at);
       const k = s === hovered ? 2 * d : d;
-      ctx.fillRect(Math.round(px - k / 2), Math.round(py - k / 2), k, k);
+      const x0 = Math.round(px - k / 2), y0 = Math.round(py - k / 2);
+      ctx.fillStyle = `rgb(${ink})`; ctx.fillRect(x0 - b, y0 - b, k + 2 * b, k + 2 * b);
+      ctx.fillStyle = marker; ctx.fillRect(x0, y0, k, k);
       shown.push({ s, px, py });
     }
     if (hovered) placeTip();
@@ -131,13 +145,16 @@ const SITES = [
   canvas.addEventListener('pointerleave', () => hover(null));
 
   function frame(t) {
-    if (visible && !document.hidden && t - last > 40) {
-      lon += (t - last > 200 ? 0 : (t - last) * 0.006);
+    if (visible && !document.hidden && t - last > 50 && !document.querySelector('dialog[open]')) {
+      lon += (t - last > 200 ? 0 : (t - last) * 0.0042);
       last = t; draw();
     } else if (t - last > 200) last = t;
     requestAnimationFrame(frame);
   }
 
+  // hidden until the continents are in (or the map is slow or missing), then faded in: no empty sphere first
+  const reveal = () => canvas.classList.remove('pending');
+  canvas.classList.add('pending'); setTimeout(reveal, 1500);
   readColors(); resize(); draw();
   addEventListener('resize', () => { resize(); draw(); });
   matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { readColors(); draw(); });
@@ -145,8 +162,8 @@ const SITES = [
 
   fetch('static/data/land-110m.json')
     .then((r) => r.json())
-    .then((topo) => { land = topojson.feature(topo, topo.objects.land); draw(); })
-    .catch(() => { /* plain dithered sphere if the map can't load */ });
+    .then((topo) => { land = topojson.feature(topo, topo.objects.land); draw(); reveal(); })
+    .catch(() => reveal());   // plain dithered sphere if the map can't load
 
   if (!reduceMotion) requestAnimationFrame(frame);
 })();
@@ -181,8 +198,10 @@ const SITES = [
     // click also fires for Enter/Space; a drag that just ended is not a click
     el.addEventListener('click', () => {
       if (moved) { moved = false; return; }
-      // portal folders with a data-href leave the site; the others open a panel
-      if (el.dataset.href) window.open(el.dataset.href, '_blank', 'noopener');
+      // portal folders with a data-href leave the site (a relative one, a page of this site, opens in place);
+      // the others open a panel
+      if (el.dataset.href && !el.dataset.href.includes('://')) location.href = el.dataset.href;
+      else if (el.dataset.href) window.open(el.dataset.href, '_blank', 'noopener');
       else location.hash = el.dataset.open;
     });
   });
@@ -456,8 +475,20 @@ async function startGame(root) {
     suggest.querySelectorAll('button').forEach((b) => { b.disabled = !on; });
     status.textContent = on ? '' : 'The chat is not connected yet. It opens when the Meditron server goes public.';
   }
+  // The model the relay serves, from its health check, so the label follows the server when the model changes.
+  const modelLine = document.getElementById('chat-model');
+  function showModel(id) {
+    if (!id) return;
+    const name = id.split('/').pop(), base = name.replace(/-MeditronFO$/, '');
+    const link = document.createElement('a');
+    link.href = `https://huggingface.co/${id}`; link.target = '_blank'; link.rel = 'noopener'; link.textContent = name;
+    modelLine.replaceChildren('Model: ', link,
+      base !== name ? ` · ${base} fine-tuned on the open MeditronFO medical data` : '');
+    modelLine.hidden = false;
+  }
   setOnline(false);
-  fetch(CHAT.endpoint).then((r) => r.ok && r.json()).then((d) => setOnline(Boolean(d && d.ok))).catch(() => {});
+  fetch(CHAT.endpoint).then((r) => r.ok && r.json())
+    .then((d) => { setOnline(Boolean(d && d.ok)); if (d && d.ok) showModel(d.model); }).catch(() => {});
 
   // Meditron's answers carry the cube, as chat apps put the assistant's logo beside its messages.
   const CUBE = '<span class="cube chat-cube" aria-hidden="true"><img class="cube-light" src="static/img/cube.png" alt=""><img class="cube-dark" src="static/img/cube-dark.png" alt=""></span>';

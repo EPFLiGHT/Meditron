@@ -15,7 +15,7 @@
   --green: #2f6b2f;
   --grey-bar: #b9c1cb;
   --globe-ink: #0c43a0;
-  --marker: #e08a12;
+  --marker: #efcd5f;        /* the Meditron cube's yellow */
 
   --font: 'Manrope', system-ui, sans-serif;
   --t-sm: 0.875rem;
@@ -29,13 +29,13 @@
   :root:not([data-theme="light"]) {
     --paper: #0d1724; --ink: #e6ebf2; --muted: #9aa7b8; --rule: #2a3a4f;
     --blue: #7fa6ec; --blue-wash: #16243a; --sky: #68afe7; --sky-wash: #19324f; --folder: #13233a; --band: #0a2a63;
-    --red: #e0708f; --green: #7cc27c; --grey-bar: #4a596c; --globe-ink: #6f98e6; --marker: #f0b45e;
+    --red: #e0708f; --green: #7cc27c; --grey-bar: #4a596c; --globe-ink: #6f98e6; --marker: #efcd5f;
   }
 }
 :root[data-theme="dark"] {
   --paper: #0d1724; --ink: #e6ebf2; --muted: #9aa7b8; --rule: #2a3a4f;
   --blue: #7fa6ec; --blue-wash: #16243a; --sky: #68afe7; --sky-wash: #19324f; --folder: #13233a; --band: #0a2a63;
-  --red: #e0708f; --green: #7cc27c; --grey-bar: #4a596c; --globe-ink: #6f98e6; --marker: #f0b45e;
+  --red: #e0708f; --green: #7cc27c; --grey-bar: #4a596c; --globe-ink: #6f98e6; --marker: #efcd5f;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -65,15 +65,26 @@ button { font: inherit; color: inherit; }
 .top a { color: var(--muted); text-decoration: none; }
 .top a:hover { color: var(--blue); }
 .top-links a:hover { text-decoration: underline; text-decoration-thickness: 1.5px; }
+.top-brand { display: flex; align-items: center; gap: 1rem; }
 .top-lab img { height: 1.9rem; width: auto; }
+/* LiGHT's four hosts, one ink like the footer's white logos; only EPFL where the line is short */
+.top-hosts { list-style: none; margin: 0; padding: 0 0 0 1rem; border-left: 1px solid var(--rule); display: flex; align-items: center; gap: 1.1rem; }
+.top-hosts img { display: block; width: auto; filter: brightness(0); opacity: 0.85; }
+.top-hosts a:hover img { opacity: 1; }
+.th-epfl { height: 1.05rem; } .th-ariadne { height: 1.8rem; } .th-ashoka { height: 1.8rem; } .th-c4ir { height: 2rem; }
+@media (max-width: 1149px) { .top-hosts .th-more { display: none; } }
 .top-lab .logo-mono { display: none; filter: invert(1); }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .top-lab .logo-color { display: none; }
   :root:not([data-theme="light"]) .top-lab .logo-mono { display: block; }
+  :root:not([data-theme="light"]) .top-hosts img { filter: brightness(0) invert(1); }
 }
 :root[data-theme="dark"] .top-lab .logo-color { display: none; }
 :root[data-theme="dark"] .top-lab .logo-mono { display: block; }
-@media (max-width: 560px) { .top-lab img { height: 1.35rem; } .top-links { gap: 0.8rem; } .top-links a { font-size: 0.8rem; } .top-code { display: none; } }
+:root[data-theme="dark"] .top-hosts img { filter: brightness(0) invert(1); }
+@media (max-width: 560px) { .top { padding-inline: 16px; } .top-brand { gap: 0.5rem; } .top-hosts { padding-left: 0.5rem; } .th-epfl { height: 0.72rem; } .top-lab img { height: 1.2rem; } .top-links { gap: 0.8rem; } .top-links a { font-size: 0.8rem; } .top-code { display: none; } }
+/* phones: the downloads stay one tap away, in the folders and the footer */
+@media (max-width: 420px) { .top-download { display: none; } }
 @media (max-width: 360px) { .top-lab img { height: 1.1rem; } .top-links { gap: 0.7rem; } }
 .top-links { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0.4rem 1.25rem; }
 
@@ -89,36 +100,42 @@ button { font: inherit; color: inherit; }
 #globe {
   position: absolute; left: 50%; top: calc(var(--hs) / 2); transform: translate(-50%, -50%);
   width: min(86vmin, 46rem); height: min(86vmin, 46rem);
-  image-rendering: pixelated;
+  transition: opacity 0.6s ease;
 }
+#globe.pending { opacity: 0; }
 .hero-center { position: relative; z-index: 3; text-align: center; padding: 0 16px; pointer-events: none; }
 .hero-center a { pointer-events: auto; }
 .wordmark {
   /* the cube in front of the name, at about cap height */
   display: flex; align-items: center; justify-content: center; gap: 0.12em;
   font-size: clamp(3rem, min(12.5vw, 18vh), 11rem); font-weight: 800; letter-spacing: -0.035em; line-height: 0.9;
-  color: var(--ink);
-  /* paper-coloured halo keeps the letters legible on the dither */
-  text-shadow: 0 0 0.04em var(--paper), 0 0 0.12em var(--paper);
+  /* ivory letters on the navy globe, as on the MeditronFO page; a navy halo where they leave the globe */
+  color: #fbf7ef;
+  text-shadow: 0 0 0.06em #0d1d40, 0 0 0.18em rgb(13 29 64 / 0.6);
 }
-.wordmark .cube { height: 0.8em; flex: none; filter: drop-shadow(0 0 0.02em var(--paper)) drop-shadow(0 0 0.06em var(--paper)); }
+.wordmark .cube { height: 0.8em; flex: none; filter: drop-shadow(0 0 0.03em #0d1d40) drop-shadow(0 0 0.09em rgb(13 29 64 / 0.6)); }
 .wordmark .cube img { height: 100%; width: auto; }
 .tagline {
-  margin: 1.1rem auto 1.5rem; max-width: 26rem; font-size: var(--t-md); font-weight: 600; line-height: 1.35;
-  background: var(--paper); padding: 0.35rem 0.8rem; border-radius: 6px; width: fit-content;
+  margin: 1.1rem auto 1.5rem; max-width: 34rem; font-size: var(--t-md); font-weight: 600; line-height: 1.35;
+  padding: 0.35rem 0.8rem; width: fit-content;
+  color: #fbf7ef; text-shadow: 0 0 4px #0d1d40, 0 0 12px #0d1d40;
 }
 .talk {
   display: inline-block; padding: 0.8rem 1.4rem; border-radius: 999px;
   background: var(--blue); color: var(--paper); text-decoration: none; font-weight: 800; font-size: 1.05rem;
 }
 .talk:hover { background: var(--ink); }
+/* on the navy globe: an ivory button */
+.hero .talk { background: #fbf7ef; color: #0d1d40; }
+.hero .talk:hover { background: #ffdcaa; }
+.hero .talk:focus-visible { outline-color: #fbf7ef; }
 .globe-key {
   /* the bottom corners hold the second row of folders, so the key captions the globe from above */
   position: absolute; left: 50%; top: 4.5rem; transform: translateX(-50%); white-space: nowrap;
   background: var(--paper); padding: 0.2rem 0.6rem; border-radius: 6px; z-index: 2; margin: 0;
   font-size: var(--t-sm); color: var(--muted); display: flex; align-items: center; gap: 0.5rem;
 }
-.globe-key .dot { width: 0.6rem; height: 0.6rem; background: var(--marker); }
+.globe-key .dot { width: 0.6rem; height: 0.6rem; background: var(--marker); outline: 1.5px solid var(--globe-ink); }
 
 /* the three commitments sit under the call to action; hovering one brings out its folders (app.js) */
 /* hovering or focusing a commitment brings out the folders it is linked to and fades the rest */
@@ -166,7 +183,7 @@ button { font: inherit; color: inherit; }
 .folder:focus-visible { outline-offset: 5px; }
 .folder-tab {
   display: inline-block; position: relative; top: 1.5px;
-  padding: 0.3rem 0.9rem 0.25rem; font-size: var(--t-sm); font-weight: 700;
+  padding: 0.2rem 0.8rem 0.15rem; font-size: 1.35rem; font-weight: 700;
   background: var(--blue); color: var(--paper); border: 1.5px solid var(--blue); border-bottom: 0;
 }
 .folder-body {
@@ -198,6 +215,7 @@ button { font: inherit; color: inherit; }
 @media (min-width: 901px) and (max-height: 940px) {
   .folder-portal { width: 14.5rem; }
   .folder-portal .folder-title { font-size: 1.1rem; margin-bottom: 0.35rem; }
+  .folder-portal .folder-tab { font-size: 1.1rem; }
   .folder-portal .folder-fig { aspect-ratio: 960 / 330; object-fit: cover; object-position: top; }
   .folder-portal .fig-low { object-position: 50% 90%; }
   .folder-portal .folder-cta { margin-top: 0.5rem; font-size: 0.85rem; }
@@ -249,6 +267,9 @@ button { font: inherit; color: inherit; }
 
 /* Small screens: the folders become a plain stack under the globe. */
 @media (max-width: 900px) {
+  .hero .talk { background: var(--blue); color: var(--paper); }
+  .hero .talk:hover { background: var(--ink); }
+  .hero .talk:focus-visible { outline-color: var(--blue); }
   .hero { display: block; place-items: normal; min-height: 0; padding: 4.5rem 0 2rem; }
   #globe { position: relative; left: auto; top: auto; transform: none; margin: 0 auto; width: min(92vw, 30rem); height: min(92vw, 30rem); }
   .hero-center { margin-top: calc(-1 * min(92vw, 30rem) / 2 - 3.5rem); }
@@ -267,6 +288,9 @@ button { font: inherit; color: inherit; }
   display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 2.25rem;
 }
 .h-epfl { height: 0.95rem; } .h-ariadne { height: 1.6rem; } .h-ashoka { height: 1.6rem; } .h-c4ir { height: 1.75rem; }
+.h-epfl-ai { height: 1.75rem; } .h-eth-ai { height: 1.9rem; } .h-cscs { height: 1.5rem; }
+.foot-logos { display: grid; grid-template-columns: auto auto; align-items: center; gap: 1.1rem 1.25rem; }
+.foot-logos .hosts { display: contents; }
 
 .site-tip {
   position: absolute; z-index: 4; pointer-events: none;
@@ -335,6 +359,8 @@ button { font: inherit; color: inherit; }
 .chat-disclaimer { display: flex; align-items: center; gap: 0.35rem; font-size: 0.8rem; color: var(--muted); margin-top: 0.5rem; }
 .chat-disclaimer svg { flex: none; }
 .chat-status { font-size: var(--t-sm); color: var(--muted); margin-top: 0.6rem; min-height: 1.4em; }
+.chat-model { font-size: var(--t-sm); color: var(--muted); margin: 0.4rem 0 0.8rem; }
+.chat-model a { font-weight: 700; }
 /* like a figure, the conversation runs wider than the text column above it */
 .chat-log, .chat-suggest, .chat-form, .chat-disclaimer, .chat-status {
   width: min(56rem, calc(100vw - 32px)); margin-left: calc(50% - min(28rem, 50vw - 16px));
@@ -381,10 +407,12 @@ button { font: inherit; color: inherit; }
 @media (min-width: 1100px) {
   .foot-row { display: grid; grid-template-columns: auto 1fr auto; }
   .hosts { justify-content: center; }
+  .foot-logos { justify-content: center; }
 }
 @media (max-width: 640px) {
   .foot { padding-inline: 16px; }
   .hosts-label { display: none; }  /* the section keeps it as its aria-label */
+  .foot-logos { grid-template-columns: auto; }
   .hosts-list { flex-wrap: nowrap; gap: 1rem; }
   .foot-row { gap: 1.1rem; }
 }
