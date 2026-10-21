@@ -21,7 +21,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400..800&display=swap">
-  <link rel="stylesheet" href="static/style.css?v=20261021b">
+  <link rel="stylesheet" href="static/style.css?v=20261021c">
   <link rel="preload" href="static/data/land-110m.json" as="fetch" crossorigin>
 </head>
 <body>
@@ -61,7 +61,7 @@
       <div class="commitments">
         <p class="commitments-title" id="commitments-title">The three commitments</p>
         <ul aria-labelledby="commitments-title">
-          <li data-to="f-open f-paper" tabindex="0"><span>Openness</span></li>
+          <li data-to="f-open f-models f-apertus f-paper" tabindex="0"><span>Openness</span></li>
           <li data-to="f-paper f-automoove" tabindex="0"><span>Clinical grounding</span></li>
           <li data-to="f-moove" tabindex="0"><span>Real-world evaluation</span></li>
         </ul>
@@ -69,12 +69,12 @@
 
       <div class="folders" aria-label="The parts of Meditron">
         <button id="f-open" class="folder folder-portal" type="button" data-href="https://huggingface.co/datasets/EPFLiGHT/fully-open-meditron">
-          <span class="folder-tab">Open</span>
+          <span class="folder-tab">Open data</span>
           <span class="folder-body">
             <strong class="folder-title">Open down to the data</strong>
-            <span class="folder-desc"><span>All 533,888 training examples, Apache-2.0: public medical QA, questions built from 14,192 clinical guidelines and vignettes modelled on MOOVE, with generation prompts co-authored by four clinicians.</span></span>
-            <img class="folder-fig" src="static/img/portal-hf.jpg" alt="The training data on Hugging Face: 534k rows, Apache-2.0" width="960" height="453">
-            <span class="folder-cta">Get the data</span>
+            <span class="folder-desc"><span>All 533,888 training examples, under open licences listed per source: public medical QA, questions built from 14,192 clinical guidelines and vignettes modelled on MOOVE, with generation prompts co-authored by four clinicians.</span></span>
+            <img class="folder-fig" src="static/img/portal-hf.jpg" alt="The training data on Hugging Face: 534k rows" width="960" height="453">
+            <span class="folder-cta">Browse the data on HF</span>
           </span>
         </button>
         <button id="f-moove" class="folder folder-portal" type="button" data-href="https://jointhemoove.org/">
@@ -119,7 +119,7 @@
           <span class="folder-tab">Projects</span>
           <span class="folder-body">
             <strong class="folder-title">Latest projects</strong>
-            <span class="folder-desc"><span>MeditronFO: the first medical AI where every step is open, from the data to the evaluation, and it still beats leading partially open systems.</span></span>
+            <span class="folder-desc"><span>MeditronFO: the first medical AI where every step is open, from the data to the evaluation.</span></span>
             <img class="folder-fig" src="static/img/portal-projects.jpg" alt="The MeditronFO project page: the title over a globe rising at dawn" width="960" height="453">
             <span class="folder-cta">Read the blog</span>
           </span>
@@ -131,6 +131,24 @@
             <span class="folder-desc"><span>The people behind Meditron at LiGHT, EPFL's lab for AI in global health and humanitarian response.</span></span>
             <img class="folder-fig" src="static/img/portal-team.jpg" alt="The team panel: the people behind Meditron and their roles" width="960" height="434">
             <span class="folder-cta">Meet the team</span>
+          </span>
+        </button>
+        <button id="f-models" class="folder folder-portal" type="button" data-href="https://huggingface.co/collections/EPFLiGHT/meditronfo">
+          <span class="folder-tab">Models</span>
+          <span class="folder-body">
+            <strong class="folder-title">Download the models</strong>
+            <span class="folder-desc"><span>Six MeditronFO models on Hugging Face, from 8B to 70B: Apertus, OLMo-2, EuroLLM and Gemma-3, each finetuned on our open corpus.</span></span>
+            <img class="folder-fig" src="static/img/portal-models.jpg" alt="The MeditronFO collection on Hugging Face" width="960" height="453">
+            <span class="folder-cta">Download</span>
+          </span>
+        </button>
+        <button id="f-apertus" class="folder folder-portal" type="button" data-href="https://www.apertus-ai.org/">
+          <span class="folder-tab">Apertus</span>
+          <span class="folder-body">
+            <strong class="folder-title">Our friends at Apertus</strong>
+            <span class="folder-desc"><span>Meditron is built on Apertus, the fully open language model from EPFL, ETH Zurich and CSCS: open weights, open data, open training code.</span></span>
+            <img class="folder-fig" src="static/img/portal-apertus.jpg" alt="The Apertus home page: open weights, open data, open science" width="960" height="453">
+            <span class="folder-cta">Visit Apertus</span>
           </span>
         </button>
       </div>
@@ -161,6 +179,22 @@
         </form>
         <p class="chat-disclaimer"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/></svg>Meditron can be wrong. It is a research model, not a doctor. Use with care.</p>
         <p class="chat-status" id="chat-status" role="status"></p>
+      </div>
+    </section>
+
+    <section id="meditronfo" class="feature-section" aria-labelledby="meditronfo-title">
+      <div class="feature-wrap">
+        <h2 id="meditronfo-title">Meet our latest project</h2>
+        <p>The first medical AI where every step is open, from the data to the evaluation.</p>
+        <a class="feature-thumb" href="meditronfo/"><img src="static/img/meditronfo-thumb.jpg" alt="The MeditronFO project page: the title over a globe rising at dawn" width="1920" height="906" loading="lazy"></a>
+      </div>
+    </section>
+
+    <section id="download" class="feature-section" aria-labelledby="download-title">
+      <div class="feature-wrap">
+        <h2 id="download-title">Download Meditron</h2>
+        <p>Six MeditronFO models on Hugging Face, from 8B to 70B: Apertus, OLMo-2, EuroLLM and Gemma-3, each finetuned on our open corpus.</p>
+        <a class="feature-thumb" href="https://huggingface.co/collections/EPFLiGHT/meditronfo" target="_blank" rel="noopener"><img src="static/img/portal-models.jpg" alt="The MeditronFO collection on Hugging Face" width="960" height="453" loading="lazy"></a>
       </div>
     </section>
 
@@ -253,7 +287,7 @@
         <thead><tr><th>Model</th><th>Open base model</th><th>Open medical data</th><th>Open data pipeline</th><th>Open training code</th></tr></thead>
         <tbody>
           <tr><td>MedGemma-27B (Google)</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td></tr>
-          <tr><td>Meditron-70B (2023)</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td></tr>
+          <tr><td>Meditron-70B (2023)</td><td class="no">No</td><td>Partial</td><td>Partial</td><td>Partial</td></tr>
           <tr class="ours"><td>Meditron on Apertus</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
         </tbody>
       </table>
@@ -295,20 +329,19 @@
   </template>
 
   <template id="tpl-team" data-title="The team">
-    <h2>The team</h2>
     <div class="people-cols">
     <div>
     <h3>Lead</h3>
     <ul class="people">
-      <li><a href="https://xaviertheimerlienhard.com/" target="_blank" rel="noopener">Xavier Theimer-Lienhard</a><span>PhD Student</span></li>
+      <li><a href="https://xaviertheimerlienhard.com/" target="_blank" rel="noopener">Xavier Theimer-Lienhard</a><span>PhD Student · EPFL</span></li>
     </ul>
     <h3>Directors</h3>
     <ul class="people">
-      <li><a href="https://www.linkedin.com/in/anniehartley/" target="_blank" rel="noopener">Mary-Anne Hartley</a><span>Director</span></li>
-      <li><a href="https://www.linkedin.com/in/kristinakeitel/" target="_blank" rel="noopener">Kristina Keitel</a><span>Clinical Director</span></li>
-      <li><a href="https://www.linkedin.com/in/lars-henning-klein/" target="_blank" rel="noopener">Lars Klein</a><span>Academic Director</span></li>
-      <li><a href="https://sasudavid.github.io/dsasu/" target="_blank" rel="noopener">David Sasu</a><span>Technology Director</span></li>
-      <li><a href="https://www.linkedin.com/in/trevorbrokowski/" target="_blank" rel="noopener">Trevor Brokowski</a><span>Innovation Director</span></li>
+      <li><a href="https://www.linkedin.com/in/anniehartley/" target="_blank" rel="noopener">Mary-Anne Hartley, MD</a><span>Director · EPFL</span></li>
+      <li><a href="https://www.linkedin.com/in/kristinakeitel/" target="_blank" rel="noopener">Kristina Keitel, MD</a><span>Clinical Director · EPFL</span></li>
+      <li><a href="https://www.linkedin.com/in/lars-henning-klein/" target="_blank" rel="noopener">Lars Klein</a><span>Academic Director · EPFL</span></li>
+      <li><a href="https://sasudavid.github.io/dsasu/" target="_blank" rel="noopener">David Sasu</a><span>Technology Director · EPFL</span></li>
+      <li><a href="https://www.linkedin.com/in/trevorbrokowski/" target="_blank" rel="noopener">Trevor Brokowski</a><span>Innovation Director · Ariadne Labs</span></li>
     </ul>
     </div>
     <div>
@@ -316,9 +349,15 @@
     <ul class="people">
       <li><a href="https://people.epfl.ch/vadim.elguedj" target="_blank" rel="noopener">Vadim El Guedj</a><span>EPFL</span></li>
       <li><span class="name">Mushtaha El-Amin</span><span>Visiting Researcher</span></li>
-      <li><a href="https://people.epfl.ch/fay.elhassan" target="_blank" rel="noopener">Fay Elhassan</a><span>PhD Student</span></li>
-      <li><a href="https://people.epfl.ch/yusuf.kesmen" target="_blank" rel="noopener">Yusuf Kesmen</a><span>EPFL AI Center PhD Fellow</span></li>
-      <li><span class="name">Sahaj Vaidya</span><span>Visiting Researcher</span></li>
+      <li><a href="https://people.epfl.ch/fay.elhassan" target="_blank" rel="noopener">Fay Elhassan</a><span>PhD Student · EPFL</span></li>
+      <li><a href="https://people.epfl.ch/yusuf.kesmen" target="_blank" rel="noopener">Yusuf Kesmen</a><span>PhD Fellow · EPFL AI Center</span></li>
+      <li><span class="name">Sahaj Vaidya</span><span>Visiting Researcher · Ashoka University</span></li>
+    </ul>
+    <h3>Clinical advisors</h3>
+    <ul class="people">
+      <li><span class="name">Veronique Suttels, MD</span><span>EPFL</span></li>
+      <li><span class="name">Evelyne Knüsel, MD</span><span>EPFL</span></li>
+      <li><span class="name">Carl Starvaggi, MD</span><span>EPFL</span></li>
     </ul>
     </div>
     </div>
@@ -326,10 +365,10 @@
 
   <template id="tpl-moove" data-title="MOOVE, clinician testing">
     <h2>MOOVE</h2>
-    <p class="lead">Benchmarks made of exam questions miss what clinicians actually ask. On the MOOVE platform, clinicians write the questions they face in their own practice, then read two anonymous answers side by side and vote for the better one.</p>
+    <p class="lead">Benchmarks made of exam questions miss what clinicians actually ask. On the MOOVE platform, questions are collected from clinicians' own practice; clinicians then read two anonymous answers side by side and vote for the better one.</p>
     <dl class="stats">
       <div><dt>Events</dt><dd>18</dd></div>
-      <div><dt>Questions written</dt><dd>3,786</dd></div>
+      <div><dt>Questions collected</dt><dd>3,786</dd></div>
       <div><dt>Countries</dt><dd>7</dd></div>
     </dl>
     <h3>Where the events ran</h3>

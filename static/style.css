@@ -90,8 +90,9 @@ button { font: inherit; color: inherit; }
 
 /* ---------- hero: globe, wordmark, folders ---------- */
 .hero {
-  /* --hs is the first screen; the second row of folders sits in the --more below it */
-  --hs: max(100svh, 46rem); --more: 18rem;
+  /* --hs is the first screen; the folders past the first row sit in the --more below it (two more rows here,
+     one on wide screens) */
+  --hs: max(100svh, 46rem); --more: 33rem;
   --bb0: calc(100% - var(--hs) + max(0.03 * var(--hs), var(--hs) - 100svh + 0.75rem));
   position: relative; min-height: calc(var(--hs) + var(--more)); overflow: hidden;
   display: grid; place-items: center; grid-template-rows: var(--hs) 1fr;
@@ -211,6 +212,9 @@ button { font: inherit; color: inherit; }
 #f-community { --l: 4%; --t: calc(var(--hs) - 3.5rem); }
 #f-projects { --l: calc(50% - 9rem); --t: calc(var(--hs) + 1.5rem); }
 #f-team { --l: auto; --rr: 4%; --t: calc(var(--hs) - 3.5rem); }
+/* third row, either side of the projects folder */
+#f-models { --l: 4%; --t: calc(var(--hs) + 14.5rem); }
+#f-apertus { --l: auto; --rr: 4%; --t: calc(var(--hs) + 14.5rem); }
 /* laptop-height windows: smaller portals showing the top strip of each snapshot, so they clear the wordmark */
 @media (min-width: 901px) and (max-height: 940px) {
   .folder-portal { width: 14.5rem; }
@@ -256,10 +260,14 @@ button { font: inherit; color: inherit; }
   #f-automoove { --l: calc(50% + var(--pw) / 2 + var(--g)); --bb: var(--bb0); }
   #f-paper { --l: calc(50% + var(--pw) / 2 + 2 * var(--g) + var(--w)); --bb: calc(var(--bb0) + var(--step)); }
   /* second row follows the same curve, each card just below the one above it */
-  #f-community, #f-projects, #f-team { --rr: auto; --bb: auto; }
+  .hero { --more: 18rem; }
+  #f-community, #f-projects, #f-team, #f-models, #f-apertus { --rr: auto; --bb: auto; }
   #f-community { --l: calc(50% - var(--pw) / 2 - 2 * var(--g) - 2 * var(--w)); --t: calc(100% - var(--bb0) - var(--step) + 1.25rem); }
   #f-projects { --l: calc(50% - var(--w) / 2); --t: calc(100% - var(--bb0) + 1.25rem); }
   #f-team { --l: calc(50% + var(--pw) / 2 + 2 * var(--g) + var(--w)); --t: calc(100% - var(--bb0) - var(--step) + 1.25rem); }
+  /* the inner columns of the second row, just below the moove and automoove folders */
+  #f-models { --l: calc(50% - var(--pw) / 2 - var(--g) - var(--w)); --t: calc(100% - var(--bb0) + 1.25rem); }
+  #f-apertus { --l: calc(50% + var(--pw) / 2 + var(--g)); --t: calc(100% - var(--bb0) + 1.25rem); }
 }
 @media (min-width: 1280px) and (max-height: 940px) {
   .hero { --pw: 14rem; --step: 3rem; }
@@ -306,8 +314,8 @@ button { font: inherit; color: inherit; }
 .why-section { padding: 4.5rem 16px 1rem; }
 .why-wrap { max-width: var(--measure); margin: 0 auto; }
 /* every section below the hero: one heading size, one text size and colour (the citation stays small and grey) */
-.why-section h2, .chat-section h2, .cite-section h2, .credits h2 { font-size: var(--t-xl); font-weight: 800; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 0.75rem; }
-.why-section p, .chat-intro, .credits p { font-size: var(--t-base); line-height: 1.5; color: var(--ink); }
+.why-section h2, .chat-section h2, .feature-section h2, .cite-section h2, .credits h2 { font-size: var(--t-xl); font-weight: 800; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 0.75rem; }
+.why-section p, .chat-intro, .feature-section p, .credits p { font-size: var(--t-base); line-height: 1.5; color: var(--ink); }
 
 /* ---------- chat ---------- */
 .chat-section { padding: 5rem 16px 4rem; }
@@ -365,6 +373,20 @@ button { font: inherit; color: inherit; }
 .chat-log, .chat-suggest, .chat-form, .chat-disclaimer, .chat-status {
   width: min(56rem, calc(100vw - 32px)); margin-left: calc(50% - min(28rem, 50vw - 16px));
 }
+
+/* ---------- MeditronFO and download: a heading, one line and a large linked thumbnail ---------- */
+.feature-section { padding: 2.5rem 16px; }
+.feature-wrap { max-width: var(--measure); margin: 0 auto; }
+/* as wide as the chat, like a figure */
+.feature-thumb {
+  display: block; margin-top: 1.25rem; overflow: hidden;
+  width: min(56rem, calc(100vw - 32px)); margin-left: calc(50% - min(28rem, 50vw - 16px));
+  border: 1px solid var(--rule); border-radius: 14px; box-shadow: 0 6px 24px rgb(20 32 46 / 0.10);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.feature-thumb:hover, .feature-thumb:focus-visible { transform: translateY(-3px); box-shadow: 0 12px 32px rgb(20 32 46 / 0.16); }
+.feature-thumb img { display: block; width: 100%; height: auto; }
+@media (prefers-reduced-motion: reduce) { .feature-thumb { transition: none; } .feature-thumb:hover { transform: none; } }
 
 /* ---------- cite ---------- */
 .cite-section { padding: 3rem 16px; }
