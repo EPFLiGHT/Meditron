@@ -491,13 +491,6 @@ th { font-size: 0.82rem; color: var(--muted); font-weight: 700; vertical-align: 
 td.yes { color: var(--green); font-weight: 700; } td.no { color: var(--muted); }
 tr.ours td { font-weight: 700; background: var(--blue-wash); }
 
-.stats { display: flex; flex-wrap: wrap; gap: 2.5rem; margin: 1.5rem 0; }
-.stats dt { font-size: var(--t-sm); color: var(--muted); }
-.stats dd { margin: 0; font-size: 2.2rem; font-weight: 800; line-height: 1.1; }
-.places { list-style: none; padding: 0; }
-.places li { padding: 0.4rem 0; border-top: 1px solid var(--rule); }
-.places strong { display: inline-block; min-width: 7rem; }
-
 /* team panel: one short line per person, as on metagov.org/people */
 .panel-body > .people-cols { max-width: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 0 3rem; }
 .people-cols h3 { font-size: 1rem; margin: 1.5rem 0 0.6rem; }

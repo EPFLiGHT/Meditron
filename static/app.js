@@ -15,18 +15,20 @@ const css = (name) => getComputedStyle(document.documentElement).getPropertyValu
 /* ---------------------------------------------------------------- globe */
 
 // Where the MOOVE events ran: city where the event is known, the capital otherwise.
-// Counts are distinct questions and clinician votes per event, summed per place.
+// Counts are distinct questions and clinician votes per place (two Kenya events shared one question set).
 const SITES = [
   { at: [6.63, 46.52], name: 'CHUV, Lausanne', lines: ['3 events, Aug 2024 to Nov 2025', '758 questions, 5,086 clinician votes', 'Specialist hospital care'] },
   { at: [6.15, 46.20], name: 'HUG, Geneva', lines: ['1 event, Sep to Dec 2024', '320 questions, 1,704 clinician votes', 'Specialist hospital care'] },
   { at: [4.35, 50.85], name: 'Belgium', lines: ['1 event, Oct 2025', '108 questions, 126 clinician votes', 'Specialist hospital care'] },
-  { at: [36.82, -1.29], name: 'Kenya', lines: ['3 events, May 2025 to Aug 2026', '712 questions, 2,923 clinician votes', 'Primary care'] },
-  { at: [39.21, -6.79], name: 'Tanzania', lines: ['2 events, Dec 2025 to Jun 2026', '467 questions, 3,034 clinician votes', 'Primary care'] },
+  { at: [36.82, -1.29], name: 'Kenya', lines: ['5 events, May 2025 to Oct 2026', '999 questions, 4,931 clinician votes', 'Primary care, maternal and newborn health'] },
+  { at: [39.21, -6.79], name: 'Tanzania', lines: ['3 events, Dec 2025 to Aug 2026', '567 questions, 3,334 clinician votes', 'Primary care'] },
   { at: [33.79, -13.96], name: 'Malawi', lines: ['2 events, May to Jul 2026', '300 questions, 1,700 clinician votes', 'Primary care'] },
-  { at: [38.74, 9.03], name: 'Ethiopia', lines: ['2 events, Mar to Apr 2026', '612 questions, 1,534 clinician votes', 'Primary care'] },
+  { at: [38.74, 9.03], name: 'Ethiopia', lines: ['3 events, Mar to Sep 2026', '812 questions, 2,734 clinician votes', 'Primary care, paediatric emergency care'] },
+  { at: [73.05, 33.68], name: 'Pakistan', lines: ['1 event, Sep 2026', '278 questions, 834 clinician votes', 'Primary care, maternal and newborn health'] },
   { at: [77.59, 12.97], name: 'Bengaluru, India', lines: ['1 event, Jan to Mar 2026', '305 questions, 491 clinician votes', 'Specialist hospital care'] },
   { at: [78.49, 17.39], name: 'Hyderabad, India', lines: ['1 event, Jan to Feb 2026', '98 questions, 87 clinician votes', 'Specialist hospital care'] },
   { at: [77.02, 28.99], name: 'Ashoka University, India', lines: ['1 event, Jan to Apr 2026', '86 questions, 138 clinician votes', 'Specialist hospital care'] },
+  { at: [76.27, 9.93], name: 'Amrita, India', lines: ['1 event, Jul to Sep 2026', '306 questions, 684 clinician votes', 'Primary care, maternal and newborn health'] },
 ];
 
 (function globe() {
