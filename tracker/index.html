@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Meditron run tracker</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#0c43a0">
+  <link rel="icon" href="../static/img/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400..800&display=swap">
+  <link rel="stylesheet" href="../static/style.css?v=20261020">
+  <link rel="stylesheet" href="tracker.css">
+</head>
+<body class="tracker">
+  <header class="top">
+    <a class="top-lab" href="https://www.light-laboratory.org/" target="_blank" rel="noopener"><img src="../static/img/light-logo.png" alt="LiGHT, EPFL"></a>
+    <nav class="top-links" aria-label="Project links">
+      <a href="../rubric/" data-local>Rubric viewer</a>
+      <a href="../persample/" data-local>Per-question rubrics</a>
+      <a href="../leaderboard/" data-local>MOOVE leaderboard</a>
+      <a href="../">Meditron</a>
+    </nav>
+  </header>
+
+  <main class="tr">
+    <section class="tr-head">
+      <span class="tr-eyebrow">Internal · Apertus health expert, RL post-training</span>
+      <h1>Run tracker</h1>
+      <p class="tr-sub" id="sub">Loading the runs…</p>
+      <div class="kpis" id="kpis"></div>
+    </section>
+
+    <div class="controls">
+      <div class="seg" id="axisSeg" role="group" aria-label="Axis"></div>
+      <label for="hideLost"><input type="checkbox" id="hideLost"> Hide lost runs</label>
+      <label class="sr" for="q">Filter runs</label>
+      <input id="q" type="search" placeholder="Filter by experiment or job id">
+    </div>
+
+    <section class="compute" aria-labelledby="compute-h">
+      <h2 id="compute-h">Compute by study</h2>
+      <div class="bars" id="bars"></div>
+      <p class="legend"><span><i class="k-ok"></i>completed or running</span><span><i class="k-idle"></i>idle GPUs in working jobs (GSSR)</span><span><i class="k-lost"></i>lost: failed runs nobody resumed</span><span><i class="k-lost-judge"></i>lost: judge time with no run to serve</span><span>GPU-hours over all attempts of a job</span></p>
+    </section>
+
+    <div id="axes" class="axes"></div>
+  </main>
+
+  <footer class="foot">
+    <p id="gen"></p>
+    <p>RL validation is sampled at temperature 1.0. Axis 1 scores strict \boxed{} answers (% correct) and axis 2 scores the rubric reward (0 to 1), so neither compares directly with medbench.</p>
+    <p>Evaluations: medbench is lm-eval at temperature 0 (medical average over MedQA, MedMCQA, PubMedQA, MedXpertQA, MMLU-Pro health; general over IFEval, ARC-C, ARC-E, MMLU-Pro; hover for each task), HealthBench and hallubench are graded by Gemma-4-31B, AutoMOOVE is the win rate against the starting model on the 576 unanimous MOOVE questions (ties count half). Small numbers are the change against the starting model, coloured when it passes about the noise (1 point, 0.02 on HealthBench, 5 points on AutoMOOVE). Over-refusal and hallucination are better lower.</p>
+    <p>Built from the run ledger and the compute report in <code>infra01/meditron/experiments/</code>, W&amp;B team-light--/Apertus-Meditron and the findings in <code>studies.yaml</code>, by <code>meditron-4/scripts/experiment_tracker.py</code>.</p>
+  </footer>
+
+  <script src="tracker.js"></script>
+</body>
+</html>
