@@ -1,0 +1,713 @@
+{
+ "healthbench": [
+  {
+   "run": "apertus8b_instruct",
+   "model": "Apertus-8B-Instruct",
+   "params": 8,
+   "open": "fully",
+   "role": "base",
+   "score": 25.98,
+   "ci": [
+    24.95,
+    27.06
+   ],
+   "finetune": "meditronFO_gptoss_8b"
+  },
+  {
+   "run": "meditronFO_gptoss_8b",
+   "model": "Apertus-8B-MeditronFO",
+   "params": 8,
+   "open": "fully",
+   "role": "fo",
+   "score": 42.06,
+   "ci": [
+    40.95,
+    43.17
+   ]
+  },
+  {
+   "run": "base_euro9b_instruct",
+   "model": "EuroLLM-9B-Instruct",
+   "params": 9,
+   "open": "fully",
+   "role": "base",
+   "score": 18.65,
+   "ci": [
+    17.62,
+    19.74
+   ],
+   "finetune": "meditronFO_gptoss_euro9b"
+  },
+  {
+   "run": "meditronFO_gptoss_euro9b",
+   "model": "EuroLLM-9B-MeditronFO",
+   "params": 9,
+   "open": "fully",
+   "role": "fo",
+   "score": 33.98,
+   "ci": [
+    32.78,
+    35.12
+   ]
+  },
+  {
+   "run": "base_euro22b_instruct",
+   "model": "EuroLLM-22B-Instruct",
+   "params": 22,
+   "open": "fully",
+   "role": "base",
+   "score": 39.94,
+   "ci": [
+    38.88,
+    40.96
+   ],
+   "finetune": "meditronFO_gptoss_euro22b"
+  },
+  {
+   "run": "meditronFO_gptoss_euro22b",
+   "model": "EuroLLM-22B-MeditronFO",
+   "params": 22,
+   "open": "fully",
+   "role": "fo",
+   "score": 43.46,
+   "ci": [
+    42.35,
+    44.51
+   ]
+  },
+  {
+   "run": "base_gemma3_27b_it",
+   "model": "Gemma-3-27B-IT",
+   "params": 27,
+   "open": "weights",
+   "role": "base",
+   "score": 55.35,
+   "ci": [
+    54.47,
+    56.27
+   ],
+   "finetune": "meditronFO_gptoss_gemma3_27b"
+  },
+  {
+   "run": "meditronFO_gptoss_gemma3_27b",
+   "model": "Gemma-3-27B-MeditronFO",
+   "params": 27,
+   "open": "weights",
+   "role": "fo",
+   "score": 56.2,
+   "ci": [
+    55.17,
+    57.16
+   ]
+  },
+  {
+   "run": "base_medgemma27b",
+   "model": "MedGemma-27B",
+   "params": 27,
+   "open": "weights",
+   "role": "med",
+   "score": 54.8,
+   "ci": [
+    53.8,
+    55.73
+   ]
+  },
+  {
+   "run": "base_olmo32b_sft",
+   "model": "OLMo-2-32B-SFT",
+   "params": 32,
+   "open": "fully",
+   "role": "base",
+   "score": 26.58,
+   "ci": [
+    25.52,
+    27.61
+   ],
+   "finetune": "meditronFO_gptoss_olmo32b"
+  },
+  {
+   "run": "meditronFO_gptoss_olmo32b",
+   "model": "OLMo-2-32B-MeditronFO",
+   "params": 32,
+   "open": "fully",
+   "role": "fo",
+   "score": 41.62,
+   "ci": [
+    40.49,
+    42.67
+   ]
+  },
+  {
+   "run": "apertus70b_instruct",
+   "model": "Apertus-70B-Instruct",
+   "params": 70,
+   "open": "fully",
+   "role": "base",
+   "score": 39.37,
+   "ci": [
+    38.3,
+    40.43
+   ],
+   "finetune": "meditronFO_gptoss_70b_16n"
+  },
+  {
+   "run": "meditronFO_gptoss_70b_16n",
+   "model": "Apertus-70B-MeditronFO",
+   "params": 70,
+   "open": "fully",
+   "role": "fo",
+   "score": 49.32,
+   "ci": [
+    48.28,
+    50.4
+   ]
+  },
+  {
+   "run": "ref_aloe_beta_70b",
+   "model": "Llama-3.1-Aloe-Beta-70B",
+   "params": 70,
+   "open": "weights",
+   "role": "med",
+   "score": 30.97,
+   "ci": [
+    29.95,
+    31.99
+   ]
+  },
+  {
+   "run": "base_gemma3_4b_it",
+   "model": "Gemma-3-4B-IT",
+   "params": 4,
+   "open": "weights",
+   "role": "gen",
+   "score": 44.09,
+   "ci": [
+    43.06,
+    45.04
+   ]
+  },
+  {
+   "run": "ref_medgemma4b",
+   "model": "MedGemma-4B",
+   "params": 4,
+   "open": "weights",
+   "role": "med",
+   "score": 34.84,
+   "ci": [
+    33.82,
+    35.93
+   ]
+  },
+  {
+   "run": "base_llama31_8b_instruct",
+   "model": "Llama-3.1-8B-Instruct",
+   "params": 8,
+   "open": "weights",
+   "role": "gen",
+   "score": 22.2,
+   "ci": [
+    21.12,
+    23.23
+   ]
+  },
+  {
+   "run": "ref_aloe_beta_8b",
+   "model": "Llama-3.1-Aloe-Beta-8B",
+   "params": 8,
+   "open": "weights",
+   "role": "med",
+   "score": 33.47,
+   "ci": [
+    32.34,
+    34.57
+   ]
+  },
+  {
+   "run": "base_llama31_70b_instruct",
+   "model": "Llama-3.1-70B-Instruct",
+   "params": 70,
+   "open": "weights",
+   "role": "gen",
+   "score": 27.09,
+   "ci": [
+    26.06,
+    28.11
+   ]
+  },
+  {
+   "run": "ref_gptoss_120b",
+   "model": "gpt-oss-120b",
+   "params": 117,
+   "open": "weights",
+   "role": "gen",
+   "score": 59.91,
+   "ci": [
+    58.92,
+    60.86
+   ]
+  }
+ ],
+ "benchmarks": [
+  {
+   "medmcqa": 52.8,
+   "medqa": 61.9,
+   "pubmedqa": 74.7,
+   "medxpertqa": 13.0,
+   "healthbench": 39.4,
+   "mcqa_avg": 50.6,
+   "avg5": 48.35,
+   "model": "Apertus-70B-Instruct",
+   "role": "base"
+  },
+  {
+   "medmcqa": 60.2,
+   "medqa": 71.1,
+   "pubmedqa": 74.9,
+   "medxpertqa": 17.3,
+   "healthbench": 49.3,
+   "mcqa_avg": 55.88,
+   "avg5": 54.56,
+   "model": "Apertus-70B-MeditronFO",
+   "role": "fo",
+   "base": "Apertus-70B-Instruct",
+   "mcqa_gain": [
+    5.28,
+    4.2,
+    6.4
+   ]
+  },
+  {
+   "medmcqa": 59.0,
+   "medqa": 65.8,
+   "pubmedqa": 71.0,
+   "medxpertqa": 12.4,
+   "healthbench": 26.6,
+   "mcqa_avg": 52.06,
+   "avg5": 46.96,
+   "model": "OLMo-2-32B-SFT",
+   "role": "base"
+  },
+  {
+   "medmcqa": 60.8,
+   "medqa": 72.3,
+   "pubmedqa": 76.9,
+   "medxpertqa": 17.9,
+   "healthbench": 41.6,
+   "mcqa_avg": 56.98,
+   "avg5": 53.91,
+   "model": "OLMo-2-32B-MeditronFO",
+   "role": "fo",
+   "base": "OLMo-2-32B-SFT",
+   "mcqa_gain": [
+    4.92,
+    3.8,
+    6.1
+   ]
+  },
+  {
+   "medmcqa": 55.8,
+   "medqa": 65.3,
+   "pubmedqa": 76.4,
+   "medxpertqa": 14.6,
+   "healthbench": 39.9,
+   "mcqa_avg": 53.01,
+   "avg5": 50.4,
+   "model": "EuroLLM-22B-Instruct",
+   "role": "base"
+  },
+  {
+   "medmcqa": 55.2,
+   "medqa": 64.7,
+   "pubmedqa": 77.9,
+   "medxpertqa": 14.9,
+   "healthbench": 43.5,
+   "mcqa_avg": 53.18,
+   "avg5": 51.23,
+   "model": "EuroLLM-22B-MeditronFO",
+   "role": "fo",
+   "base": "EuroLLM-22B-Instruct",
+   "mcqa_gain": [
+    0.17,
+    -0.9,
+    1.2
+   ]
+  },
+  {
+   "medmcqa": 47.8,
+   "medqa": 52.1,
+   "pubmedqa": 74.3,
+   "medxpertqa": 11.8,
+   "healthbench": 26.0,
+   "mcqa_avg": 46.49,
+   "avg5": 42.39,
+   "model": "Apertus-8B-Instruct",
+   "role": "base"
+  },
+  {
+   "medmcqa": 52.0,
+   "medqa": 60.7,
+   "pubmedqa": 71.4,
+   "medxpertqa": 15.1,
+   "healthbench": 42.1,
+   "mcqa_avg": 49.81,
+   "avg5": 48.26,
+   "model": "Apertus-8B-MeditronFO",
+   "role": "fo",
+   "base": "Apertus-8B-Instruct",
+   "mcqa_gain": [
+    3.32,
+    2.1,
+    4.5
+   ]
+  },
+  {
+   "medmcqa": 45.9,
+   "medqa": 48.0,
+   "pubmedqa": 73.9,
+   "medxpertqa": 10.5,
+   "healthbench": 18.7,
+   "mcqa_avg": 44.56,
+   "avg5": 39.38,
+   "model": "EuroLLM-9B-Instruct",
+   "role": "base"
+  },
+  {
+   "medmcqa": 47.6,
+   "medqa": 50.4,
+   "pubmedqa": 66.0,
+   "medxpertqa": 13.6,
+   "healthbench": 34.0,
+   "mcqa_avg": 44.41,
+   "avg5": 42.32,
+   "model": "EuroLLM-9B-MeditronFO",
+   "role": "fo",
+   "base": "EuroLLM-9B-Instruct",
+   "mcqa_gain": [
+    -0.15,
+    -1.3,
+    1.1
+   ]
+  },
+  {
+   "medmcqa": 64.5,
+   "medqa": 76.9,
+   "pubmedqa": 76.5,
+   "medxpertqa": 16.9,
+   "healthbench": 55.4,
+   "mcqa_avg": 58.68,
+   "avg5": 58.02,
+   "model": "Gemma-3-27B-IT",
+   "role": "base"
+  },
+  {
+   "medmcqa": 63.7,
+   "medqa": 78.2,
+   "pubmedqa": 76.7,
+   "medxpertqa": 18.4,
+   "healthbench": 56.2,
+   "mcqa_avg": 59.26,
+   "avg5": 58.65,
+   "model": "Gemma-3-27B-MeditronFO",
+   "role": "fo",
+   "base": "Gemma-3-27B-IT",
+   "mcqa_gain": [
+    0.58,
+    -0.3,
+    1.4
+   ]
+  },
+  {
+   "medmcqa": 73.7,
+   "medqa": 87.4,
+   "pubmedqa": 77.6,
+   "medxpertqa": 25.2,
+   "healthbench": 54.8,
+   "mcqa_avg": 65.99,
+   "avg5": 63.75,
+   "model": "MedGemma-27B",
+   "role": "med"
+  }
+ ],
+ "automoove": [
+  {
+   "model": "Apertus-70B-MeditronFO",
+   "against": "Apertus-70B-Instruct",
+   "win": 442,
+   "tie": 35,
+   "loss": 39,
+   "gemma4": [
+    89.1,
+    86.5,
+    91.4
+   ],
+   "qwen38": [
+    84.5,
+    81.5,
+    87.2
+   ],
+   "muse": [
+    90.1,
+    88.0,
+    92.2
+   ],
+   "majority": [
+    89.7,
+    87.4,
+    91.9
+   ],
+   "n": 516
+  },
+  {
+   "model": "Apertus-8B-MeditronFO",
+   "against": "Apertus-8B-Instruct",
+   "win": 357,
+   "tie": 63,
+   "loss": 96,
+   "gemma4": [
+    75.3,
+    71.9,
+    78.7
+   ],
+   "qwen38": [
+    61.7,
+    57.7,
+    65.6
+   ],
+   "muse": [
+    81.2,
+    78.3,
+    84.0
+   ],
+   "majority": [
+    74.2,
+    70.8,
+    77.6
+   ],
+   "n": 516
+  },
+  {
+   "model": "OLMo-2-32B-MeditronFO",
+   "against": "OLMo-2-32B-SFT",
+   "win": 406,
+   "tie": 37,
+   "loss": 73,
+   "gemma4": [
+    82.3,
+    79.0,
+    85.3
+   ],
+   "qwen38": [
+    72.1,
+    68.5,
+    75.6
+   ],
+   "muse": [
+    85.5,
+    82.8,
+    88.0
+   ],
+   "majority": [
+    81.9,
+    78.7,
+    84.8
+   ],
+   "n": 516
+  },
+  {
+   "model": "EuroLLM-22B-MeditronFO",
+   "against": "EuroLLM-22B-Instruct",
+   "win": 258,
+   "tie": 93,
+   "loss": 165,
+   "gemma4": [
+    59.0,
+    55.1,
+    62.8
+   ],
+   "qwen38": [
+    49.8,
+    45.9,
+    53.6
+   ],
+   "muse": [
+    66.7,
+    63.5,
+    69.8
+   ],
+   "majority": [
+    59.2,
+    55.4,
+    62.9
+   ],
+   "n": 516
+  },
+  {
+   "model": "EuroLLM-9B-MeditronFO",
+   "against": "EuroLLM-9B-Instruct",
+   "win": 216,
+   "tie": 89,
+   "loss": 211,
+   "gemma4": [
+    50.5,
+    46.6,
+    54.5
+   ],
+   "qwen38": [
+    34.2,
+    30.6,
+    38.1
+   ],
+   "muse": [
+    70.7,
+    67.3,
+    73.9
+   ],
+   "majority": [
+    50.7,
+    46.7,
+    54.7
+   ],
+   "n": 516
+  },
+  {
+   "model": "Gemma-3-27B-MeditronFO",
+   "against": "Gemma-3-27B-IT",
+   "win": 324,
+   "tie": 106,
+   "loss": 86,
+   "gemma4": [
+    73.1,
+    69.8,
+    76.3
+   ],
+   "qwen38": [
+    70.3,
+    67.1,
+    73.6
+   ],
+   "muse": [
+    58.3,
+    55.8,
+    60.9
+   ],
+   "majority": [
+    71.0,
+    67.9,
+    74.0
+   ],
+   "n": 516
+  },
+  {
+   "model": "Gemma-3-27B-MeditronFO",
+   "against": "MedGemma-27B",
+   "win": 228,
+   "tie": 151,
+   "loss": 137,
+   "gemma4": [
+    58.8,
+    55.2,
+    62.4
+   ],
+   "qwen38": [
+    52.8,
+    49.0,
+    56.6
+   ],
+   "muse": [
+    54.2,
+    51.5,
+    56.7
+   ],
+   "majority": [
+    57.1,
+    53.8,
+    60.3
+   ],
+   "n": 516
+  },
+  {
+   "model": "Apertus-70B-MeditronFO",
+   "against": "MedGemma-27B",
+   "win": 161,
+   "tie": 105,
+   "loss": 250,
+   "gemma4": [
+    41.4,
+    37.5,
+    45.1
+   ],
+   "qwen38": [
+    28.9,
+    25.5,
+    32.3
+   ],
+   "muse": [
+    41.6,
+    39.1,
+    44.2
+   ],
+   "majority": [
+    35.8,
+    32.5,
+    39.1
+   ],
+   "n": 516
+  },
+  {
+   "model": "Gemma-3-27B-IT",
+   "against": "MedGemma-27B",
+   "win": 103,
+   "tie": 173,
+   "loss": 240,
+   "gemma4": [
+    36.7,
+    33.5,
+    40.1
+   ],
+   "qwen38": [
+    29.3,
+    26.1,
+    32.5
+   ],
+   "muse": [
+    44.9,
+    42.7,
+    47.2
+   ],
+   "majority": [
+    35.1,
+    32.3,
+    38.0
+   ],
+   "n": 516
+  },
+  {
+   "model": "Apertus-70B-Instruct",
+   "against": "MedGemma-27B",
+   "win": 11,
+   "tie": 13,
+   "loss": 492,
+   "gemma4": [
+    3.4,
+    2.1,
+    4.8
+   ],
+   "qwen38": [
+    3.0,
+    1.7,
+    4.6
+   ],
+   "muse": [
+    3.7,
+    2.6,
+    4.9
+   ],
+   "majority": [
+    2.6,
+    1.6,
+    3.9
+   ],
+   "n": 516
+  }
+ ]
+}
