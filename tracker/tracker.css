@@ -99,10 +99,11 @@ tbody tr:hover td { background: var(--blue-wash); }
 th.n, td.n { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
 td.exp { font-weight: 600; word-break: break-word; min-width: 15rem; }
 td.exp small { display: block; color: var(--muted); font-weight: 400; }
+td.exp small.wb a { color: var(--blue); font-weight: 700; }
 .val { white-space: nowrap; font-variant-numeric: tabular-nums; }
 .val b { color: var(--blue); font-weight: 800; }
 .val small { color: var(--muted); }
-.val .sets { display: block; color: var(--muted); font-size: 0.78rem; }
+.val .sets { display: block; color: var(--muted); font-size: 0.78rem; white-space: normal; min-width: 14rem; }
 .u-good { color: var(--green); } .u-mid { color: var(--ink); } .u-poor { color: var(--red); }
 svg.spark { display: block; overflow: visible; }
 svg.spark .ar { fill: var(--blue-wash); }

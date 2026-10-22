@@ -157,14 +157,13 @@ function runRow(att) {
   const links = att.filter(j => j.wandb_url).map((j, i, a) => `<a href="${esc(j.wandb_url)}" target="_blank" rel="noopener" title="job ${esc(j.job_id)}">${a.length > 1 ? `W&amp;B ${i + 1}` : "W&amp;B"}</a>`).join(" ");
   return `<tr>
     <td class="n"${att.length > 1 ? ` title="jobs ${esc(ids.join(", "))}"` : ""}>${esc(last.job_id)}${att.length > 1 ? `<small>${att.length} attempts</small>` : ""}</td>
-    <td class="exp">${esc(last.experiment)}${resub}${notes.map(n => `<small>${esc(n)}</small>`).join("")}</td>
+    <td class="exp">${esc(last.experiment)}${links ? `<small class="wb">${links}</small>` : ""}${resub}${notes.map(n => `<small>${esc(n)}</small>`).join("")}</td>
     <td>${chip(last.state)}</td>
     <td class="n">${last.nodes}</td>
     <td class="n">${curve?.steps ?? last.curve?.steps ?? "–"}</td>
     <td class="n">${fmt(sum(att, j => j.gpu_hours))}</td>
     <td class="n ${utilCls(util)}">${util == null ? "–" : fmt(util, 0) + " %"}</td>
-    ${valCells({ axis: last.axis, curve })}
-    <td>${links}</td></tr>`;
+    ${valCells({ axis: last.axis, curve })}</tr>`;
 }
 
 // Downstream evaluations (experiment_tracker.py collect_evals). [group, key, label, scale, decimals, higher is better, title]
@@ -253,7 +252,7 @@ function studyBlock(s) {
   const runs = runsOf(js.filter(j => j.kind === "rl"));
   const extra = js.filter(j => j.kind !== "rl");
   const table = runs.length ? `<div class="tbl"><table>
-    <thead><tr><th class="n">Job</th><th>Experiment</th><th>State</th><th class="n">Nodes</th><th class="n">Steps</th><th class="n">GPU-h</th><th class="n">GPU util</th><th>Validation: start → best @step → last</th><th>Curve</th><th>W&amp;B</th></tr></thead>
+    <thead><tr><th class="n">Job</th><th>Experiment</th><th>State</th><th class="n">Nodes</th><th class="n">Steps</th><th class="n">GPU-h</th><th class="n">GPU util</th><th>Validation: start → best @step → last</th><th>Curve</th></tr></thead>
     <tbody>${runs.map(runRow).join("")}</tbody></table></div>` : all.length ? `<p class="note">No runs match the filter.</p>` : "";
   const evals = extra.length ? `<p class="note">Also ${extra.length} eval job(s) for this study: ${extra.map(j => esc(j.job_id)).join(", ")} (${fmt(sum(extra, j => j.gpu_hours))} GPU-h).</p>` : "";
   const body = `${table}${evalTable(s)}${evals}`;
