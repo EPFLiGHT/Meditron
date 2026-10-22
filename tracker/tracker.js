@@ -13,7 +13,7 @@ const $ = id => document.getElementById(id);
 // The rubric, per-question and leaderboard pages are local only: no nav links to them on the published site.
 if (!["localhost", "127.0.0.1"].includes(location.hostname)) document.querySelectorAll("[data-local]").forEach(a => a.remove());
 
-const view = { axis: "all", hideLost: false, q: "" };
+const view = { axis: "all", hideLost: false, openDone: false, q: "" };
 try { Object.assign(view, JSON.parse(localStorage.getItem("tracker-view") || "{}")); } catch (e) {}
 const save = () => { try { localStorage.setItem("tracker-view", JSON.stringify(view)); } catch (e) {} };
 
@@ -95,6 +95,8 @@ function renderControls() {
   $("axisSeg").onclick = e => { const b = e.target.closest("button"); if (!b) return; view.axis = b.dataset.axis; save(); render(); };
   const hl = $("hideLost"); hl.checked = view.hideLost;
   hl.onchange = () => { view.hideLost = hl.checked; save(); render(); };
+  const od = $("openDone"); od.checked = view.openDone;
+  od.onchange = () => { view.openDone = od.checked; save(); render(); };
   const q = $("q"); q.value = view.q;
   q.oninput = () => { view.q = q.value.trim(); save(); render(); };
 }
@@ -251,13 +253,13 @@ function studyBlock(s) {
   const runs = runsOf(js.filter(j => j.kind === "rl"));
   const extra = js.filter(j => j.kind !== "rl");
   const table = runs.length ? `<div class="tbl"><table>
-    <thead><tr><th class="n">Job</th><th>Experiment</th><th>State</th><th class="n">Nodes</th><th class="n">Steps</th><th class="n">GPU-h</th><th class="n">GPU util</th><th>Validation: start → best @step → last</th><th>Curve</th><th></th></tr></thead>
+    <thead><tr><th class="n">Job</th><th>Experiment</th><th>State</th><th class="n">Nodes</th><th class="n">Steps</th><th class="n">GPU-h</th><th class="n">GPU util</th><th>Validation: start → best @step → last</th><th>Curve</th><th>W&amp;B</th></tr></thead>
     <tbody>${runs.map(runRow).join("")}</tbody></table></div>` : all.length ? `<p class="note">No runs match the filter.</p>` : "";
   const evals = extra.length ? `<p class="note">Also ${extra.length} eval job(s) for this study: ${extra.map(j => esc(j.job_id)).join(", ")} (${fmt(sum(extra, j => j.gpu_hours))} GPU-h).</p>` : "";
   const body = `${table}${evalTable(s)}${evals}`;
-  // a done study folds to its title and answer; the filter opens it
+  // a done study folds to its title and answer; the filter or "Unfold done studies" opens it
   if (st === "done" && !live) {
-    return `<article class="study done">${tab}<div class="study-body"><details class="fold"${view.q ? " open" : ""}>
+    return `<article class="study done">${tab}<div class="study-body"><details class="fold"${view.q || view.openDone ? " open" : ""}>
       <summary class="study-top">${head}</summary><div class="fold-body"><div class="study-top">${rest}</div>${body}</div></details></div></article>`;
   }
   return `<article class="study">${tab}<div class="study-body"><div class="study-top">${head}${rest}</div>${body}</div></article>`;
