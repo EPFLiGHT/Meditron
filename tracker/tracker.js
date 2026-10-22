@@ -249,8 +249,10 @@ function studyBlock(s) {
     return `<article class="study support">${tab}<div class="study-body"><div class="study-top">${head}${rest}</div>
       <details><summary>${js.length} jobs by name</summary><p>${list || "none"}</p></details></div></article>`;
   }
-  const runs = runsOf(js.filter(j => j.kind === "rl"));
-  const extra = js.filter(j => j.kind !== "rl");
+  // training runs: NemoRL (kind rl) and axolotl SFT/DPO (kind sft); the rest are evals and judges
+  const train = j => j.kind === "rl" || j.kind === "sft";
+  const runs = runsOf(js.filter(train));
+  const extra = js.filter(j => !train(j));
   const table = runs.length ? `<div class="tbl"><table>
     <thead><tr><th class="n">Job</th><th>Experiment</th><th>State</th><th class="n">Nodes</th><th class="n">Steps</th><th class="n">GPU-h</th><th class="n">GPU util</th><th>Validation: start → best @step → last</th><th>Curve</th></tr></thead>
     <tbody>${runs.map(runRow).join("")}</tbody></table></div>` : all.length ? `<p class="note">No runs match the filter.</p>` : "";
