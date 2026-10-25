@@ -17,11 +17,11 @@ const css = (name) => getComputedStyle(document.documentElement).getPropertyValu
 // Where the MOOVE events ran: city where the event is known, the capital otherwise.
 // Counts are distinct questions and clinician votes per place (two Kenya events shared one question set).
 const SITES = [
-  { at: [6.63, 46.52], name: 'CHUV, Lausanne', lines: ['3 events, Aug 2024 to Nov 2025', '758 questions, 5,086 clinician votes', 'Specialist hospital care'] },
+  { at: [6.63, 46.52], name: 'CHUV, Lausanne', lines: ['4 events, Aug 2024 to Nov 2025', '4,320 questions, 13,112 clinician votes', 'Specialist hospital care'] },
   { at: [6.15, 46.20], name: 'HUG, Geneva', lines: ['1 event, Sep to Dec 2024', '320 questions, 1,704 clinician votes', 'Specialist hospital care'] },
   { at: [4.35, 50.85], name: 'Belgium', lines: ['1 event, Oct 2025', '108 questions, 126 clinician votes', 'Specialist hospital care'] },
-  { at: [36.82, -1.29], name: 'Kenya', lines: ['5 events, May 2025 to Oct 2026', '999 questions, 4,931 clinician votes', 'Primary care, maternal and newborn health'] },
-  { at: [39.21, -6.79], name: 'Tanzania', lines: ['3 events, Dec 2025 to Aug 2026', '567 questions, 3,334 clinician votes', 'Primary care'] },
+  { at: [36.82, -1.29], name: 'Kenya', lines: ['7 events, Oct 2024 to Oct 2026', '2,130 questions, 7,549 clinician votes', 'Primary care, maternal, newborn and child health'] },
+  { at: [39.21, -6.79], name: 'Tanzania', lines: ['5 events, Aug 2024 to Aug 2026', '1,055 questions, 4,621 clinician votes', 'Primary care, paediatric emergency care'] },
   { at: [33.79, -13.96], name: 'Malawi', lines: ['2 events, May to Jul 2026', '300 questions, 1,700 clinician votes', 'Primary care'] },
   { at: [38.74, 9.03], name: 'Ethiopia', lines: ['3 events, Mar to Sep 2026', '812 questions, 2,734 clinician votes', 'Primary care, paediatric emergency care'] },
   { at: [73.05, 33.68], name: 'Pakistan', lines: ['1 event, Sep 2026', '278 questions, 834 clinician votes', 'Primary care, maternal and newborn health'] },
@@ -29,6 +29,8 @@ const SITES = [
   { at: [78.49, 17.39], name: 'Hyderabad, India', lines: ['1 event, Jan to Feb 2026', '98 questions, 87 clinician votes', 'Specialist hospital care'] },
   { at: [77.02, 28.99], name: 'Ashoka University, India', lines: ['1 event, Jan to Apr 2026', '86 questions, 138 clinician votes', 'Specialist hospital care'] },
   { at: [76.27, 9.93], name: 'Amrita, India', lines: ['1 event, Jul to Sep 2026', '306 questions, 684 clinician votes', 'Primary care, maternal and newborn health'] },
+  { at: [100.49, 13.76], name: 'Siriraj Hospital, Bangkok', lines: ['1 event, Dec 2024 to Aug 2025', '339 questions, 1,126 clinician votes', 'Specialist hospital care'] },
+  { at: [-47.88, -15.79], name: 'Brazil', lines: ['2 events, Jan to Nov 2025', '450 questions, 1,514 clinician votes', 'Specialist hospital care'] },
 ];
 
 (function globe() {
