@@ -21,7 +21,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400..800&display=swap">
-  <link rel="stylesheet" href="static/style.css?v=20261021d">
+  <link rel="stylesheet" href="static/style.css?v=20261023b">
   <link rel="preload" href="static/data/land-110m.json" as="fetch" crossorigin>
 </head>
 <body>
@@ -51,7 +51,7 @@
 
       <div class="hero-center">
         <h1 class="wordmark"><span class="cube" aria-hidden="true"><img class="cube-light" src="static/img/cube.png" alt=""><img class="cube-dark" src="static/img/cube-dark.png" alt=""></span><span>Meditron</span></h1>
-        <p class="tagline">An open research project from the LiGHT lab.</p>
+        <p class="tagline">Open medical AI models, built and tested with clinicians around the world.</p>
         <a class="talk" href="#chat">Talk to Meditron</a>
       </div>
 
@@ -86,13 +86,13 @@
             <span class="folder-cta">Visit MOOVE</span>
           </span>
         </button>
-        <button id="f-paper" class="folder folder-portal" type="button" data-href="https://arxiv.org/abs/2605.16215">
-          <span class="folder-tab">Paper</span>
+        <button id="f-paper" class="folder folder-portal" type="button" data-open="publications">
+          <span class="folder-tab">Publications</span>
           <span class="folder-body">
-            <strong class="folder-title">Read the paper</strong>
-            <span class="folder-desc"><span>Fully Open Meditron: an auditable pipeline for clinical LLMs. A clinician-vetted corpus, decontamination and training code, applied to five fully-open base models; every finetune is preferred over its base.</span></span>
-            <img class="folder-fig" src="static/img/paper-fig1.jpg" alt="Figure 1 of the paper: the Meditron pipeline, from data and model to clinical evaluation" width="960" height="453">
-            <span class="folder-cta">Read</span>
+            <strong class="folder-title">Read the papers</strong>
+            <span class="folder-desc"><span>Four papers over three generations of Meditron, from MEDITRON-70B on Llama-2 in 2023 to Fully Open Meditron, an auditable pipeline where every finetune is preferred over its base.</span></span>
+            <img class="folder-fig" src="static/img/paper-fig1.jpg" alt="Figure 1 of the Fully Open Meditron paper: the Meditron pipeline, from data and model to clinical evaluation" width="960" height="453">
+            <span class="folder-cta">See the papers</span>
           </span>
         </button>
         <button id="f-automoove" class="folder folder-portal folder-play" type="button" data-open="automoove">
@@ -154,11 +154,37 @@
       </div>
     </section>
 
-    <section class="why-section" aria-labelledby="why-title">
+    <section class="why-section" id="what" aria-labelledby="why-title">
       <div class="why-wrap">
-        <h2 id="why-title">Why Meditron</h2>
-        <p>Most &ldquo;open&rdquo; medical LLMs release only model weights, withholding the data provenance, curation procedures, and synthetic pipelines that determine model behavior. In high-stakes clinical settings &ndash; where clinicians, regulators, and patients may reasonably need to audit what a model has learned &ndash; this opacity is a fundamental limitation.</p>
+        <h2 id="why-title">What is Meditron</h2>
+        <p>Meditron is a family of open medical AI models: large language models trained to answer clinical questions. Anyone can download them, run them on their own hardware and adapt them, from a hospital in Switzerland to a health post in Malawi.</p>
+        <p>Two things set it apart. It is open down to the training data, so clinicians, regulators and patients can check what it learned. And it is tested by clinicians: at MOOVE events they put questions from their own practice to the models and vote for the better answer.</p>
       </div>
+      <ol class="timeline" aria-label="Meditron over the years">
+        <li>
+          <span class="tl-year">2023</span>
+          <strong><a href="https://arxiv.org/abs/2311.16079" target="_blank" rel="noopener">Meditron 1</a></strong>
+          <span class="tl-tag">Open weights</span>
+          <p>7B and 70B models on Llama-2, pretrained on PubMed and international clinical guidelines.</p>
+        </li>
+        <li>
+          <span class="tl-year">2024</span>
+          <strong><a href="https://www.researchsquare.com/article/rs-4139743/v1" target="_blank" rel="noopener">Clinicians step in</a></strong>
+          <p>Sixteen physicians grade Meditron's answers, and MOOVE events at CHUV, Lausanne, put the models to hospital specialists.</p>
+        </li>
+        <li>
+          <span class="tl-year">2025</span>
+          <strong><a href="https://openreview.net/forum?id=ZcD35zKujO" target="_blank" rel="noopener">Meditron 3</a></strong>
+          <span class="tl-tag">Open weights</span>
+          <p>8B and 70B models on Llama-3.1, co-designed with clinicians and humanitarian experts.</p>
+        </li>
+        <li class="tl-now">
+          <span class="tl-year">2026</span>
+          <strong><a href="meditronfo/">MeditronFO</a></strong>
+          <span class="tl-tag">Fully open</span>
+          <p>Data, code and models, on Apertus and four other open bases; MOOVE reaches primary care in Kenya, Tanzania and Malawi.</p>
+        </li>
+      </ol>
     </section>
 
     <section id="chat" class="chat-section" aria-labelledby="chat-title">
@@ -326,6 +352,37 @@
     </ol>
     <p class="note">Not perfect: AI reviewers still flag about 1 in 10 sampled rows. You can check them yourself.</p>
     <p class="links"><a href="https://huggingface.co/swiss-ai" target="_blank" rel="noopener">Apertus on Hugging Face</a><a href="https://huggingface.co/collections/EPFLiGHT/meditronfo" target="_blank" rel="noopener">Meditron models</a><a href="https://huggingface.co/datasets/EPFLiGHT/fully-open-meditron" target="_blank" rel="noopener">Browse the training data</a></p>
+  </template>
+
+  <template id="tpl-publications" data-title="Publications">
+    <h2>Publications</h2>
+    <p class="lead">Meditron has been open medical AI from EPFL since 2023, one model generation at a time.</p>
+    <ol class="pubs">
+      <li>
+        <span class="pub-gen">MeditronFO · 2026</span>
+        <a href="https://arxiv.org/abs/2605.16215" target="_blank" rel="noopener">Fully Open Meditron: An Auditable Pipeline for Clinical LLMs</a>
+        <span class="pub-meta">Theimer-Lienhard et al. · arXiv preprint</span>
+        <p>A clinician-vetted corpus, decontamination and training code, applied to five fully open base models, Apertus among them.</p>
+      </li>
+      <li>
+        <span class="pub-gen">Meditron 3 · 2025</span>
+        <a href="https://openreview.net/forum?id=ZcD35zKujO" target="_blank" rel="noopener">Llama-3-Meditron: An Open-Weight Suite of Medical LLMs Based on Llama-3.1</a>
+        <span class="pub-meta">Sallinen et al. · GenAI4Health workshop, AAAI 2025</span>
+        <p>8B and 70B open-weight models on Llama-3.1, pretrained on medical literature and guidelines and instruction-tuned on synthetic data.</p>
+      </li>
+      <li>
+        <span class="pub-gen">Meditron 1 · 2024</span>
+        <a href="https://www.researchsquare.com/article/rs-4139743/v1" target="_blank" rel="noopener">MEDITRON: Open Medical Foundation Models Adapted for Clinical Practice</a>
+        <span class="pub-meta">Chen et al. · Research Square preprint</span>
+        <p>The extended Meditron paper, with a vision variant and an evaluation by sixteen independent physicians.</p>
+      </li>
+      <li>
+        <span class="pub-gen">Meditron 1 · 2023</span>
+        <a href="https://arxiv.org/abs/2311.16079" target="_blank" rel="noopener">MEDITRON-70B: Scaling Medical Pretraining for Large Language Models</a>
+        <span class="pub-meta">Chen et al. · arXiv preprint</span>
+        <p>7B and 70B models on Llama-2, pretrained on PubMed and international clinical guidelines.</p>
+      </li>
+    </ol>
   </template>
 
   <template id="tpl-team" data-title="The team">

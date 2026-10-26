@@ -1,4 +1,4 @@
-/* MeditronFO release page. data.json comes from meditron-4/scripts/meditronfo_page_data.py (the paper's tables and
+/* MeditronFO release page. data.json comes from meditron-4/website/meditronfo.py (the paper's tables and
    Figure 1); the five game cases are the main page's static/data/clinician_rounds.json. */
 
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));

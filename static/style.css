@@ -310,12 +310,33 @@ button { font: inherit; color: inherit; }
 .site-tip strong { display: block; font-size: 0.95rem; font-weight: 800; }
 .site-tip span { display: block; color: var(--muted); }
 
-/* ---------- why Meditron ---------- */
+/* ---------- what is Meditron, and its timeline ---------- */
 .why-section { padding: 4.5rem 16px 1rem; }
 .why-wrap { max-width: var(--measure); margin: 0 auto; }
 /* every section below the hero: one heading size, one text size and colour (the citation stays small and grey) */
 .why-section h2, .chat-section h2, .feature-section h2, .cite-section h2, .credits h2 { font-size: var(--t-xl); font-weight: 800; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 0.75rem; }
 .why-section p, .chat-intro, .feature-section p, .credits p { font-size: var(--t-base); line-height: 1.5; color: var(--ink); }
+.why-wrap p + p { margin-top: 0.9rem; }
+/* four steps on one line from 900px; below that a vertical list on a left rule */
+.timeline { list-style: none; margin: 3rem auto 0; padding: 0; max-width: 64rem; display: grid; gap: 1.5rem; }
+.timeline li { position: relative; padding-left: 1.5rem; border-left: 2px solid var(--rule); }
+.timeline li::before {
+  content: ""; position: absolute; left: -7px; top: 0.3rem; width: 12px; height: 12px;
+  background: var(--paper); border: 2px solid var(--blue);
+}
+.timeline .tl-now::before { background: var(--marker); border-color: var(--ink); }
+.tl-year { display: block; font-size: var(--t-sm); font-weight: 800; letter-spacing: 0.06em; color: var(--muted); }
+.timeline strong { display: block; margin-top: 0.15rem; font-size: 1.1rem; font-weight: 800; }
+.timeline strong a { text-decoration: none; }
+.timeline strong a:hover { text-decoration: underline; }
+.tl-tag { display: inline-block; margin-top: 0.35rem; padding: 0.05rem 0.5rem; font-size: 0.75rem; font-weight: 700; background: var(--blue-wash); color: var(--blue); }
+.tl-now .tl-tag { background: var(--marker); color: #14202e; }
+.timeline p { margin-top: 0.4rem; font-size: 0.92rem; line-height: 1.45; color: var(--ink); }
+@media (min-width: 900px) {
+  .timeline { grid-template-columns: repeat(4, 1fr); gap: 0 1.5rem; }
+  .timeline li { padding: 1.4rem 0 0; border-left: 0; border-top: 2px solid var(--rule); }
+  .timeline li::before { left: 0; top: -7px; }
+}
 
 /* ---------- chat ---------- */
 .chat-section { padding: 5rem 16px 4rem; }
@@ -499,6 +520,14 @@ tr.ours td { font-weight: 700; background: var(--blue-wash); }
 .people a { text-decoration: none; }
 .people a:hover { text-decoration: underline; }
 .people li > span:last-child { margin-left: 0.35rem; font-size: 0.82rem; font-style: italic; color: var(--muted); }
+.pubs { list-style: none; padding: 0; margin: 1.5rem 0 0; }
+.pubs li { padding: 1.1rem 0; border-top: 1px solid var(--rule); }
+.pubs li:last-child { border-bottom: 1px solid var(--rule); }
+.pub-gen { display: block; font-size: 0.78rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.pubs a { display: block; margin-top: 0.3rem; font-weight: 800; font-size: 1.05rem; text-decoration: none; }
+.pubs a:hover { text-decoration: underline; }
+.pub-meta { display: block; margin-top: 0.15rem; font-size: var(--t-sm); font-style: italic; color: var(--muted); }
+.pubs p { margin: 0.45rem 0 0; font-size: 0.95rem; }
 .steps { padding-left: 1.4rem; } .steps li { margin: 0.4rem 0; padding-left: 0.3rem; }
 
 /* leaderboards */
