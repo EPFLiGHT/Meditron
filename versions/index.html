@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Meditron site versions</title>
+  <meta name="description" content="Earlier versions of the Meditron site, kept as they were.">
+  <link rel="icon" href="../static/img/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400..800&display=swap">
+  <link rel="stylesheet" href="../static/style.css?v=20261028q">
+  <style>
+    /* the versions, newest first: a snapshot of each page's first screen, its date and what changed */
+    .ver { width: min(64rem, 100% - 32px); margin: 0 auto; padding: 1rem 0 5rem; }
+    .ver h1 { font-size: var(--t-xl); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.6rem; }
+    .ver > p { max-width: var(--measure); }
+    .ver-list { list-style: none; margin: 2.5rem 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.5rem 2rem; }
+    .ver-list a { display: block; color: inherit; text-decoration: none; }
+    .ver-list img {
+      width: 100%; height: auto; border: 1px solid var(--rule); border-radius: 12px;
+      box-shadow: 0 6px 24px rgb(20 32 46 / 0.10); transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .ver-list a:hover img, .ver-list a:focus-visible img { transform: translateY(-3px); box-shadow: 0 12px 32px rgb(20 32 46 / 0.16); }
+    .ver-name { display: flex; align-items: baseline; gap: 0.6rem; margin-top: 0.9rem; font-size: var(--t-md); font-weight: 800; color: var(--blue); }
+    .ver-name time { font-size: var(--t-sm); font-weight: 600; color: var(--muted); }
+    .ver-list p { margin: 0.3rem 0 0; font-size: 0.95rem; line-height: 1.45; }
+    .ver-back { color: var(--ink); text-decoration: none; transition: color 0.2s; }
+    .ver-back:hover { color: var(--sky); }
+    .ver-also { margin-top: 3.5rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); font-size: 0.95rem; }
+    .ver-also h2 { font-size: var(--t-md); font-weight: 800; margin-bottom: 0.5rem; }
+    .ver-also ul { margin: 0; padding-left: 1.2rem; }
+    @media (max-width: 700px) { .ver-list { grid-template-columns: 1fr; } }
+    @media (prefers-reduced-motion: reduce) { .ver-list img { transition: none; } .ver-list a:hover img { transform: none; } }
+  </style>
+</head>
+<body>
+  <header class="lh">
+    <a class="lh-logo" href="https://www.light-laboratory.org"><img class="logo-color" src="../static/img/light-logo-color.png" alt="LiGHT, Laboratory for intelligent Global Health and Humanitarian Response Technologies"><img class="logo-mono" src="../static/img/light-logo.png" alt=""></a>
+    <a class="ver-back" href="../">Back to Meditron</a>
+  </header>
+
+  <main class="ver">
+    <h1>Site versions</h1>
+    <p>The Meditron site as it looked at each stage, kept as it was. The chat answers only on the current site and in v2 to v5.</p>
+
+    <ol class="ver-list" reversed>
+      <li><a href="../"><img src="thumbs/current.jpg" alt="The current site" width="1280" height="800" loading="lazy"><span class="ver-name">Current <time datetime="2026-10-28">28 Oct 2026</time></span></a>
+        <p>On the LiGHT template: the lab's header and footer, five folders under the three commitments, the chat under them.</p></li>
+      <li><a href="../v5/"><img src="thumbs/v5.jpg" alt="Version 5" width="1280" height="800" loading="lazy"><span class="ver-name">v5 <time datetime="2026-10-26">26 Oct 2026</time></span></a>
+        <p>“What is Meditron” in plain language, with the 2023 to 2026 timeline; the last version before the LiGHT template.</p></li>
+      <li><a href="../v4/"><img src="thumbs/v4.jpg" alt="Version 4" width="1280" height="800" loading="lazy"><span class="ver-name">v4 <time datetime="2026-10-21">21 Oct 2026</time></span></a>
+        <p>The navy dawn globe with the name in ivory, the 2026 MOOVE events on it, and large thumbnails for MeditronFO and the downloads.</p></li>
+      <li><a href="../v3/"><img src="thumbs/v3.jpg" alt="Version 3" width="1280" height="800" loading="lazy"><span class="ver-name">v3 <time datetime="2026-10-19">19 Oct 2026</time></span></a>
+        <p>The folders as snapshots of where they lead, in a row along the foot of the globe, around the panel of three commitments.</p></li>
+      <li><a href="../v2/"><img src="thumbs/v2.jpg" alt="Version 2" width="1280" height="800" loading="lazy"><span class="ver-name">v2 <time datetime="2026-10-13">13 Oct 2026</time></span></a>
+        <p>LiGHT's logo and blues, the folders cut to four, and a Cite section with a copyable BibTeX entry.</p></li>
+      <li><a href="../v1/"><img src="thumbs/v1.jpg" alt="Version 1" width="1280" height="800" loading="lazy"><span class="ver-name">v1 <time datetime="2026-10-07">7 Oct 2026</time></span></a>
+        <p>The first public site: the globe of MOOVE sites, the project folders, the AutoMOOVE game and the leaderboards.</p></li>
+    </ol>
+
+    <section class="ver-also" aria-labelledby="also-title">
+      <h2 id="also-title">Variants of the current site</h2>
+      <ul>
+        <li><a href="../withbeam/">With the LiGHT beam</a>: “Trustworthy medical AI = ƒ(…)” typing the three commitments above the globe.</li>
+        <li><a href="../400/">Titles at weight 400</a>: every heading, card and panel title at regular weight.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="lf">
+    <div class="lf-row">
+      <a class="lf-logo" href="https://www.light-laboratory.org"><img src="../static/img/light/footer-logo.png" alt="LiGHT, Laboratory for intelligent Global Health and Humanitarian Response Technologies" width="166" height="118"></a>
+      <ul class="lf-hosts" aria-label="LiGHT is hosted by">
+        <li><a href="https://www.epfl.ch/" target="_blank" rel="noopener"><img src="../static/img/light/host1.png" alt="EPFL" width="130" height="130"></a></li>
+        <li><a href="https://www.ariadnelabs.org/" target="_blank" rel="noopener"><img src="../static/img/light/host2.png" alt="Ariadne Labs, Harvard" width="130" height="130"></a></li>
+        <li><a href="https://www.ashoka.edu.in/" target="_blank" rel="noopener"><img src="../static/img/light/host3.png" alt="Ashoka University" width="130" height="130"></a></li>
+        <li><a href="https://c4ir.rw/" target="_blank" rel="noopener"><img src="../static/img/light/host4.png" alt="World Economic Forum, Rwanda Centre for the Fourth Industrial Revolution" width="130" height="125"></a></li>
+      </ul>
+      <nav class="lf-links" aria-label="LiGHT">
+        <a href="https://www.light-laboratory.org">Home</a>
+        <a href="../#team">Who we are</a>
+        <a href="mailto:admin-light@epfl.ch">Contact</a>
+        <p class="lf-copy">© 2026 by LiGHT</p>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>
