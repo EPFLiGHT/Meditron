@@ -112,24 +112,33 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400..800&display=swap">
   <link rel="stylesheet" href="https://use.typekit.net/ssi4ehi.css">
-  <link rel="stylesheet" href="static/style.css?v=20261028m">
+  <link rel="stylesheet" href="static/style.css?v=20261028q">
   <link rel="preload" href="static/data/land-110m.json" as="fetch" crossorigin>
-  <!-- the LiGHT beam shows only with ?withbeam (withbeam/ redirects here), to compare -->
-  <script>if (new URLSearchParams(location.search).has('withbeam')) document.documentElement.classList.add('withbeam');</script>
+  <!-- page variants, to compare: ?withbeam shows the LiGHT beam (withbeam/), ?w400 sets every title at weight 400 (400/); links within the site keep them -->
+  <script>
+  (() => {
+    const q = new URLSearchParams(location.search), on = ['withbeam', 'w400'].filter((k) => q.has(k));
+    on.forEach((k) => document.documentElement.classList.add(k));
+    if (on.length) addEventListener('DOMContentLoaded', () => {
+      for (const el of document.querySelectorAll('a[href]:not([href^="#"]):not([href*=":"]), [data-href]:not([data-href*=":"])')) {
+        const u = new URL(el.getAttribute('href') ?? el.dataset.href, location.href);
+        u.search = '?' + on.join('&');
+        if (el.hasAttribute('href')) el.setAttribute('href', u.href); else el.dataset.href = u.href;
+      }
+    });
+  })();
+  </script>
 </head>
-<body>
+<body id="home">
   <a class="skip" href="#chat">Skip to the chat</a>
 
-  <!-- the LiGHT header, as on light-laboratory.org: the lab's logo, and a menu of this page's sections -->
+  <!-- the LiGHT header, as on light-laboratory.org: the lab's logo, and a menu of this page's parts; the part in view is underlined, as LiGHT marks its current page (app.js) -->
   <header class="lh">
     <a class="lh-logo" href="https://www.light-laboratory.org"><img class="logo-color" src="static/img/light-logo-color.png" alt="LiGHT, Laboratory for intelligent Global Health and Humanitarian Response Technologies"><img class="logo-mono" src="static/img/light-logo.png" alt=""></a>
     <button class="lh-menu" type="button" aria-expanded="false" aria-controls="top-nav"><span class="sr">Menu</span><span class="bars" aria-hidden="true"></span></button>
     <nav class="lh-links" id="top-nav" aria-label="Sections">
-      <a href="#chat">Chat</a>
-      <a href="#what">About</a>
-      <a href="#meditronfo">Latest project</a>
-      <a href="#game-feature">Game</a>
-      <a href="#download">Download</a>
+      <a class="is-here" href="#home">Home</a>
+      <a href="#meditronfo">MeditronFO</a>
       <a href="#join">Join us</a>
       <a href="#team">Who we are</a>
     </nav>
@@ -161,7 +170,6 @@
             <button id="f-open" class="folder folder-portal" type="button" data-open="data">
               <span class="folder-tab">Data &amp; code</span>
               <span class="folder-body">
-                <strong class="folder-title">Open down to the data</strong>
                 <span class="folder-desc"><span>All 533,888 training examples and the code that made them, built on Apertus, the fully open base model from EPFL, ETH Zurich and CSCS.</span></span>
                 <img class="folder-fig" src="static/img/portal-hf.jpg" alt="The training data on Hugging Face: 534k rows" width="960" height="453">
                 <span class="folder-cta">See what's open</span>
@@ -170,7 +178,6 @@
             <button id="f-models" class="folder folder-portal" type="button" data-href="https://huggingface.co/collections/EPFLiGHT/meditronfo">
               <span class="folder-tab">Models</span>
               <span class="folder-body">
-                <strong class="folder-title">Download the models</strong>
                 <span class="folder-desc"><span>Six MeditronFO models on Hugging Face, from 8B to 70B: Apertus, OLMo-2, EuroLLM and Gemma-3, each finetuned on our open corpus.</span></span>
                 <img class="folder-fig" src="static/img/portal-models.jpg" alt="The MeditronFO collection on Hugging Face" width="960" height="453">
                 <span class="folder-cta">Download</span>
@@ -184,7 +191,6 @@
             <button id="f-projects" class="folder folder-portal" type="button" data-href="meditronfo/">
               <span class="folder-tab">Projects</span>
               <span class="folder-body">
-                <strong class="folder-title">Latest projects</strong>
                 <span class="folder-desc"><span>MeditronFO: the first medical AI where every step is open, from the data to the evaluation.</span></span>
                 <img class="folder-fig" src="static/img/portal-projects.jpg" alt="The MeditronFO project page: the title over a globe rising at dawn" width="960" height="453">
                 <span class="folder-cta">Read the blog</span>
@@ -193,7 +199,6 @@
             <button id="f-paper" class="folder folder-portal" type="button" data-open="publications">
               <span class="folder-tab">Publications</span>
               <span class="folder-body">
-                <strong class="folder-title">Read the papers</strong>
                 <span class="folder-desc"><span>Four papers over three generations of Meditron, from MEDITRON-70B on Llama-2 in 2023 to Fully Open Meditron, an auditable pipeline where every finetune is preferred over its base.</span></span>
                 <img class="folder-fig" src="static/img/paper-fig1.jpg" alt="Figure 1 of the Fully Open Meditron paper: the Meditron pipeline, from data and model to clinical evaluation" width="960" height="453">
                 <span class="folder-cta">See the papers</span>
@@ -205,9 +210,8 @@
           <h2 class="fgroup-label">Real-world evaluation</h2>
           <div class="fgroup-cards">
             <button id="f-moove" class="folder folder-portal" type="button" data-open="moove">
-              <span class="folder-tab">MOOVE</span>
+              <span class="folder-tab">Tested by clinicians</span>
               <span class="folder-body">
-                <strong class="folder-title">Tested by clinicians</strong>
                 <span class="folder-desc"><span>Clinicians and humanitarian experts put tough questions from their own practice to the models, compare two anonymous answers and vote for the better one.</span></span>
                 <img class="folder-fig fig-low" src="static/img/portal-moove.jpg" alt="The MOOVE platform, where clinicians write questions and judge the answers" width="960" height="453">
                 <span class="folder-cta">Explore MOOVE</span>
@@ -570,6 +574,6 @@
   <script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/15.0.7/marked.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.2.4/purify.min.js"></script>
-  <script src="static/app.js?v=20261028f"></script>
+  <script src="static/app.js?v=20261028g"></script>
 </body>
 </html>

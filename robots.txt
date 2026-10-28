@@ -4,5 +4,12 @@ Disallow: /tracker/
 Disallow: /server/
 Disallow: /nobeam/
 Disallow: /withbeam/
+Disallow: /400/
+Disallow: /versions/
+Disallow: /v1/
+Disallow: /v2/
+Disallow: /v3/
+Disallow: /v4/
+Disallow: /v5/
 
 Sitemap: https://epflight.github.io/Meditron/sitemap.xml

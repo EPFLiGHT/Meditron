@@ -14,12 +14,26 @@
   <meta property="og:url" content="https://epflight.github.io/Meditron/meditronfo/">
   <meta property="og:image" content="https://epflight.github.io/Meditron/static/img/social-preview.png">
   <meta name="twitter:card" content="summary_large_image">
+  <!-- page variants, to compare: ?withbeam shows the LiGHT beam (withbeam/), ?w400 sets every title at weight 400 (400/); links within the site keep them -->
+  <script>
+  (() => {
+    const q = new URLSearchParams(location.search), on = ['withbeam', 'w400'].filter((k) => q.has(k));
+    on.forEach((k) => document.documentElement.classList.add(k));
+    if (on.length) addEventListener('DOMContentLoaded', () => {
+      for (const el of document.querySelectorAll('a[href]:not([href^="#"]):not([href*=":"]), [data-href]:not([data-href*=":"])')) {
+        const u = new URL(el.getAttribute('href') ?? el.dataset.href, location.href);
+        u.search = '?' + on.join('&');
+        if (el.hasAttribute('href')) el.setAttribute('href', u.href); else el.dataset.href = u.href;
+      }
+    });
+  })();
+  </script>
   <link rel="icon" href="../static/img/favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400..800&display=swap">
-  <link rel="stylesheet" href="../static/style.css?v=20261028m">
-  <link rel="stylesheet" href="meditronfo.css?v=20261028a">
+  <link rel="stylesheet" href="../static/style.css?v=20261028q">
+  <link rel="stylesheet" href="meditronfo.css?v=20261028b">
   <link rel="preload" href="../static/data/land-110m.json" as="fetch" crossorigin>
 </head>
 <body class="mfo">

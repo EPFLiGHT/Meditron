@@ -62,8 +62,8 @@
 
 /* ---------- sections ---------- */
 .m-sec { max-width: 56rem; margin: 0 auto; padding: 4rem 0 1rem; }
-.m-sec h2 { font-size: var(--t-xl); font-weight: 400; letter-spacing: -0.02em; margin-bottom: 1.5rem; }
-.m-h3 { font-size: var(--t-md); font-weight: 400; margin: 2.5rem 0 0.75rem; }
+.m-sec h2 { font-size: var(--t-xl); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 1.5rem; }
+.m-h3 { font-size: var(--t-md); font-weight: 800; margin: 2.5rem 0 0.75rem; }
 .m-prose { max-width: var(--measure); }
 .m-foot { font-size: 0.85rem; color: var(--muted); max-width: 44rem; margin-top: 0.75rem; }
 

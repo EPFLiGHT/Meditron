@@ -235,6 +235,21 @@ const SITES = [
       top.classList.remove('open'); btn.setAttribute('aria-expanded', 'false');
     }
   });
+  // the link of the part in view is underlined: Home over the hero, a section while it crosses the upper third, Who we are while the team panel is open
+  const links = [...top.querySelectorAll('.lh-links a')];
+  const part = (a) => (a.hash === '#home' ? document.querySelector('.hero') : document.getElementById(a.hash.slice(1)));
+  function mark() {
+    const line = innerHeight / 3;
+    const here = location.hash === '#team' ? links.find((a) => a.hash === '#team')
+      : links.find((a) => { const r = part(a)?.getBoundingClientRect(); return r && r.top <= line && r.bottom > line; })
+        ?? (scrollY < innerHeight / 2 ? links[0] : null);
+    links.forEach((a) => a.classList.toggle('is-here', a === here));
+  }
+  let queued = false;
+  addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(() => { queued = false; mark(); }); } }, { passive: true });
+  addEventListener('hashchange', mark); addEventListener('resize', mark);
+  // the panel's own close handler drops the hash after this one runs
+  document.getElementById('panel')?.addEventListener('close', () => requestAnimationFrame(mark)); mark();
 })();
 
 // The beam types its arguments one after another, with the LiGHT homepage's timings, and lights the
