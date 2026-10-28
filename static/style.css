@@ -18,6 +18,8 @@
   --marker: #efcd5f;        /* the Meditron cube's yellow */
 
   --font: 'Manrope', system-ui, sans-serif;
+  --display: 'ivypresto-headline', 'Cormorant Garamond', Georgia, serif;   /* LiGHT's headline face (Adobe Fonts kit) */
+  --gutter: clamp(16px, 3.2vw, 46px);   /* LiGHT's page margin */
   --t-sm: 0.875rem;
   --t-base: 1.0625rem;
   --t-md: 1.3125rem;
@@ -88,6 +90,74 @@ button { font: inherit; color: inherit; }
 @media (max-width: 360px) { .top-lab img { height: 1.1rem; } .top-links { gap: 0.7rem; } }
 .top-links { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0.4rem 1.25rem; }
 
+/* ---------- the LiGHT header: logo left, the lab's menu right; a menu button on phones ---------- */
+.lh {
+  position: relative; z-index: 5;
+  display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+  padding: 2.25rem var(--gutter) 1.5rem;
+}
+.lh-logo img { height: clamp(2.6rem, 4vw, 3.4rem); width: auto; }
+.lh-logo .logo-mono { display: none; filter: invert(1); }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .lh-logo .logo-color { display: none; }
+  :root:not([data-theme="light"]) .lh-logo .logo-mono { display: block; }
+}
+:root[data-theme="dark"] .lh-logo .logo-color { display: none; }
+:root[data-theme="dark"] .lh-logo .logo-mono { display: block; }
+.lh-links { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0.4rem 1.9rem; font-size: 1rem; }
+.lh-links a { color: var(--ink); text-decoration: none; }
+.lh-links a:hover, .lh-links a.is-here { color: var(--sky); }
+.lh-links a.is-here { text-decoration: underline; text-underline-offset: 0.3em; }
+.lh-menu { display: none; }
+@media (max-width: 900px) {
+  .lh { padding-top: 1.5rem; padding-bottom: 1rem; }
+  .lh-logo img { height: 2.2rem; }
+  .lh-menu {
+    display: grid; place-items: center; width: 2.75rem; height: 2.75rem; padding: 0;
+    border: 0; background: none; cursor: pointer;
+  }
+  .lh-menu .bars, .lh-menu .bars::before, .lh-menu .bars::after {
+    display: block; width: 1.9rem; height: 2px; background: var(--ink); content: ''; position: relative;
+  }
+  .lh-menu .bars::before { position: absolute; top: -0.6rem; }
+  .lh-menu .bars::after { position: absolute; top: 0.6rem; }
+  .lh-links {
+    display: none; position: absolute; top: 100%; right: var(--gutter); z-index: 6;
+    flex-direction: column; gap: 0; min-width: 12rem; padding: 0.5rem 0;
+    background: var(--paper); border: 1px solid var(--rule); box-shadow: 0 12px 32px rgb(20 32 46 / 0.16);
+  }
+  .lh-links a { padding: 0.55rem 1.25rem; }
+  .lh.open .lh-links { display: flex; }
+}
+
+/* ---------- the beam: LiGHT's two-blue banner with a typed function ---------- */
+.beam {
+  position: relative; overflow: hidden; margin: 0 var(--gutter); border-radius: 12px;
+  min-height: clamp(18rem, 24vw, 21.5rem); display: flex; align-items: center;
+  padding: 2rem clamp(1.5rem, 13vw, 11rem);
+}
+.beam-bg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.beam-eq { position: relative; margin: 0; color: #fff; font-family: var(--display); line-height: 1.15; }
+.beam-lhs { display: block; font-weight: 700; font-size: clamp(2.2rem, 4vw, 3.6rem); letter-spacing: -0.01em; }
+.beam-fx { display: block; margin-top: 0.35rem; font-size: clamp(2rem, 3vw, 2.7rem); white-space: nowrap; }
+.beam-fx i { font-weight: 700; margin-right: 0.15em; }
+.beam-cursor { font-family: var(--font); font-weight: 300; margin-left: 0.05em; animation: beam-blink 0.85s steps(1) infinite; }
+@keyframes beam-blink { 50% { opacity: 0; } }
+@media (max-width: 900px) { .beam { min-height: 21rem; align-items: flex-end; padding: 1.75rem 1.5rem 3.5rem; } }
+@media (max-width: 420px) { .beam-fx { font-size: 1.75rem; } }
+@media (prefers-reduced-motion: reduce) { .beam-cursor { display: none; } .beam-fx { white-space: normal; } }
+
+/* the paper's links, as on the CLIMB and MoBayes pages */
+.project-links { display: flex; flex-wrap: wrap; gap: 0.6rem; padding: 1.25rem var(--gutter) 0; }
+.btn {
+  display: inline-flex; align-items: center; padding: 0.5rem 1.15rem; border-radius: 999px;
+  border: 1.5px solid var(--blue); color: var(--blue); background: transparent;
+  font-weight: 700; font-size: 0.95rem; text-decoration: none;
+}
+.btn:hover { background: var(--blue-wash); }
+.btn-solid { background: var(--blue); color: var(--paper); }
+.btn-solid:hover { background: var(--ink); border-color: var(--ink); }
+
 /* ---------- hero: globe, wordmark, folders ---------- */
 .hero {
   /* --hs is the first screen; the folders past the first row sit in the --more below it (two more rows here,
@@ -132,7 +202,7 @@ button { font: inherit; color: inherit; }
 .hero .talk:focus-visible { outline-color: #fbf7ef; }
 .globe-key {
   /* the bottom corners hold the second row of folders, so the key captions the globe from above */
-  position: absolute; left: 50%; top: 4.5rem; transform: translateX(-50%); white-space: nowrap;
+  position: absolute; left: 50%; top: 1.5rem; transform: translateX(-50%); white-space: nowrap;
   background: var(--paper); padding: 0.2rem 0.6rem; border-radius: 6px; z-index: 2; margin: 0;
   font-size: var(--t-sm); color: var(--muted); display: flex; align-items: center; gap: 0.5rem;
 }
@@ -278,7 +348,7 @@ button { font: inherit; color: inherit; }
   .hero .talk { background: var(--blue); color: var(--paper); }
   .hero .talk:hover { background: var(--ink); }
   .hero .talk:focus-visible { outline-color: var(--blue); }
-  .hero { display: block; place-items: normal; min-height: 0; padding: 4.5rem 0 2rem; }
+  .hero { display: block; place-items: normal; min-height: 0; padding: 0 0 2rem; }
   #globe { position: relative; left: auto; top: auto; transform: none; margin: 0 auto; width: min(92vw, 30rem); height: min(92vw, 30rem); }
   .hero-center { margin-top: calc(-1 * min(92vw, 30rem) / 2 - 3.5rem); }
   .globe-key { position: static; transform: none; width: fit-content; justify-content: center; margin: 3rem auto 0; }
@@ -426,6 +496,18 @@ button { font: inherit; color: inherit; }
   font-size: 0.8rem; line-height: 1.5;
 }
 
+/* ---------- join: the community image as a thumbnail, one path per kind of contributor ---------- */
+.join-section { padding: 3.5rem 16px; background: var(--blue-wash); }
+.join-wrap { max-width: 64rem; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 20rem) minmax(0, 1fr); gap: 2rem 3rem; align-items: start; }
+.join-thumb { width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--rule); box-shadow: 0 6px 24px rgb(20 32 46 / 0.10); }
+.join-text h2 { font-size: var(--t-xl); margin-bottom: 0.6rem; }
+.join-paths { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; margin-top: 1.25rem; }
+.join-path { display: flex; flex-direction: column; align-items: flex-start; padding: 1.1rem 1.25rem 1.25rem; background: var(--paper); border-top: 4px solid var(--sky); }
+.join-path h3 { font-size: var(--t-md); margin-bottom: 0.4rem; }
+.join-path p { font-size: 0.95rem; color: var(--muted); flex: 1; }
+@media (max-width: 820px) { .join-wrap { grid-template-columns: 1fr; } .join-thumb { max-width: 24rem; } }
+@media (max-width: 560px) { .join-paths { grid-template-columns: 1fr; } }
+
 /* ---------- contact and credits, just above the footer ---------- */
 .credits {
   display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 1.5rem 2.5rem;
@@ -434,6 +516,11 @@ button { font: inherit; color: inherit; }
 .credits p { margin: 0; }
 .credits a { white-space: nowrap; }
 @media (max-width: 640px) { .credits { grid-template-columns: 1fr; } }
+/* the Swiss AI Initiative, in ink */
+.credit-logos { list-style: none; margin: 1.1rem 0 0; padding: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.75rem; }
+.credit-logos img { width: auto; filter: brightness(0); opacity: 0.8; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .credit-logos img { filter: brightness(0) invert(1); } }
+:root[data-theme="dark"] .credit-logos img { filter: brightness(0) invert(1); }
 
 /* ---------- footer: a LiGHT navy band ---------- */
 .foot { background: var(--band); color: rgb(255 255 255 / 0.75); padding: 2.25rem 2.5rem; font-size: var(--t-sm); }
@@ -458,6 +545,28 @@ button { font: inherit; color: inherit; }
   .foot-logos { grid-template-columns: auto; }
   .hosts-list { flex-wrap: nowrap; gap: 1rem; }
   .foot-row { gap: 1.1rem; }
+}
+
+/* ---------- the LiGHT footer: a navy band, logo left, the hosts in the middle, three links right ---------- */
+.lf { background: var(--band); color: #fff; padding: 2.75rem var(--gutter); font-size: var(--t-sm); }
+.lf :focus-visible { outline-color: var(--sky); }
+.lf-row { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1.75rem 2.5rem; }
+.lf-logo { height: 2.6rem; width: auto; filter: invert(1); }
+.lf-hosts img { filter: brightness(0) invert(1); width: auto; }
+.lf .h-epfl { height: 1.6rem; } .lf .h-ariadne { height: 2.6rem; } .lf .h-ashoka { height: 3.4rem; } .lf .h-c4ir { height: 2.3rem; }
+.lf-hosts { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 1.25rem 2.5rem; }
+.lf-links { display: flex; flex-direction: column; align-items: flex-end; gap: 0.3rem; font-size: 1rem; }
+.lf-links a { color: var(--sky); text-underline-offset: 0.2em; }
+.lf-links a:hover { color: #fff; }
+.lf-copy { margin: 1rem 0 0; font-size: var(--t-sm); }
+@media (max-width: 1000px) {
+  .lf-row { grid-template-columns: 1fr; justify-items: start; }
+  .lf-hosts { justify-content: flex-start; }
+  .lf-links { align-items: flex-start; }
+}
+@media (max-width: 560px) {
+  .lf .h-epfl { height: 1.1rem; } .lf .h-ariadne { height: 1.9rem; } .lf .h-ashoka { height: 2.5rem; } .lf .h-c4ir { height: 1.8rem; }
+  .lf-hosts { gap: 1rem 1.5rem; }
 }
 
 /* ---------- panel (opened folder) ---------- */

@@ -211,6 +211,41 @@ const SITES = [
   });
 })();
 
+/* ---------------------------------------------------------- LiGHT header and beam */
+
+// Phones: the LiGHT menu folds behind a button.
+(function lightMenu() {
+  const top = document.querySelector('.lh');
+  const btn = top && top.querySelector('.lh-menu');
+  if (!btn) return;
+  btn.addEventListener('click', () => btn.setAttribute('aria-expanded', String(top.classList.toggle('open'))));
+  document.addEventListener('click', (e) => {
+    if (!top.contains(e.target) && top.classList.contains('open')) { top.classList.remove('open'); btn.setAttribute('aria-expanded', 'false'); }
+  });
+})();
+
+// The beam types its arguments one after another, with the LiGHT homepage's timings;
+// with reduced motion it shows all three at once.
+(function beam() {
+  const el = document.getElementById('beam-word');
+  if (!el) return;
+  const words = el.dataset.words.split('|');
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    el.textContent = `(${words.map((w) => w.slice(1, -1)).join(', ')})`;
+    return;
+  }
+  let w = 0, n = words[0].length;
+  function type() {
+    if (n < words[w].length) { el.textContent = words[w].slice(0, ++n); setTimeout(type, 80); }
+    else setTimeout(erase, 1200);
+  }
+  function erase() {
+    if (n > 0) { el.textContent = words[w].slice(0, --n); setTimeout(erase, 40); }
+    else { w = (w + 1) % words.length; setTimeout(type, 300); }
+  }
+  setTimeout(erase, 1200);   // the first word is already in the HTML
+})();
+
 /* ---------------------------------------------------------- commitments */
 
 // Hovering or focusing a commitment brings out the folders that show it and fades the rest.
