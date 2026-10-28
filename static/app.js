@@ -39,7 +39,7 @@ const SITES = [
   // the globe all sea and all land, drawn once per size; a frame lays the land layer over the sea one, clipped to the coasts
   const seaLayer = document.createElement('canvas'), landLayer = document.createElement('canvas');
   let land = null, size = 0, ink = [12, 67, 160], marker = '#efcd5f';
-  let lon = -25, last = 0, visible = true, hovered = null, shown = [];
+  let lon = -100, last = 0, visible = true, hovered = null, shown = [];
 
   // the MeditronFO page's globe: a navy night side, light blue land and a warm limb
   const NIGHT = [13, 29, 64], LAND = [104, 175, 231], RIM = [255, 222, 172], LIMB = [255, 240, 210];
