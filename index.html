@@ -112,7 +112,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400..800&display=swap">
   <link rel="stylesheet" href="https://use.typekit.net/ssi4ehi.css">
-  <link rel="stylesheet" href="static/style.css?v=20261028l">
+  <link rel="stylesheet" href="static/style.css?v=20261028m">
   <link rel="preload" href="static/data/land-110m.json" as="fetch" crossorigin>
   <!-- the LiGHT beam shows only with ?withbeam (withbeam/ redirects here), to compare -->
   <script>if (new URLSearchParams(location.search).has('withbeam')) document.documentElement.classList.add('withbeam');</script>
@@ -120,17 +120,18 @@
 <body>
   <a class="skip" href="#chat">Skip to the chat</a>
 
-  <!-- the LiGHT header, as on light-laboratory.org: the logo and the lab's menu (Meditron is one of its programs) -->
+  <!-- the LiGHT header, as on light-laboratory.org: the lab's logo, and a menu of this page's sections -->
   <header class="lh">
     <a class="lh-logo" href="https://www.light-laboratory.org"><img class="logo-color" src="static/img/light-logo-color.png" alt="LiGHT, Laboratory for intelligent Global Health and Humanitarian Response Technologies"><img class="logo-mono" src="static/img/light-logo.png" alt=""></a>
     <button class="lh-menu" type="button" aria-expanded="false" aria-controls="top-nav"><span class="sr">Menu</span><span class="bars" aria-hidden="true"></span></button>
-    <nav class="lh-links" id="top-nav" aria-label="LiGHT">
-      <a href="https://www.light-laboratory.org">Home</a>
-      <a class="is-here" href="https://www.light-laboratory.org/programs-item">Programs</a>
+    <nav class="lh-links" id="top-nav" aria-label="Sections">
+      <a href="#chat">Chat</a>
+      <a href="#what">About</a>
+      <a href="#meditronfo">Latest project</a>
+      <a href="#game-feature">Game</a>
+      <a href="#download">Download</a>
+      <a href="#join">Join us</a>
       <a href="#team">Who we are</a>
-      <a href="https://www.light-laboratory.org/publications-list">Publications</a>
-      <a href="https://www.light-laboratory.org/teaching">Teaching</a>
-      <a href="https://www.light-laboratory.org/join-us">Join Us</a>
     </nav>
   </header>
 
@@ -217,7 +218,7 @@
       </div>
     </section>
 
-    <!-- the chat on a light blue band like Join us, right under the folders; the greeting is page text, not part of the conversation sent to the model -->
+    <!-- the chat as a card, right under the folders; the greeting is page text, not part of the conversation sent to the model -->
     <section id="chat" class="chat-section" aria-labelledby="chat-title">
       <h2 id="chat-title">Talk to Meditron</h2>
       <div class="chat-wrap">
@@ -276,7 +277,7 @@
       <div class="feature-wrap">
         <h2 id="meditronfo-title">Meet our latest project</h2>
         <p>The first medical AI where every step is open, from the data to the evaluation.</p>
-        <a class="feature-thumb" href="meditronfo/"><img src="static/img/meditronfo-thumb.jpg" alt="The MeditronFO project page: the title over a globe rising at dawn" width="1920" height="906" loading="lazy"></a>
+        <a class="feature-thumb" href="meditronfo/"><img src="static/img/meditronfo-thumb.jpg" alt="The MeditronFO project page: the title over a globe rising at dawn" width="1920" height="906" loading="lazy"><span class="feature-cta">Read about MeditronFO</span></a>
       </div>
     </section>
 
@@ -284,7 +285,7 @@
       <div class="feature-wrap">
         <h2 id="game-feature-title">Can you judge like a clinician?</h2>
         <p>Five real MOOVE cases written by clinicians in Ethiopia, Switzerland and Kenya: read two anonymous answers, vote for the better one, and see whether you agree with the clinicians and with AutoMOOVE, our AI judge.</p>
-        <a class="feature-thumb" href="#automoove"><img src="static/img/automoove-thumb.jpg" alt="A round of the AutoMOOVE game: a clinician's question and two anonymous answers to compare" width="1920" height="906" loading="lazy"></a>
+        <a class="feature-thumb" href="#automoove"><img src="static/img/automoove-thumb.jpg" alt="A round of the AutoMOOVE game: a clinician's question and two anonymous answers to compare" width="1920" height="906" loading="lazy"><span class="feature-cta">Play the game</span></a>
       </div>
     </section>
 
@@ -292,7 +293,7 @@
       <div class="feature-wrap">
         <h2 id="download-title">Download Meditron</h2>
         <p>Six MeditronFO models on Hugging Face, from 8B to 70B: Apertus, OLMo-2, EuroLLM and Gemma-3, each finetuned on our open corpus.</p>
-        <a class="feature-thumb" href="https://huggingface.co/collections/EPFLiGHT/meditronfo" target="_blank" rel="noopener"><img src="static/img/portal-models.jpg" alt="The MeditronFO collection on Hugging Face" width="960" height="453" loading="lazy"></a>
+        <a class="feature-thumb" href="https://huggingface.co/collections/EPFLiGHT/meditronfo" target="_blank" rel="noopener"><img src="static/img/portal-models.jpg" alt="The MeditronFO collection on Hugging Face" width="960" height="453" loading="lazy"><span class="feature-cta ext">Download on Hugging Face</span></a>
       </div>
     </section>
 
