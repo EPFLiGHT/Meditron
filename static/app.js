@@ -177,6 +177,16 @@ const SITES = [
 (function folders() {
   const desktop = matchMedia('(min-width: 901px)');
   let top = 10;
+  // The row keeps its folded height, so a folder unfolding on hover overlays the chat instead of pushing it down.
+  const row = document.querySelector('.folders');
+  function lockRow() {
+    if (!row) return;
+    row.style.height = '';
+    if (desktop.matches) row.style.height = `${row.offsetHeight}px`;
+  }
+  addEventListener('load', lockRow);
+  addEventListener('resize', lockRow);
+  document.fonts?.ready.then(lockRow);
   document.querySelectorAll('.folder').forEach((el) => {
     let sx = 0, sy = 0, ox = 0, oy = 0, moved = false, down = false;
     el.addEventListener('pointerdown', (e) => {
@@ -219,8 +229,11 @@ const SITES = [
   const btn = top && top.querySelector('.lh-menu');
   if (!btn) return;
   btn.addEventListener('click', () => btn.setAttribute('aria-expanded', String(top.classList.toggle('open'))));
+  // a tap outside the menu, or on one of its links (Who we are opens the team panel in place), closes it
   document.addEventListener('click', (e) => {
-    if (!top.contains(e.target) && top.classList.contains('open')) { top.classList.remove('open'); btn.setAttribute('aria-expanded', 'false'); }
+    if (top.classList.contains('open') && (!top.contains(e.target) || e.target.closest('.lh-links a'))) {
+      top.classList.remove('open'); btn.setAttribute('aria-expanded', 'false');
+    }
   });
 })();
 

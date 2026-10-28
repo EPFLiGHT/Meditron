@@ -22,7 +22,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400..800&display=swap">
   <link rel="stylesheet" href="https://use.typekit.net/ssi4ehi.css">
-  <link rel="stylesheet" href="static/style.css?v=20261028e">
+  <link rel="stylesheet" href="static/style.css?v=20261028f">
   <link rel="preload" href="static/data/land-110m.json" as="fetch" crossorigin>
 </head>
 <body>
@@ -35,7 +35,7 @@
     <nav class="lh-links" id="top-nav" aria-label="LiGHT">
       <a href="https://www.light-laboratory.org">Home</a>
       <a class="is-here" href="https://www.light-laboratory.org/programs-item">Programs</a>
-      <a href="https://www.light-laboratory.org/who-we-are">Who we are</a>
+      <a href="#team">Who we are</a>
       <a href="https://www.light-laboratory.org/publications-list">Publications</a>
       <a href="https://www.light-laboratory.org/teaching">Teaching</a>
       <a href="https://www.light-laboratory.org/join-us">Join Us</a>
@@ -125,10 +125,33 @@
       </div>
     </section>
 
+    <!-- the chat on a light blue band like Join us, right under the folders; the greeting is page text, not part of the conversation sent to the model -->
+    <section id="chat" class="chat-section" aria-labelledby="chat-title">
+      <h2 id="chat-title">Talk to Meditron</h2>
+      <div class="chat-wrap">
+        <p class="chat-model" id="chat-model" hidden></p>
+        <div class="chat-log" id="chat-log" aria-live="polite">
+          <div class="msg-row"><span class="cube chat-cube" aria-hidden="true"><img class="cube-light" src="static/img/cube.png" alt=""><img class="cube-dark" src="static/img/cube-dark.png" alt=""></span><div class="msg bot"><p>Hello, I'm Meditron, an open medical AI model. Ask me a medical question.</p><p>I'm a research model, not a doctor: I can be wrong, and I know nothing about you beyond what you type.</p></div></div>
+        </div>
+        <div class="chat-suggest" id="chat-suggest">
+          <button type="button">A 2-year-old has sunken eyes and drinks eagerly. How should a health post manage this?</button>
+          <button type="button">What should I ask a farmer with pneumonia before choosing an antibiotic?</button>
+          <button type="button">When does a sore throat in a child need antibiotics?</button>
+        </div>
+        <form class="chat-form" id="chat-form">
+          <label class="sr" for="chat-input">Your question</label>
+          <textarea id="chat-input" rows="2" placeholder="Ask Meditron a question"></textarea>
+          <button type="submit" class="send" id="chat-send">Send</button>
+        </form>
+        <p class="chat-disclaimer"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/></svg>Meditron can be wrong. It is a research model, not a doctor. Use with care.</p>
+        <p class="chat-status" id="chat-status" role="status"></p>
+      </div>
+    </section>
+
     <section class="why-section" id="what" aria-labelledby="why-title">
       <div class="why-wrap">
         <h2 id="why-title">What is Meditron</h2>
-        <p>Meditron is a family of open medical AI models: large language models trained to answer clinical questions. Anyone can download them, run them on their own hardware and adapt them, from a hospital in Switzerland to a health post in Malawi. We commit to keep the familly open down to the training data, so clinicians, regulators and patients can check what it learned. And thanks to our MOOVE events, where clinicians evaluate the models with questions from their own practice, we commit to keep the familly tested by clinicians.</p>
+        <p>Meditron is a family of open medical AI models: large language models trained to answer clinical questions. Anyone can download them, run them on their own hardware and adapt them, from a hospital in Switzerland to a health post in Malawi. We commit to keep the family open down to the training data, so clinicians, regulators and patients can check what it learned. And thanks to our MOOVE events, where clinicians evaluate the models with questions from their own practice, we commit to keep the family tested by clinicians.</p>
       </div>
       <ol class="timeline" aria-label="Meditron over the years">
         <li>
@@ -157,32 +180,19 @@
       </ol>
     </section>
 
-    <section id="chat" class="chat-section" aria-labelledby="chat-title">
-      <div class="chat-wrap">
-        <h2 id="chat-title">Talk to Meditron</h2>
-        <p class="chat-intro">Ask a medical question. It is a research model, not a doctor: it can be wrong, and it knows nothing about you beyond what you type.</p>
-        <p class="chat-model" id="chat-model" hidden></p>
-        <div class="chat-log" id="chat-log" aria-live="polite"></div>
-        <div class="chat-suggest" id="chat-suggest">
-          <button type="button">A 2-year-old has sunken eyes and drinks eagerly. How should a health post manage this?</button>
-          <button type="button">What should I ask a farmer with pneumonia before choosing an antibiotic?</button>
-          <button type="button">When does a sore throat in a child need antibiotics?</button>
-        </div>
-        <form class="chat-form" id="chat-form">
-          <label class="sr" for="chat-input">Your question</label>
-          <textarea id="chat-input" rows="2" placeholder="Ask Meditron a question"></textarea>
-          <button type="submit" class="send" id="chat-send">Send</button>
-        </form>
-        <p class="chat-disclaimer"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/></svg>Meditron can be wrong. It is a research model, not a doctor. Use with care.</p>
-        <p class="chat-status" id="chat-status" role="status"></p>
-      </div>
-    </section>
-
     <section id="meditronfo" class="feature-section" aria-labelledby="meditronfo-title">
       <div class="feature-wrap">
         <h2 id="meditronfo-title">Meet our latest project</h2>
         <p>The first medical AI where every step is open, from the data to the evaluation.</p>
         <a class="feature-thumb" href="meditronfo/"><img src="static/img/meditronfo-thumb.jpg" alt="The MeditronFO project page: the title over a globe rising at dawn" width="1920" height="906" loading="lazy"></a>
+      </div>
+    </section>
+
+    <section id="game-feature" class="feature-section" aria-labelledby="game-feature-title">
+      <div class="feature-wrap">
+        <h2 id="game-feature-title">Can you judge like a clinician?</h2>
+        <p>Five real MOOVE cases written by clinicians in Ethiopia, Switzerland and Kenya: read two anonymous answers, vote for the better one, and see whether you agree with the clinicians and with AutoMOOVE, our AI judge.</p>
+        <a class="feature-thumb" href="#automoove"><img src="static/img/automoove-thumb.jpg" alt="A round of the AutoMOOVE game: a clinician's question and two anonymous answers to compare" width="1920" height="906" loading="lazy"></a>
       </div>
     </section>
 
@@ -200,7 +210,7 @@
         <img class="join-thumb" src="static/img/portal-community.jpg" alt="The globe with the places where clinicians have tested Meditron" width="960" height="453" loading="lazy">
         <div class="join-text">
           <h2 id="join-title">Join us</h2>
-          <p>Meditron is built with the people who use it. There are two ways in.</p>
+          <p>Meditron is built with the people who use it.</p>
           <div class="join-paths">
             <div class="join-path">
               <h3>Clinicians</h3>
@@ -208,10 +218,10 @@
               <a class="btn btn-solid" href="https://jointhemoove.org/" target="_blank" rel="noopener">Join MOOVE</a>
             </div>
             <div class="join-path">
-              <h3>Researchers and engineers</h3>
-              <p>Build open medical AI with us. Fill in a short form and we send you an invite to our Slack.</p>
-              <!-- TODO: the sign-up form, as in the community folder -->
-              <a class="btn btn-solid" href="https://example.org/meditron-community-form" target="_blank" rel="noopener">Request an invite</a>
+              <h3>Community</h3>
+              <p>Everyone else: researchers, engineers, health workers or simply curious. Stay up to date with Meditron and join the community: fill in a short form and we send you an invite to our Slack.</p>
+              <!-- TODO: replace the placeholder with the sign-up form, whose confirmation page gives the Slack invite -->
+              <a class="btn btn-solid" href="https://example.org/meditron-community-form" target="_blank" rel="noopener">Join the community</a>
             </div>
           </div>
         </div>
@@ -241,7 +251,7 @@
       <div>
         <h2>Contact</h2>
         <p>Questions about Meditron? Write to <a href="mailto:admin-light@epfl.ch?subject=Meditron">admin-light@epfl.ch</a>.</p>
-        <p class="team-link">Meet the <a href="#team">Meditron team</a>.</p>
+        <a class="team-thumb" href="#team"><img src="static/img/team-thumb.jpg" alt="" width="1920" height="906" loading="lazy"><span>Meet the Meditron team</span></a>
       </div>
       <div>
         <h2>Credits</h2>
@@ -267,7 +277,7 @@
       </ul>
       <nav class="lf-links" aria-label="LiGHT">
         <a href="https://www.light-laboratory.org">Home</a>
-        <a href="https://www.light-laboratory.org/who-we-are">Who we are</a>
+        <a href="#team">Who we are</a>
         <a href="mailto:admin-light@epfl.ch">Contact</a>
         <p class="lf-copy">© 2026 by LiGHT</p>
       </nav>
@@ -393,6 +403,8 @@
       <li><span class="name">Veronique Suttels, MD</span><span>EPFL</span></li>
       <li><span class="name">Evelyne Knüsel, MD</span><span>EPFL</span></li>
       <li><span class="name">Carl Starvaggi, MD</span><span>EPFL</span></li>
+      <li><a href="https://www.linkedin.com/in/anniehartley/" target="_blank" rel="noopener">Mary-Anne Hartley, MD</a><span>EPFL</span></li>
+      <li><a href="https://www.linkedin.com/in/kristinakeitel/" target="_blank" rel="noopener">Kristina Keitel, MD</a><span>EPFL</span></li>
     </ul>
     </div>
     <div>
@@ -465,6 +477,6 @@
   <script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/15.0.7/marked.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.2.4/purify.min.js"></script>
-  <script src="static/app.js?v=20261028c"></script>
+  <script src="static/app.js?v=20261028d"></script>
 </body>
 </html>

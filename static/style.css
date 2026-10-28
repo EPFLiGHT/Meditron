@@ -162,7 +162,8 @@ button { font: inherit; color: inherit; }
 .hero {
   /* --hs is the globe's band: the globe and a margin for its key; the folder row follows in the flow */
   --gs: min(86vmin, 46rem); --hs: calc(var(--gs) + 5rem);
-  position: relative; overflow: hidden; padding-bottom: 3.5rem;
+  /* clipped sideways only, so an unfolded folder can hang over the chat below */
+  position: relative; overflow-x: clip; padding-bottom: 3.5rem;
   display: grid; justify-items: center; grid-template-rows: var(--hs) auto;
 }
 .hero-center { grid-row: 1; align-self: center; }
@@ -338,7 +339,7 @@ button { font: inherit; color: inherit; }
 .why-wrap { max-width: var(--measure); margin: 0 auto; }
 /* every section below the hero: one heading size, one text size and colour (the citation stays small and grey) */
 .why-section h2, .chat-section h2, .feature-section h2, .cite-section h2, .credits h2 { font-size: var(--t-xl); font-weight: 800; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 0.75rem; }
-.why-section p, .chat-intro, .feature-section p, .credits p { font-size: var(--t-base); line-height: 1.5; color: var(--ink); }
+.why-section p, .feature-section p, .credits p { font-size: var(--t-base); line-height: 1.5; color: var(--ink); }
 .why-wrap p + p { margin-top: 0.9rem; }
 /* four steps on one line from 900px; below that a vertical list on a left rule */
 .timeline { list-style: none; margin: 3rem auto 0; padding: 0; max-width: 64rem; display: grid; gap: 1.5rem; }
@@ -362,9 +363,14 @@ button { font: inherit; color: inherit; }
 }
 
 /* ---------- chat ---------- */
-.chat-section { padding: 5rem 16px 4rem; }
-.chat-wrap { max-width: var(--measure); margin: 0 auto; }
-.chat-log { display: flex; flex-direction: column; gap: 1rem; margin: 1.5rem 0; }
+/* a light blue band, like Join us; the chat is a card on it */
+.chat-section { margin-top: 1.5rem; padding: 3.5rem 16px; background: var(--blue-wash); }
+.chat-section > h2 { max-width: var(--measure); margin: 0 auto 1.25rem; }
+.chat-wrap {
+  position: relative; max-width: 56rem; margin: 0 auto; padding: clamp(1.1rem, 3vw, 2rem);
+  background: var(--paper); border-radius: 14px; border: 1px solid var(--rule); box-shadow: 0 6px 24px rgb(20 32 46 / 0.10);
+}
+.chat-log { display: flex; flex-direction: column; gap: 1rem; margin: 0 0 1rem; }
 .msg { max-width: 92%; padding: 0.75rem 1rem; border-radius: 12px; line-height: 1.55; }
 .msg p { margin: 0 0 0.5rem; } .msg p:last-child { margin: 0; }
 .msg.bot :is(h1, h2, h3, h4) { font-size: 1.05rem; font-weight: 800; margin: 1rem 0 0.4rem; }
@@ -391,20 +397,21 @@ button { font: inherit; color: inherit; }
 /* the sharp corner points at the cube, which sits at the top left of the answer */
 .msg.bot { align-self: flex-start; background: var(--blue-wash); border-top-left-radius: 3px; }
 .msg.bot.error { background: none; border: 1.5px solid var(--red); color: var(--ink); }
-.chat-suggest { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+/* the example questions, as pills under the greeting */
+.chat-suggest { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0 0 1.25rem 2.6rem; }
 .chat-suggest[hidden] { display: none; }
 .chat-suggest button {
-  background: none; border: 1.5px solid var(--rule); border-radius: 999px; padding: 0.4rem 0.9rem;
-  font-size: 0.9rem; text-align: left; cursor: pointer; line-height: 1.35;
+  background: var(--paper); border: 1.5px solid var(--sky); border-radius: 999px; padding: 0.45rem 1rem;
+  font-size: 0.9rem; text-align: left; cursor: pointer; line-height: 1.35; color: var(--blue);
 }
-.chat-suggest button:hover { border-color: var(--blue); color: var(--blue); }
+.chat-suggest button:hover { background: var(--blue-wash); border-color: var(--blue); }
 .chat-form { display: flex; gap: 0.6rem; align-items: flex-end; }
 .chat-form textarea {
-  flex: 1; font: inherit; color: inherit; background: var(--paper); resize: vertical; min-height: 3.2rem;
-  border: 1.5px solid var(--ink); border-radius: 10px; padding: 0.7rem 0.9rem;
+  flex: 1; font: inherit; color: inherit; background: var(--paper); resize: vertical; min-height: 3.6rem;
+  border: 2px solid var(--blue); border-radius: 12px; padding: 0.8rem 1rem;
 }
 .send {
-  border: 0; border-radius: 10px; padding: 0.8rem 1.2rem; background: var(--blue); color: var(--paper);
+  border: 0; border-radius: 12px; padding: 0.95rem 1.5rem; background: var(--blue); color: var(--paper);
   font-weight: 800; cursor: pointer;
 }
 .send:disabled, .chat-form textarea:disabled { opacity: 0.5; cursor: not-allowed; }
@@ -413,10 +420,7 @@ button { font: inherit; color: inherit; }
 .chat-status { font-size: var(--t-sm); color: var(--muted); margin-top: 0.6rem; min-height: 1.4em; }
 .chat-model { font-size: var(--t-sm); color: var(--muted); margin: 0.4rem 0 0.8rem; }
 .chat-model a { font-weight: 700; }
-/* like a figure, the conversation runs wider than the text column above it */
-.chat-log, .chat-suggest, .chat-form, .chat-disclaimer, .chat-status {
-  width: min(56rem, calc(100vw - 32px)); margin-left: calc(50% - min(28rem, 50vw - 16px));
-}
+@media (max-width: 560px) { .chat-suggest { margin-left: 0; } }
 
 /* ---------- MeditronFO and download: a heading, one line and a large linked thumbnail ---------- */
 .feature-section { padding: 2.5rem 16px; }
@@ -467,7 +471,16 @@ button { font: inherit; color: inherit; }
   max-width: calc(var(--measure) + 32px); margin: 0 auto; padding: 2.5rem 16px 3rem;
 }
 .credits p { margin: 0; }
-.credits .team-link { margin-top: 0.6rem; }
+/* the team panel, as a small linked thumbnail under the contact line */
+.team-thumb {
+  display: block; width: min(17rem, 100%); margin-top: 1.1rem; overflow: hidden; text-decoration: none;
+  border: 1px solid var(--rule); border-radius: 10px; background: var(--paper);
+  box-shadow: 0 4px 16px rgb(20 32 46 / 0.10); transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.team-thumb img { width: 100%; height: auto; }
+.team-thumb span { display: block; padding: 0.5rem 0.75rem; font-weight: 800; font-size: 0.95rem; }
+.team-thumb:hover, .team-thumb:focus-visible { transform: translateY(-2px); box-shadow: 0 10px 26px rgb(20 32 46 / 0.16); }
+@media (prefers-reduced-motion: reduce) { .team-thumb { transition: none; } .team-thumb:hover { transform: none; } }
 .credits a { white-space: nowrap; }
 @media (max-width: 640px) { .credits { grid-template-columns: 1fr; } }
 /* the Swiss AI Initiative, in ink */
