@@ -20,6 +20,7 @@
   --font: 'Manrope', system-ui, sans-serif;
   --display: 'ivypresto-headline', 'Cormorant Garamond', Georgia, serif;   /* LiGHT's headline face (Adobe Fonts kit) */
   --gutter: clamp(16px, 3.2vw, 46px);   /* LiGHT's page margin */
+  --page: min(1500px, 100% - 2 * var(--gutter));   /* LiGHT's column */
   --t-sm: 0.875rem;
   --t-base: 1.0625rem;
   --t-md: 1.3125rem;
@@ -92,11 +93,11 @@ button { font: inherit; color: inherit; }
 
 /* ---------- the LiGHT header: logo left, the lab's menu right; a menu button on phones ---------- */
 .lh {
-  position: relative; z-index: 5;
+  position: relative; z-index: 5; width: var(--page); margin: 0 auto;
   display: flex; justify-content: space-between; align-items: center; gap: 1rem;
-  padding: 2.25rem var(--gutter) 1.5rem;
+  padding: 4.85rem 0 2.1rem;
 }
-.lh-logo img { height: clamp(2.6rem, 4vw, 3.4rem); width: auto; }
+.lh-logo img { height: 58px; width: auto; }
 .lh-logo .logo-mono { display: none; filter: invert(1); }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .lh-logo .logo-color { display: none; }
@@ -122,7 +123,7 @@ button { font: inherit; color: inherit; }
   .lh-menu .bars::before { position: absolute; top: -0.6rem; }
   .lh-menu .bars::after { position: absolute; top: 0.6rem; }
   .lh-links {
-    display: none; position: absolute; top: 100%; right: var(--gutter); z-index: 6;
+    display: none; position: absolute; top: 100%; right: 0; z-index: 6;
     flex-direction: column; gap: 0; min-width: 12rem; padding: 0.5rem 0;
     background: var(--paper); border: 1px solid var(--rule); box-shadow: 0 12px 32px rgb(20 32 46 / 0.16);
   }
@@ -132,13 +133,13 @@ button { font: inherit; color: inherit; }
 
 /* ---------- the beam: LiGHT's two-blue banner with a typed function ---------- */
 .beam {
-  position: relative; overflow: hidden; margin: 0 var(--gutter); border-radius: 12px;
-  min-height: clamp(18rem, 24vw, 21.5rem); display: flex; align-items: center;
-  padding: 2rem clamp(1.5rem, 13vw, 11rem);
+  position: relative; overflow: hidden; width: var(--page); margin: 0 auto; border-radius: 12px;
+  min-height: 342px; display: flex; align-items: center;
+  padding: 2rem 13.2%;
 }
 .beam-bg { position: absolute; inset: 0; width: 100%; height: 100%; }
 .beam-eq { position: relative; margin: 0; color: #fff; font-family: var(--display); line-height: 1.15; }
-.beam-lhs { display: block; font-weight: 700; font-size: clamp(2.2rem, 4vw, 3.6rem); letter-spacing: -0.01em; }
+.beam-lhs { display: block; font-weight: 700; font-size: clamp(2.2rem, 4vw, 3.6rem); }
 .beam-fx { display: block; margin-top: 0.35rem; font-size: clamp(2rem, 3vw, 2.7rem); white-space: nowrap; }
 .beam-fx i { font-weight: 700; margin-right: 0.15em; }
 .beam-cursor { font-family: var(--font); font-weight: 300; margin-left: 0.05em; animation: beam-blink 0.85s steps(1) infinite; }
@@ -147,8 +148,7 @@ button { font: inherit; color: inherit; }
 @media (max-width: 420px) { .beam-fx { font-size: 1.75rem; } }
 @media (prefers-reduced-motion: reduce) { .beam-cursor { display: none; } .beam-fx { white-space: normal; } }
 
-/* the paper's links, as on the CLIMB and MoBayes pages */
-.project-links { display: flex; flex-wrap: wrap; gap: 0.6rem; padding: 1.25rem var(--gutter) 0; }
+/* buttons (the join section) */
 .btn {
   display: inline-flex; align-items: center; padding: 0.5rem 1.15rem; border-radius: 999px;
   border: 1.5px solid var(--blue); color: var(--blue); background: transparent;
@@ -547,26 +547,25 @@ button { font: inherit; color: inherit; }
   .foot-row { gap: 1.1rem; }
 }
 
-/* ---------- the LiGHT footer: a navy band, logo left, the hosts in the middle, three links right ---------- */
-.lf { background: var(--band); color: #fff; padding: 2.75rem var(--gutter); font-size: var(--t-sm); }
+/* ---------- the LiGHT footer, as on light-laboratory.org: logo, the four host tiles from about a quarter in, three links right ---------- */
+.lf { background: var(--band); color: #fff; padding: 2.4rem 0; }
 .lf :focus-visible { outline-color: var(--sky); }
-.lf-row { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1.75rem 2.5rem; }
-.lf-logo { height: 2.6rem; width: auto; filter: invert(1); }
-.lf-hosts img { filter: brightness(0) invert(1); width: auto; }
-.lf .h-epfl { height: 1.6rem; } .lf .h-ariadne { height: 2.6rem; } .lf .h-ashoka { height: 3.4rem; } .lf .h-c4ir { height: 2.3rem; }
-.lf-hosts { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 1.25rem 2.5rem; }
-.lf-links { display: flex; flex-direction: column; align-items: flex-end; gap: 0.3rem; font-size: 1rem; }
-.lf-links a { color: var(--sky); text-underline-offset: 0.2em; }
+.lf-row { width: var(--page); margin: 0 auto; display: grid; grid-template-columns: 26% auto 1fr; align-items: center; gap: 1.5rem 0; }
+.lf-logo img { width: 166px; height: auto; }
+.lf-hosts { list-style: none; margin: 0; padding: 0; display: flex; gap: 10px; }
+.lf-hosts img { width: 130px; height: auto; }
+.lf-links { justify-self: end; display: flex; flex-direction: column; align-items: flex-end; font-size: 1rem; line-height: 1.6; }
+.lf-links a { color: var(--sky); text-underline-offset: 0.15em; }
 .lf-links a:hover { color: #fff; }
-.lf-copy { margin: 1rem 0 0; font-size: var(--t-sm); }
-@media (max-width: 1000px) {
-  .lf-row { grid-template-columns: 1fr; justify-items: start; }
-  .lf-hosts { justify-content: flex-start; }
-  .lf-links { align-items: flex-start; }
+.lf-copy { margin: 1.9rem 0 0; font-size: var(--t-sm); }
+@media (max-width: 1100px) {
+  .lf-row { grid-template-columns: auto 1fr; }
+  .lf-hosts { grid-column: 1 / -1; grid-row: 2; flex-wrap: wrap; }
 }
 @media (max-width: 560px) {
-  .lf .h-epfl { height: 1.1rem; } .lf .h-ariadne { height: 1.9rem; } .lf .h-ashoka { height: 2.5rem; } .lf .h-c4ir { height: 1.8rem; }
-  .lf-hosts { gap: 1rem 1.5rem; }
+  .lf-row { grid-template-columns: 1fr; justify-items: start; }
+  .lf-hosts img { width: 80px; }
+  .lf-links { justify-self: start; align-items: flex-start; }
 }
 
 /* ---------- panel (opened folder) ---------- */
