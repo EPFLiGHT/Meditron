@@ -224,8 +224,8 @@ const SITES = [
   });
 })();
 
-// The beam types its arguments one after another, with the LiGHT homepage's timings;
-// with reduced motion it shows all three at once.
+// The beam types its arguments one after another, with the LiGHT homepage's timings, and lights the
+// matching folder group; with reduced motion it shows all three at once.
 (function beam() {
   const el = document.getElementById('beam-word');
   if (!el) return;
@@ -234,39 +234,20 @@ const SITES = [
     el.textContent = `(${words.map((w) => w.slice(1, -1)).join(', ')})`;
     return;
   }
+  // the folder group of the commitment being typed lights up (the words and the groups share their order)
+  const groups = document.querySelectorAll('.fgroup');
+  const light = (k) => groups.forEach((g, gi) => g.classList.toggle('is-lit', gi === k));
   let w = 0, n = words[0].length;
+  light(0);
   function type() {
     if (n < words[w].length) { el.textContent = words[w].slice(0, ++n); setTimeout(type, 80); }
     else setTimeout(erase, 1200);
   }
   function erase() {
     if (n > 0) { el.textContent = words[w].slice(0, --n); setTimeout(erase, 40); }
-    else { w = (w + 1) % words.length; setTimeout(type, 300); }
+    else { w = (w + 1) % words.length; light(w); setTimeout(type, 300); }
   }
   setTimeout(erase, 1200);   // the first word is already in the HTML
-})();
-
-/* ---------------------------------------------------------- commitments */
-
-// Hovering or focusing a commitment brings out the folders that show it and fades the rest.
-(function commitments() {
-  const items = [...document.querySelectorAll('.commitments [data-to]')];
-  if (!items.length) return;
-  const hero = items[0].closest('.hero');
-  const desktop = matchMedia('(min-width: 901px)');
-  const links = items.flatMap((li) => li.dataset.to.split(' ').map((id) => ({ li, folder: document.getElementById(id) })));
-  function focus(on) {
-    hero.querySelectorAll('.is-linked').forEach((el) => el.classList.remove('is-linked'));
-    hero.classList.toggle('focus', Boolean(on));
-    if (!on) return;
-    links.filter((l) => on === l.li).forEach((l) => { l.li.classList.add('is-linked'); l.folder.classList.add('is-linked'); });
-  }
-  items.forEach((el) => {
-    el.addEventListener('pointerenter', () => { if (desktop.matches) focus(el); });
-    el.addEventListener('pointerleave', () => focus(null));
-    el.addEventListener('focus', () => { if (desktop.matches) focus(el); });
-    el.addEventListener('blur', () => focus(null));
-  });
 })();
 
 /* ---------------------------------------------------------------- panel */
