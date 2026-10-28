@@ -241,7 +241,7 @@ const SITES = [
 // matching folder group; with reduced motion it shows all three at once.
 (function beam() {
   const el = document.getElementById('beam-word');
-  if (!el) return;
+  if (!el || document.documentElement.classList.contains('nobeam')) return;
   const words = el.dataset.words.split('|');
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
     el.textContent = `(${words.map((w) => w.slice(1, -1)).join(', ')})`;
