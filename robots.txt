@@ -1,0 +1,8 @@
+# Read by crawlers only at the root of a domain: in effect once the site has its own domain.
+User-agent: *
+Disallow: /tracker/
+Disallow: /server/
+Disallow: /nobeam/
+Disallow: /withbeam/
+
+Sitemap: https://epflight.github.io/Meditron/sitemap.xml
