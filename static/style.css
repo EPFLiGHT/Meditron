@@ -305,7 +305,8 @@ button { font: inherit; color: inherit; }
   .hero .talk:hover { background: var(--ink); }
   .hero .talk:focus-visible { outline-color: var(--blue); }
   .hero { display: block; place-items: normal; min-height: 0; padding: 0 0 2rem; }
-  #globe { position: relative; left: auto; top: auto; transform: none; margin: 0 auto; width: min(92vw, 30rem); height: min(92vw, 30rem); }
+  /* a canvas is inline by default: block, so the auto margins centre it */
+  #globe { display: block; position: relative; left: auto; top: auto; transform: none; margin: 1rem auto 0; width: min(92vw, 30rem); height: min(92vw, 30rem); }
   .hero-center { margin-top: calc(-1 * min(92vw, 30rem) / 2 - 3.5rem); }
   .globe-key { position: static; transform: none; width: fit-content; justify-content: center; margin: 3rem auto 0; }
   .folders { margin: 2rem auto 0; }
