@@ -597,7 +597,10 @@ tr.ours td { font-weight: 700; background: var(--blue-wash); }
 .people li { margin: 0.3rem 0; }
 .people a { text-decoration: none; }
 .people a:hover { text-decoration: underline; }
-.people li > * + span { margin-left: 0.35rem; font-size: 0.82rem; font-style: italic; color: var(--muted); }
+.people li > :is(a, .name) + span { margin-left: 0.35rem; font-size: 0.82rem; font-style: italic; color: var(--muted); }
+/* a small round photo before each name: LiGHT's headshots, its blue backdrop where there is none */
+.people .face { display: inline-block; width: 1.6rem; height: 1.6rem; margin-right: 0.55rem; vertical-align: middle; border-radius: 50%; object-fit: cover; }
+.people li:has(.face) { margin: 0.45rem 0; }
 .pubs { list-style: none; padding: 0; margin: 1.5rem 0 0; }
 .pubs li { padding: 1.1rem 0; border-top: 1px solid var(--rule); }
 .pubs li:last-child { border-bottom: 1px solid var(--rule); }
