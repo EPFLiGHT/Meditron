@@ -518,9 +518,10 @@ button { font: inherit; color: inherit; }
 /* ---------- the LiGHT footer, as on light-laboratory.org: logo, the four host tiles from about a quarter in, three links right ---------- */
 .lf { background: var(--band); color: #fff; padding: 2.4rem 0; }
 .lf :focus-visible { outline-color: var(--sky); }
-.lf-row { width: var(--page); margin: 0 auto; display: grid; grid-template-columns: 26% auto 1fr; align-items: center; gap: 1.5rem 0; }
+/* the hosts start where the page's text column does; -5px is the EPFL tile's transparent margin, so its ink lines up */
+.lf-row { width: var(--page); margin: 0 auto; display: grid; grid-template-columns: calc((100% - var(--measure)) / 2) auto 1fr; align-items: center; gap: 1.5rem 0; }
 .lf-logo img { width: 166px; height: auto; }
-.lf-hosts { list-style: none; margin: 0; padding: 0; display: flex; gap: 10px; }
+.lf-hosts { list-style: none; margin: 0 0 0 -5px; padding: 0; display: flex; gap: 10px; }
 .lf-hosts img { width: 130px; height: auto; }
 .lf-links { justify-self: end; display: flex; flex-direction: column; align-items: flex-end; font-size: 1rem; line-height: 1.6; }
 .lf-links a { color: var(--sky); text-underline-offset: 0.15em; }
