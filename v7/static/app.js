@@ -53,10 +53,10 @@ const SITES = [
   const projection = d3.geoOrthographic().clipAngle(90).precision(0.5);
   const path = d3.geoPath(projection, ctx);
 
-  // The story's clock T counts stops and is the scroll position, so the story plays both ways: the camera reaches
+  // The story's clock T counts stops and can run both ways (the rail, a drag): the camera reaches
   // stop i at T = i + 0.5, after MOVE of a step in flight, and rests there for the rest of the step.
   // Stop n, after the last site, is the ocean, where the card about Meditron rests until the clock ends.
-  const n = SITES.length, MOVE = 0.4, END = n + 1.9, STEP_SVH = 34, STEP_MS = 2600;
+  const n = SITES.length, MOVE = 0.4, END = n + 1.9, STEP_MS = 2600;
   const START = [-5, 12], OCEAN_VIEW = [70, -15], OCEAN_SPOT = [79, -23];   // where the camera starts; the ocean's view, and where its card sits
   const docked = matchMedia('(max-width: 900px)');   // phones: the site's card sits under the globe instead of beside its square
   const arrive = (i) => i + 0.5;
@@ -207,8 +207,8 @@ const SITES = [
   stops.innerHTML = items.map(([name, , more]) => `<li><button type="button">${name}${more ? `<span class="sr"> ${more}</span>` : ''}</button></li>`).join('');
   const rows = [...stops.children];
   rows.forEach((li, i) => li.addEventListener('click', () => {
-    wanted = false; held = false;
-    scrollTo({ top: scrollFor(items[i][1]), behavior: reduceMotion ? 'auto' : 'smooth' });
+    wanted = false;
+    if (reduceMotion) T = items[i][1]; else goal = items[i][1];
   }));
   let lastLit = -1, lastHere = -1;
   function showProgress(lit) {
@@ -258,63 +258,54 @@ const SITES = [
     tip.style.top = `${r.top - h.top + m.py * k}px`;
   }
 
-  /* the clock: the scroll position, which the story moves on by itself while nobody else is scrolling */
-  const stepPx = () => (story.offsetHeight - stage.offsetHeight) / END;
-  const scrollFor = (t) => scrollY + story.getBoundingClientRect().top + t * stepPx();
-  let wanted = !reduceMotion;   // the story plays until someone scrolls it back or pauses it
-  let held = false;             // paused with the button: stays paused, even back at the top of the page
-  let lastInput = -1e9, pos = null, lastY = scrollY, last = 0, drawn = null;
-  const idle = 1400;
-  for (const ev of ['wheel', 'touchmove', 'keydown', 'pointerdown']) addEventListener(ev, () => { lastInput = performance.now(); }, { passive: true });
+  /* the clock: its own, so the page scrolls freely past the globe; the story plays while the stage is mostly in view */
+  let wanted = !reduceMotion;   // the story plays until someone pauses it
+  let goal = null;              // a stop on the rail the story is gliding to
+  let last = 0, drawn = null;
+  const GLIDE_MS = 250;         // one step of the story when gliding to a stop
 
   function frame(t) {
     requestAnimationFrame(frame);
     const dt = Math.min(100, t - last);
     if (dt < 30) return;
     last = t;
-    const top = story.getBoundingClientRect().top, step = stepPx(), vh = innerHeight;
-    // someone else moved the page: going back means they want to look at something, so the story stops playing;
-    // back at the top it may start again
-    if (pos !== null && Math.abs(scrollY - pos) > 8) { pos = null; lastInput = t; }
-    if (pos === null && scrollY < lastY - 1) wanted = false;
-    if (top > vh * 0.5 && !held) wanted = true;
-    lastY = scrollY;
-    T = clamp(-top / (step * END)) * END;
-    const playing = wanted && !document.hidden && t - lastInput > idle && top < vh * 0.3 && T < END && !document.querySelector('dialog[open]');
-    if (playing) {
-      pos = (pos ?? scrollY) + dt * step / STEP_MS;
-      scrollTo({ top: pos, behavior: 'instant' });
-      lastY = scrollY;
-    } else pos = null;
+    const box = stage.getBoundingClientRect(), vh = innerHeight;
+    const seen = clamp((Math.min(box.bottom, vh) - Math.max(box.top, 0)) / Math.min(box.height, vh));
+    const open = document.querySelector('dialog[open]');
+    if (goal !== null) {
+      const left = goal - T, move = dt / GLIDE_MS;
+      if (Math.abs(left) <= move) { T = goal; goal = null; } else T += Math.sign(left) * move;
+    }
+    const playing = wanted && goal === null && dragX === null && !document.hidden && seen >= 0.7 && T < END && !open;
+    if (playing) T = Math.min(END, T + dt / STEP_MS);
     play.textContent = T >= END - 0.01 ? 'Replay' : wanted ? 'Pause' : 'Play';
     // the rail joins once the stage is nearly in place, so it is never cut off by the fold
-    const railIn = clamp(1 - top / (vh * 0.2));
+    const railIn = clamp((seen - 0.65) / 0.05);
     rail.style.opacity = railIn; rail.style.visibility = railIn > 0 ? 'visible' : 'hidden';
     // the globe turns by itself until the story starts, then comes round to the camera the short way
-    spin = top >= 0 ? wrap(spin + dt * 0.0042) : Math.abs(spin) < 0.05 ? 0 : spin * Math.exp(-dt / 220);
+    spin = T === 0 && !playing ? wrap(spin + dt * 0.0042) : Math.abs(spin) < 0.05 ? 0 : spin * Math.exp(-dt / 220);
     const state = `${T}|${spin}|${size}`;
-    if (visible && !document.querySelector('dialog[open]') && (state !== drawn || showing())) { drawn = state; draw(t); }
+    if (visible && !open && (state !== drawn || showing())) { drawn = state; draw(t); }
   }
   let visible = true;
   new IntersectionObserver(([e]) => { visible = e.isIntersecting; }).observe(canvas);
 
   play.addEventListener('click', () => {
-    if (T >= END - 0.01) { scrollTo({ top: scrollFor(0), behavior: 'instant' }); lastY = scrollY; wanted = true; held = false; }
-    else { wanted = !wanted; held = !wanted; }
-    lastInput = -1e9;
+    goal = null;
+    if (T >= END - 0.01) { T = 0; wanted = true; }
+    else wanted = !wanted;
   });
 
   // the globe also turns by hand: a sideways drag runs the story, to the right to go back
   let dragX = null;
   canvas.addEventListener('pointermove', (e) => {
     if (dragX === null) { hover(siteAt(e)); return; }
-    const top = story.getBoundingClientRect().top;
-    if (top <= 0 && T < END) scrollBy({ top: (dragX - e.clientX) * stepPx() / 110, behavior: 'instant' });
+    T = Math.max(0, Math.min(END, T + (dragX - e.clientX) / 110));
     dragX = e.clientX;
   });
   canvas.addEventListener('pointerdown', (e) => {
     hover(siteAt(e));
-    if (!reduceMotion && e.button === 0) { dragX = e.clientX; canvas.setPointerCapture(e.pointerId); canvas.classList.add('dragging'); }
+    if (!reduceMotion && e.button === 0) { goal = null; dragX = e.clientX; canvas.setPointerCapture(e.pointerId); canvas.classList.add('dragging'); }
   });
   const dragEnd = () => { dragX = null; canvas.classList.remove('dragging'); };
   canvas.addEventListener('pointerup', dragEnd);
@@ -325,7 +316,6 @@ const SITES = [
   const reveal = () => canvas.classList.remove('pending');
   canvas.classList.add('pending'); setTimeout(reveal, 1500);
   if (reduceMotion) story.classList.add('still');
-  else story.style.height = `calc(100svh + ${END * STEP_SVH}svh)`;
   readColors(); resize(); draw();
   addEventListener('resize', () => { resize(); draw(); });
   matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { readColors(); draw(); });
@@ -343,16 +333,19 @@ const SITES = [
 (function folders() {
   const desktop = matchMedia('(min-width: 901px)');
   let top = 10;
-  // The row keeps its folded height, so a folder unfolding on hover overlays the chat instead of pushing it down.
+  // Each group comes in once as the scroll reaches it, label first; without motion they are simply there.
   const row = document.querySelector('.folders');
-  function lockRow() {
-    if (!row) return;
-    row.style.height = '';
-    if (desktop.matches) row.style.height = `${row.offsetHeight}px`;
+  if (row && !reduceMotion) {
+    row.classList.add('reveal');
+    const seen = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        e.target.classList.add('is-in');
+        seen.unobserve(e.target);
+      });
+    }, { rootMargin: '0px 0px -20% 0px' });
+    row.querySelectorAll('.fgroup').forEach((g) => seen.observe(g));
   }
-  addEventListener('load', lockRow);
-  addEventListener('resize', lockRow);
-  document.fonts?.ready.then(lockRow);
   document.querySelectorAll('.folder').forEach((el) => {
     let sx = 0, sy = 0, ox = 0, oy = 0, moved = false, down = false;
     el.addEventListener('pointerdown', (e) => {
@@ -385,6 +378,41 @@ const SITES = [
       else location.hash = el.dataset.open;
     });
   });
+})();
+
+/* ---------------------------------------------------------------- dawn */
+
+// The dawn sky of the MeditronFO page behind the header and the title, with the horizon just under the buttons.
+(function dawn() {
+  const canvas = document.getElementById('sky'), ctas = document.querySelector('.hero-cta');
+  if (!canvas || !ctas) return;
+  const ctx = canvas.getContext('2d');
+  let drawn = '';
+
+  function draw() {
+    const W = Math.round(canvas.clientWidth), H = Math.round(canvas.clientHeight);
+    const horizon = Math.round(ctas.getBoundingClientRect().bottom - canvas.getBoundingClientRect().top + 20);
+    if (!W || !H || `${W}|${H}|${horizon}` === drawn) return;
+    drawn = `${W}|${H}|${horizon}`;
+    const dpr = Math.min(2, devicePixelRatio || 1);
+    canvas.width = W * dpr; canvas.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const f = Math.min(0.9, horizon / H), g = ctx.createLinearGradient(0, 0, 0, H);
+    [[0, '#0a1a44'], [0.38 * f, '#1d4096'], [0.66 * f, '#5b81c9'], [0.86 * f, '#b9a6b6'], [0.97 * f, '#f0bf8c'],
+      [f, '#ffdcaa'], [1, '#f6c48e']].forEach(([o, c]) => g.addColorStop(o, c));
+    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+    // film grain: grey specks over the sky
+    const speck = document.createElement('canvas');
+    speck.width = canvas.width; speck.height = canvas.height;
+    const sctx = speck.getContext('2d'), img = sctx.createImageData(speck.width, speck.height), d = img.data;
+    for (let i = 0; i < d.length; i += 4) { d[i] = d[i + 1] = d[i + 2] = Math.random() * 255; d[i + 3] = 14; }
+    sctx.putImageData(img, 0, 0);
+    ctx.drawImage(speck, 0, 0, W, H);
+  }
+
+  draw();
+  document.fonts?.ready.then(draw);
+  addEventListener('resize', draw);
 })();
 
 /* ---------------------------------------------------------------- beam */

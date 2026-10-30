@@ -112,13 +112,17 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400..800&display=swap">
   <link rel="stylesheet" href="https://use.typekit.net/ssi4ehi.css">
-  <link rel="stylesheet" href="static/style.css?v=20261030g">
+  <link rel="stylesheet" href="static/style.css?v=20261030m">
   <link rel="preload" href="static/data/land-110m.json" as="fetch" crossorigin>
-  <!-- page variants, to compare: ?withbeam shows the LiGHT beam (withbeam/), ?w400 sets every title at weight 400 (400/); links within the site keep them -->
+  <!-- page variants, to compare: ?withbeam shows the LiGHT beam (withbeam/), ?chillax the beam with its text and the name in the Meditron logo's font (chillax/), ?logofont only the name in that font (v8-logo/), ?w400 sets every title at weight 400 (400/); links within the site keep them -->
   <script>
   (() => {
-    const q = new URLSearchParams(location.search), on = ['withbeam', 'w400'].filter((k) => q.has(k));
+    const q = new URLSearchParams(location.search), on = ['withbeam', 'chillax', 'logofont', 'w400'].filter((k) => q.has(k));
     on.forEach((k) => document.documentElement.classList.add(k));
+    if (on.includes('chillax')) document.documentElement.classList.add('withbeam');
+    if (on.includes('chillax') || on.includes('logofont')) {
+      document.head.insertAdjacentHTML('beforeend', '<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=chillax@500,600,700&display=swap">');
+    }
     if (on.length) addEventListener('DOMContentLoaded', () => {
       for (const el of document.querySelectorAll('a[href]:not([href^="#"]):not([href*=":"]), [data-href]:not([data-href*=":"])')) {
         const u = new URL(el.getAttribute('href') ?? el.dataset.href, location.href);
@@ -129,8 +133,9 @@
   })();
   </script>
 </head>
-<body id="home">
+<body id="home" class="dawn">
   <a class="skip" href="#chat">Skip to the chat</a>
+  <canvas id="sky" aria-hidden="true"></canvas>
 
   <!-- the v5 header without the hosts: LiGHT's logo, and links to this page's sections -->
   <header class="top top-flow">
@@ -152,12 +157,12 @@
 
     <section class="hero" aria-label="Meditron">
       <div class="hero-center">
-        <h1 class="wordmark cube"><img class="cube-light" src="static/img/meditron-logo.png?v=2" alt="Meditron" width="1756" height="488"><img class="cube-dark" src="static/img/meditron-logo-dark.png?v=2" alt="Meditron" width="1756" height="488"></h1>
+        <h1 class="wordmark"><span class="cube" aria-hidden="true"><img class="cube-light" src="static/img/cube.png" alt=""><img class="cube-dark" src="static/img/cube-dark.png" alt=""></span><span>Meditron</span></h1>
         <p class="tagline">Open medical AI models, built and tested with clinicians around the world.</p>
         <p class="hero-cta"><a class="talk" href="#chat">Talk to Meditron</a><a class="talk talk-alt" href="#join">Join us</a></p>
       </div>
 
-      <!-- the globe rises from under the fold and pins; the scroll position is the story's clock, so scrolling up rewinds it (app.js) -->
+      <!-- the globe rises from under the fold and plays by itself while it is in view; the scroll only moves the page (app.js) -->
       <section class="story" id="story" aria-labelledby="story-title">
         <div class="story-stage" id="story-stage">
           <canvas id="globe" aria-hidden="true"></canvas>
@@ -166,7 +171,7 @@
             <ol class="story-stops" id="story-stops"></ol>
             <p class="story-tally" id="story-tally"></p>
             <span class="story-bar" aria-hidden="true"></span>
-            <p class="story-ctl"><button type="button" id="story-play">Pause</button><a href="#parts">Skip the story</a></p>
+            <p class="story-ctl"><button type="button" id="story-play">Pause</button></p>
           </div>
           <div class="story-card" id="story-card" aria-hidden="true" hidden></div>
           <!-- the last stop: this card rests in the Indian Ocean, with the sites lit around it -->
@@ -208,7 +213,7 @@
               <span class="folder-tab">Projects</span>
               <span class="folder-body">
                 <span class="folder-desc"><span>MeditronFO: the first medical AI where every step is open, from the data to the evaluation.</span></span>
-                <img class="folder-fig" src="static/img/portal-projects.jpg" alt="The MeditronFO project page: the title over a globe rising at dawn" width="960" height="453">
+                <img class="folder-fig" src="static/img/portal-projects.jpg?v=2" alt="The MeditronFO project page: the name and the paper's full title under a dawn sky" width="960" height="453">
                 <span class="folder-cta">Read the blog</span>
               </span>
             </button>
@@ -297,7 +302,7 @@
       <div class="feature-wrap">
         <h2 id="meditronfo-title">Meet our latest project</h2>
         <p>The first medical AI where every step is open, from the data to the evaluation.</p>
-        <a class="feature-thumb" href="meditronfo/"><img src="static/img/meditronfo-thumb.jpg" alt="The MeditronFO project page: the title over a globe rising at dawn" width="1920" height="906" loading="lazy"><span class="feature-cta">Read about MeditronFO</span></a>
+        <a class="feature-thumb" href="meditronfo/"><img src="static/img/meditronfo-thumb.jpg?v=2" alt="The MeditronFO project page: the name and the paper's full title under a dawn sky" width="1920" height="906" loading="lazy"><span class="feature-cta">Read about MeditronFO</span></a>
       </div>
     </section>
 
@@ -590,6 +595,6 @@
   <script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/15.0.7/marked.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.2.4/purify.min.js"></script>
-  <script src="static/app.js?v=20261030e"></script>
+  <script src="static/app.js?v=20261030j"></script>
 </body>
 </html>

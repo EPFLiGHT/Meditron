@@ -5,102 +5,39 @@ const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const fmt = (x, d = 1) => x.toFixed(d);
 
-/* ------------------------------------------------------------ sunrise */
+/* ------------------------------------------------------------ dawn sky */
 
-// The hero: a dawn sky over the main page's globe, so large that only its top shows, as an arc.
-// The sun is behind the globe: its near side is dark, with the continents as faint shapes that brighten
-// towards the lit limb. The sky, glow and grain are drawn once per size into an offscreen canvas; each
-// frame only redraws the cap of the globe as it turns.
-(function sunrise() {
-  const canvas = document.getElementById('sky');
-  if (!canvas || !window.d3) return;
+// The hero's sky: the dawn gradient, with the horizon just under the hero's buttons, and film grain.
+(function dawn() {
+  const canvas = document.getElementById('sky'), ctas = document.querySelector('.m-hero .m-ctas');
+  if (!canvas || !ctas) return;
   const ctx = canvas.getContext('2d');
-  const sky = document.createElement('canvas'), sctx = sky.getContext('2d');
-  const grain = document.createElement('canvas'), gctx = grain.getContext('2d');
-  const projection = d3.geoOrthographic().clipAngle(90).precision(0.3);
-  const path = d3.geoPath(projection, ctx);
-  const TILT = 38;   // the globe's centre sits at 38°S, so the visible cap spans the tropics to Europe
-  const RIM = 0.05;  // depth of the lit limb, as a share of the radius
-  let W = 0, H = 0, dpr = 1, R, cx, cy, top, disk, landFill, rimFill, land = null, lon = -20, last = 0, visible = true;
-
-  function noise(c, alpha) {   // film grain: grey specks over a transparent canvas
-    const g = c.getContext('2d'), img = g.createImageData(c.width, c.height), d = img.data;
-    for (let i = 0; i < d.length; i += 4) {
-      const v = Math.random() * 255;
-      d[i] = d[i + 1] = d[i + 2] = v; d[i + 3] = alpha;
-    }
-    g.putImageData(img, 0, 0);
-  }
-
-  function resize() {
-    const w = Math.round(canvas.clientWidth), h = Math.round(canvas.clientHeight);
-    if (!w || !h || (w === W && h === H)) return false;
-    W = w; H = h; dpr = Math.min(2, devicePixelRatio || 1);   // smooth edges: draw in device pixels
-    canvas.width = sky.width = W * dpr; canvas.height = sky.height = H * dpr;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0); sctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    const horizon = Math.round(H * 0.56);
-    R = Math.round(Math.max(W * 0.9, H * 0.95)); cx = W / 2; cy = horizon + R;
-    top = horizon - 4;
-    projection.scale(R).translate([cx, cy]);
-
-    const f = horizon / H, g = sctx.createLinearGradient(0, 0, 0, H);
-    [[0, '#0a1a44'], [0.38 * f, '#1d4096'], [0.66 * f, '#5b81c9'], [0.86 * f, '#b9a6b6'], [0.97 * f, '#f0bf8c'],
-      [f, '#ffdcaa'], [1, '#f6c48e']].forEach(([o, c]) => g.addColorStop(o, c));
-    sctx.fillStyle = g; sctx.fillRect(0, 0, W, H);
-    const glow = sctx.createRadialGradient(cx, cy, R, cx, cy, R + H * 0.28);
-    [[0, 'rgba(255,236,196,0.95)'], [0.06, 'rgba(255,210,150,0.6)'], [0.35, 'rgba(244,176,126,0.2)'],
-      [1, 'rgba(244,176,126,0)']].forEach(([o, c]) => glow.addColorStop(o, c));
-    sctx.fillStyle = glow; sctx.fillRect(0, 0, W, H);
-    const speck = document.createElement('canvas');
-    speck.width = W * dpr; speck.height = H * dpr; noise(speck, 14);
-    sctx.drawImage(speck, 0, 0, W, H);
-    grain.width = W * dpr; grain.height = (H - top) * dpr; noise(grain, 18);
-
-    // night side, a little lighter towards the limb; land fades in towards the limb; then the lit limb itself
-    disk = ctx.createRadialGradient(cx, cy, R * 0.7, cx, cy, R);
-    [[0, '#08132c'], [0.85, '#0d1d40'], [1, '#2a3558']].forEach(([o, c]) => disk.addColorStop(o, c));
-    landFill = ctx.createRadialGradient(cx, cy, R * 0.7, cx, cy, R);
-    [[0, 'rgba(104,175,231,0.07)'], [0.8, 'rgba(104,175,231,0.16)'], [0.97, 'rgba(190,200,220,0.4)'],
-      [1, 'rgba(255,222,172,0.8)']].forEach(([o, c]) => landFill.addColorStop(o, c));
-    rimFill = ctx.createRadialGradient(cx, cy, R * (1 - RIM), cx, cy, R);
-    [[0, 'rgba(255,214,160,0)'], [0.7, 'rgba(255,214,160,0.12)'], [1, 'rgba(255,230,190,0.55)']]
-      .forEach(([o, c]) => rimFill.addColorStop(o, c));
-    ctx.drawImage(sky, 0, 0, W, H);
-    return true;
-  }
+  let drawn = '';
 
   function draw() {
-    projection.rotate([lon, TILT]);
-    ctx.drawImage(sky, 0, top * dpr, W * dpr, (H - top) * dpr, 0, top, W, H - top);
-    ctx.save();
-    ctx.beginPath(); ctx.arc(cx, cy, R, 0, 2 * Math.PI); ctx.clip();
-    ctx.fillStyle = disk; ctx.fillRect(0, top, W, H - top);
-    if (land) { ctx.beginPath(); path(land); ctx.fillStyle = landFill; ctx.fill(); }
-    ctx.fillStyle = rimFill; ctx.fillRect(0, top, W, H - top);
-    ctx.drawImage(grain, 0, top, W, H - top);
-    ctx.restore();
-    ctx.beginPath(); ctx.arc(cx, cy, R - 0.5, 0, 2 * Math.PI);
-    ctx.strokeStyle = 'rgba(255,240,210,0.9)'; ctx.lineWidth = 1.5; ctx.stroke();
+    const W = Math.round(canvas.clientWidth), H = Math.round(canvas.clientHeight);
+    const horizon = Math.round(ctas.getBoundingClientRect().bottom - canvas.getBoundingClientRect().top + 20);
+    if (!W || !H || `${W}|${H}|${horizon}` === drawn) return;
+    drawn = `${W}|${H}|${horizon}`;
+    const dpr = Math.min(2, devicePixelRatio || 1);
+    canvas.width = W * dpr; canvas.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const f = horizon / H, g = ctx.createLinearGradient(0, 0, 0, H);
+    [[0, '#0a1a44'], [0.38 * f, '#1d4096'], [0.66 * f, '#5b81c9'], [0.86 * f, '#b9a6b6'], [0.97 * f, '#f0bf8c'],
+      [f, '#ffdcaa'], [1, '#f6c48e']].forEach(([o, c]) => g.addColorStop(o, c));
+    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+    // film grain: grey specks over the sky
+    const speck = document.createElement('canvas');
+    speck.width = canvas.width; speck.height = canvas.height;
+    const sctx = speck.getContext('2d'), img = sctx.createImageData(speck.width, speck.height), d = img.data;
+    for (let i = 0; i < d.length; i += 4) { d[i] = d[i + 1] = d[i + 2] = Math.random() * 255; d[i + 3] = 14; }
+    sctx.putImageData(img, 0, 0);
+    ctx.drawImage(speck, 0, 0, W, H);
   }
 
-  function frame(t) {
-    if (visible && !document.hidden && t - last > 50) {
-      lon += t - last > 300 ? 0 : (t - last) * 0.002;
-      last = t; draw();
-    } else if (t - last > 300) last = t;
-    requestAnimationFrame(frame);
-  }
-
-  // hidden until the continents are in (or the map is slow or missing), then faded in over the CSS sky
-  const reveal = () => canvas.classList.remove('pending');
-  canvas.classList.add('pending'); setTimeout(reveal, 1500);
-  resize(); draw();
-  addEventListener('resize', () => { if (resize()) draw(); });
-  new IntersectionObserver(([e]) => { visible = e.isIntersecting; }).observe(canvas);
-  fetch('../static/data/land-110m.json').then((r) => r.json())
-    .then((topo) => { land = topojson.feature(topo, topo.objects.land); draw(); reveal(); })
-    .catch(() => reveal());   // a plain dark globe if the map can't load
-  if (!reduceMotion) requestAnimationFrame(frame);
+  draw();
+  document.fonts?.ready.then(draw);
+  addEventListener('resize', draw);
 })();
 
 /* ------------------------------------------------------------ tooltip */

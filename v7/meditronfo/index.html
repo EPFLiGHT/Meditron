@@ -33,8 +33,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400..800&display=swap">
-  <link rel="stylesheet" href="../static/style.css?v=20261029s">
-  <link rel="stylesheet" href="meditronfo.css?v=20261029s">
+  <link rel="stylesheet" href="https://use.typekit.net/ssi4ehi.css">
+  <link rel="stylesheet" href="../static/style.css?v=20261030h">
+  <link rel="stylesheet" href="meditronfo.css?v=20261030n">
   <link rel="preload" href="../static/data/land-110m.json" as="fetch" crossorigin>
 </head>
 <body class="mfo">
@@ -42,29 +43,40 @@
 
   <header class="top">
     <a class="top-lab" href="https://www.light-laboratory.org/" target="_blank" rel="noopener"><img class="logo-color" src="../static/img/light-logo-color.png" alt="LiGHT, EPFL"><img class="logo-mono" src="../static/img/light-logo.png" alt=""></a>
-    <nav class="top-links" aria-label="Project links">
+    <nav class="top-links" aria-label="Sections">
       <a href="../">Meditron</a>
-      <a href="https://arxiv.org/abs/2605.16215" target="_blank" rel="noopener">Paper</a>
-      <a href="https://huggingface.co/collections/EPFLiGHT/meditronfo" target="_blank" rel="noopener">Download</a>
-      <a class="top-code" href="https://github.com/EPFLiGHT/FullyOpenMeditron" target="_blank" rel="noopener">Code</a>
+      <a href="#intro">Introduction</a>
+      <a href="#performance">Performance</a>
+      <a href="#clinicians">Clinician preference</a>
+      <a href="#built">How it's built</a>
+      <a href="#limits">Limits</a>
+      <a href="#get">Availability</a>
     </nav>
   </header>
 
   <main>
-    <!-- sunrise: the Meditron globe rises as an arc under a dawn sky (canvas drawn by meditronfo.js; the CSS gradient is the fallback) -->
+    <!-- the name, the paper's full title and its authors, as on the CLIMB page, under a dawn sky (canvas drawn by meditronfo.js; the CSS gradient is the fallback) -->
     <section class="m-hero" aria-labelledby="m-title">
       <canvas id="sky" aria-hidden="true"></canvas>
-      <div class="m-hero-in">
-        <h1 id="m-title"><img src="../static/img/cube.png" alt=""><span>Meditron<span class="m-fo"><span>F</span><span>O</span></span></span></h1>
+      <h1 id="m-title"><img src="../static/img/cube.png" alt=""><span>Meditron<span class="m-fo"><span>F</span><span>O</span></span></span></h1>
+      <p class="m-paper">Fully Open Meditron: An Auditable Pipeline for Clinical LLMs</p>
+      <ul class="m-authors" aria-label="Authors">
+        <li><a href="https://xaviertheimerlienhard.com/" target="_blank" rel="noopener">Xavier Theimer-Lienhard</a></li>
+        <li>Mushtaha El-Amin</li>
+        <li><a href="https://people.epfl.ch/fay.elhassan" target="_blank" rel="noopener">Fay Elhassan</a></li>
+        <li>Sahaj Vaidya</li>
+        <li>Victor Cartier-Negadi</li>
+        <li><a href="https://sasudavid.github.io/dsasu/" target="_blank" rel="noopener">David Sasu</a></li>
+        <li><a href="https://www.linkedin.com/in/lars-henning-klein/" target="_blank" rel="noopener">Lars Klein</a></li>
+        <li><a href="https://www.linkedin.com/in/anniehartley/" target="_blank" rel="noopener">Mary-Anne Hartley</a></li>
+      </ul>
+      <div class="m-ctas">
+        <a class="talk" href="https://arxiv.org/abs/2605.16215" target="_blank" rel="noopener">Paper</a>
+        <a class="m-ghost" href="https://github.com/EPFLiGHT/FullyOpenMeditron" target="_blank" rel="noopener">Code</a>
+        <a class="m-ghost" href="https://huggingface.co/collections/EPFLiGHT/meditronfo" target="_blank" rel="noopener">Models</a>
+        <a class="m-ghost" href="https://huggingface.co/datasets/EPFLiGHT/fully-open-meditron" target="_blank" rel="noopener">Data</a>
+        <a class="m-ghost" href="#cite">BibTeX</a>
       </div>
-      <ol class="m-toc" aria-label="Contents">
-        <li><a href="#intro"><span>(1)</span><i></i>Introduction</a></li>
-        <li><a href="#performance"><span>(2)</span><i></i>Performance</a></li>
-        <li><a href="#clinicians"><span>(3)</span><i></i>Clinician preference</a></li>
-        <li><a href="#built"><span>(4)</span><i></i>How it's built</a></li>
-        <li><a href="#limits"><span>(5)</span><i></i>Limits</a></li>
-        <li><a href="#get"><span>(6)</span><i></i>Availability</a></li>
-      </ol>
     </section>
 
     <section class="m-intro" aria-label="Summary">
@@ -245,8 +257,6 @@
     </div>
   </footer>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
-  <script src="meditronfo.js?v=20261021b"></script>
+  <script src="meditronfo.js?v=20261030d"></script>
 </body>
 </html>

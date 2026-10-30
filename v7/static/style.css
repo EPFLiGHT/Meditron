@@ -193,9 +193,9 @@ button { font: inherit; color: inherit; }
 .talk-alt { background: transparent; color: var(--blue); box-shadow: inset 0 0 0 1.5px var(--blue); }
 .talk-alt:hover { background: var(--blue-wash); }
 
-/* ---------- the story: the stage pins while the scroll position runs the globe ---------- */
+/* ---------- the story: one screen, the globe running on its own clock (app.js) ---------- */
 .story { position: relative; }
-.story-stage { --gs: min(96svh, 96vw, 70rem); position: sticky; top: 0; height: 100svh; }
+.story-stage { --gs: min(96svh, 96vw, 70rem); position: relative; height: 100svh; }
 #globe {
   position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
   width: var(--gs); height: var(--gs); touch-action: pan-y; cursor: grab;
@@ -255,25 +255,21 @@ button { font: inherit; color: inherit; }
   #globe { top: 47%; }
   .story-card { left: 16px; top: auto; right: 16px; bottom: 1rem; width: auto; max-width: none; }
 }
-/* reduced motion: no pinning and no tour, the globe rests on its last view with every site lit */
-.story.still .story-stage { position: relative; }
+/* reduced motion: no tour, the globe rests on its last view with every site lit */
 .story.still .story-ctl { display: none; }
 .story.still .story-stops { display: none; }
 .story.still .ocean-card { visibility: visible; }
 
-/* folders: one row of five under the three commitments (2 | 2 | 1), each group under its label */
+/* folders: one commitment per row, each under its label; a group comes in as the scroll reaches it (app.js) */
 .folders {
   position: relative; z-index: 3; width: var(--page); margin: 3.5rem auto 0; scroll-margin-top: 2rem;
-  display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0 var(--fg); --fg: clamp(1rem, 2vw, 2rem);
+  display: grid; gap: clamp(3rem, 8vh, 5.5rem); --fg: clamp(1rem, 2vw, 2rem);
 }
-.fgroup { grid-column: span 2; }
-.fgroup:last-child { grid-column: span 1; }
 .fgroup-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem var(--fg); align-items: start; }
-.fgroup:last-child .fgroup-cards { grid-template-columns: minmax(0, 1fr); }
 /* the label rules off its group; it lights up while the beam types its commitment */
 .fgroup-label {
   margin: 0 0 1.1rem; padding-top: 0.55rem; border-top: 3px solid var(--sky);
-  font-size: var(--t-sm); font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--blue);
+  font-size: var(--t-lg); color: var(--blue);
   transition: border-color 0.3s, color 0.3s;
 }
 .fgroup.is-lit .fgroup-label { border-color: var(--blue); color: var(--ink); }
@@ -293,10 +289,7 @@ button { font: inherit; color: inherit; }
 /* hover or focus also enlarges the card and unfolds a one-line description of where it leads */
 .folder:hover, .folder:focus-visible { --s: 1.06; z-index: 100; }
 .folder.dragging { --s: 1; }
-.folder-desc { display: grid; grid-template-rows: 0fr; opacity: 0; transition: grid-template-rows 0.2s ease, opacity 0.2s; }
-.folder-desc > span { overflow: hidden; font-size: var(--t-sm); line-height: 1.4; color: var(--ink); }
-.folder:hover .folder-desc, .folder:focus-visible .folder-desc { grid-template-rows: 1fr; opacity: 1; }
-.folder:hover .folder-desc > span, .folder:focus-visible .folder-desc > span { padding-bottom: 0.6rem; }
+.folder-desc > span { display: block; padding-bottom: 0.6rem; font-size: var(--t-sm); line-height: 1.4; color: var(--ink); }
 .folder-tab, .folder-body, .folder-cta { transition: background-color 0.15s, border-color 0.15s; }
 .folder.dragging { cursor: grabbing; filter: drop-shadow(10px 10px 0 var(--sky)); }
 .folder:focus-visible { outline-offset: 5px; }
@@ -334,28 +327,21 @@ button { font: inherit; color: inherit; }
 .mini-val { text-align: right; font-weight: 800; font-variant-numeric: tabular-nums; }
 
 @media (prefers-reduced-motion: no-preference) {
-  .folder { animation: drop-in 0.5s cubic-bezier(.2,.9,.3,1.2) both; }
-  #f-models { animation-delay: 0.1s; } #f-moove { animation-delay: 0.2s; }
-  #f-paper { animation-delay: 0.3s; } #f-projects { animation-delay: 0.4s; }
-  .folder:not(.dragging) { transition: transform 0.2s ease; }
-  @keyframes drop-in { from { opacity: 0; translate: 0 -1.5rem; } }
+  .folder:not(.dragging) { transition: transform 0.2s ease, opacity 0.5s var(--d, 0s), translate 0.5s var(--d, 0s); }
+  .fgroup-label { transition: border-color 0.3s, color 0.3s, opacity 0.5s, translate 0.5s; }
+  .folders.reveal .fgroup:not(.is-in) :is(.fgroup-label, .folder) { opacity: 0; translate: 0 1.5rem; }
+  .fgroup-cards .folder:nth-child(1) { --d: 0.15s; }
+  .fgroup-cards .folder:nth-child(2) { --d: 0.3s; }
 }
 
-/* Mid widths: one commitment per row; phones: one folder per row. */
-@media (max-width: 1100px) {
-  .folders { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem var(--fg); }
-  .fgroup, .fgroup:last-child { grid-column: 1 / -1; }
-  .fgroup .fgroup-cards, .fgroup:last-child .fgroup-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-@media (max-width: 560px) { .fgroup .fgroup-cards, .fgroup:last-child .fgroup-cards { grid-template-columns: minmax(0, 1fr); } }
+/* Phones: one folder per row. */
+@media (max-width: 560px) { .fgroup-cards { grid-template-columns: minmax(0, 1fr); } }
 
 /* Small screens: the folders become a plain stack. */
 @media (max-width: 900px) {
   .hero { padding: 0 0 2rem; }
   .folders { margin: 2rem auto 0; }
   .folder { transform: none; cursor: pointer; touch-action: auto; }
-  .folder-desc { grid-template-rows: 1fr; opacity: 1; }
-  .folder-desc > span { padding-bottom: 0.6rem; }
 }
 
 .hosts img { filter: brightness(0) invert(1); width: auto; }
@@ -777,3 +763,31 @@ tr.ours td { font-weight: 700; background: var(--blue-wash); }
 .tally span.hit { background: var(--blue); border-color: var(--blue); color: var(--paper); }
 .tally-row { display: grid; grid-template-columns: 7rem auto; gap: 1rem; align-items: center; margin: 0.6rem 0; }
 .game-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.5rem; }
+
+/* ---------- headlines: Ivy Presto Headline, Bold (the Adobe Fonts kit has Regular and Bold); the /400 titles above stay Regular ---------- */
+.wordmark, .ocean-card h2, .story-rail h2, .story-card strong, .fgroup-label,
+:is(.why-section, .chat-section, .feature-section, .join-section, .cite-section, .credits) :is(h2, h3),
+.panel-body :is(h2, h3, h4) { font-family: var(--display); font-weight: 700; letter-spacing: 0; }
+
+/* ---------- the dawn of the MeditronFO page behind the header and the title; it fades into the page behind the globe (app.js) ---------- */
+#sky {
+  position: absolute; top: 0; left: 0; z-index: -1; width: 100%; height: 100svh;
+  -webkit-mask-image: linear-gradient(#000 62%, transparent); mask-image: linear-gradient(#000 62%, transparent);
+}
+.dawn .top a { color: rgb(255 255 255 / 0.82); }
+.dawn .top a:hover { color: #fff; }
+.dawn .top-lab .logo-color { display: none; }
+.dawn .top-lab .logo-mono { display: block; }
+.dawn .wordmark { color: #fbf7ef; text-shadow: 0 2px 30px rgb(10 22 48 / 0.35); }
+.dawn .tagline { color: #fbf7ef; }
+.dawn .hero-cta .talk { background: #fbf7ef; color: #0c43a0; }
+.dawn .hero-cta .talk:hover { background: #fff; }
+.dawn .hero-cta .talk-alt { background: rgb(10 26 68 / 0.6); color: #fbf7ef; box-shadow: inset 0 0 0 2px #fbf7ef; }
+.dawn .hero-cta .talk-alt:hover { background: rgb(10 26 68 / 0.85); }
+/* the rail can sit on the sky: on a card of its own, as it already is on phones */
+@media (min-aspect-ratio: 3/2) and (min-width: 901px) {
+  .dawn .story-rail { width: 15.5rem; padding: 0.9rem; border-radius: 6px; background: color-mix(in srgb, var(--paper) 92%, transparent); }
+}
+
+/* ?logofont: the name in the font of the Meditron logo, in capitals as in the logo */
+.logofont .wordmark { font-family: 'Chillax', var(--font); text-transform: uppercase; }

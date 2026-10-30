@@ -9,27 +9,39 @@
 
 .mfo main { padding: 0 16px; }
 
-/* ---------- hero: dawn sky over the rising globe ---------- */
+/* ---------- hero: the name, the paper's full title, its authors and links under a dawn sky ---------- */
 .mfo .top a { color: rgb(255 255 255 / 0.82); }
 .mfo .top a:hover { color: #fff; }
 .mfo .top .logo-color { display: none; }
 .mfo .top .logo-mono { display: block; }
 .m-hero {
-  position: relative; margin: 0 -16px; overflow: hidden; isolation: isolate;
-  height: clamp(36rem, 100svh, 60rem); color: #fbf7ef;
-  /* fallback when the canvas can't draw: the same sky, a dark horizon */
-  background: linear-gradient(#0a1a44 0%, #1d4096 21%, #5b81c9 37%, #b9a6b6 48%, #f0bf8c 54%, #ffdcaa 56%, #0d1d40 56.2%, #08132c);
+  position: relative; isolation: isolate; margin: 0 -16px; padding: clamp(5.5rem, 11vh, 7rem) 16px clamp(7rem, 20vh, 11rem);
+  text-align: center; color: #fbf7ef;
+  /* fallback when the canvas can't draw: the same sky */
+  background: linear-gradient(#0a1a44 0%, #1d4096 21%, #5b81c9 37%, #b9a6b6 48%, #f0bf8c 54%, #ffdcaa 56%, #f6c48e);
 }
-#sky { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; transition: opacity 0.6s ease; }
-#sky.pending { opacity: 0; }
-.m-hero-in { position: absolute; left: 0; right: 0; top: 18%; text-align: center; padding: 0 16px; }
-.m-eyebrow { font-size: var(--t-sm); font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(255 255 255 / 0.85); margin: 0; }
+/* phones: the seven links need their own lines, under the logo */
+@media (max-width: 700px) {
+  .mfo .top { flex-direction: column; gap: 0.5rem; }
+  .mfo .top-links { justify-content: center; gap: 0.2rem 0.9rem; }
+  .m-hero { padding-top: 8.5rem; }
+}
+#sky { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; }
 .m-hero h1 {
   display: flex; align-items: center; justify-content: center; gap: 0.16em;
-  font-size: clamp(3rem, 11vw, 7.5rem); font-weight: 800; letter-spacing: -0.035em; margin: 0.3rem 0 0;
+  font-size: clamp(3rem, 11vw, 6.5rem); line-height: 1; margin: 0;
   text-shadow: 0 2px 30px rgb(10 22 48 / 0.35);
 }
 .m-hero h1 img { height: 0.9em; width: auto; }
+.m-paper { font: 700 clamp(1.4rem, 3vw, 2rem)/1.25 var(--display); max-width: 27em; margin: 1.1rem auto 1.4rem; }
+.m-authors { list-style: none; margin: 0 auto 1.75rem; padding: 0; max-width: 46rem; display: flex; flex-wrap: wrap; justify-content: center; gap: 0.25rem 1rem; color: rgb(255 255 255 / 0.85); }
+.m-authors li { white-space: nowrap; }
+.m-authors a { color: inherit; text-decoration: none; }
+.m-authors a:hover { text-decoration: underline; }
+.m-hero .talk { background: #fbf7ef; color: #0c43a0; }
+.m-hero .talk:hover { background: #fff; }
+.m-hero .m-ghost { border-color: #fbf7ef; color: #fbf7ef; background: rgb(10 26 68 / 0.6); }
+.m-hero .m-ghost:hover { background: rgb(10 26 68 / 0.85); }
 /* "FO" arrives after "Meditron": the word widens to make room, then each letter rises in, warm as the dawn, and cools to white */
 .m-fo { display: inline-block; white-space: nowrap; }
 .m-fo span { display: inline-block; }
@@ -43,15 +55,7 @@
     60% { opacity: 1; filter: blur(0); color: #ffe9cc; }
   }
 }
-.m-toc {
-  position: absolute; left: 50%; top: 66%; transform: translateX(-50%); width: min(23rem, calc(100% - 48px));
-  list-style: none; margin: 0; padding: 0; font-size: var(--t-dense);
-}
-.m-toc a { display: flex; align-items: baseline; gap: 0.5rem; padding: 0.12rem 0; color: rgb(255 255 255 / 0.9); text-decoration: none; text-shadow: 0 0 4px #09142e, 0 0 10px #09142e; }
-.m-toc a:hover, .m-toc a:focus-visible { color: #fff; }
-.m-toc span { font-size: var(--t-xs); font-variant-numeric: tabular-nums; }
-.m-toc i { flex: 1; border-bottom: 1px dotted rgb(255 255 255 / 0.45); transform: translateY(-0.25em); }
-.m-intro { max-width: 52rem; margin: 0 auto; padding: 4.5rem 0 3rem; text-align: center; }
+.m-intro { max-width: 52rem; margin: 0 auto; padding: 3.5rem 0 3rem; text-align: center; }
 .m-lede { font-size: clamp(1.25rem, 2.6vw, 1.65rem); line-height: 1.4; max-width: 40rem; margin: 0 auto 2rem; font-weight: 500; }
 .m-ctas { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; }
 .m-ghost {
@@ -208,3 +212,6 @@
 /* ---------- column layout: text in a centred reading column, figures, tables and cards wider on the same axis ---------- */
 .m-sec > * { margin-left: auto; margin-right: auto; max-width: var(--measure); }
 .m-sec > .m-fig, .m-sec > .m-scroll, .m-sec > .m-stats, .m-sec > .m-cards, .m-sec > .m-game { max-width: none; }
+
+/* headlines: as on the main page (style.css) */
+.m-hero h1, .m-sec h2, .m-h3, .m-card-head h4 { font-family: var(--display); font-weight: 700; letter-spacing: 0; }
