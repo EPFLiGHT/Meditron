@@ -112,7 +112,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400..800&display=swap">
   <link rel="stylesheet" href="https://use.typekit.net/ssi4ehi.css">
-  <link rel="stylesheet" href="static/style.css?v=20261028q">
+  <link rel="stylesheet" href="static/style.css?v=20261030g">
   <link rel="preload" href="static/data/land-110m.json" as="fetch" crossorigin>
   <!-- page variants, to compare: ?withbeam shows the LiGHT beam (withbeam/), ?w400 sets every title at weight 400 (400/); links within the site keep them -->
   <script>
@@ -132,15 +132,14 @@
 <body id="home">
   <a class="skip" href="#chat">Skip to the chat</a>
 
-  <!-- the LiGHT header, as on light-laboratory.org: the lab's logo, and a menu of this page's parts; the part in view is underlined, as LiGHT marks its current page (app.js) -->
-  <header class="lh">
-    <a class="lh-logo" href="https://www.light-laboratory.org"><img class="logo-color" src="static/img/light-logo-color.png" alt="LiGHT, Laboratory for intelligent Global Health and Humanitarian Response Technologies"><img class="logo-mono" src="static/img/light-logo.png" alt=""></a>
-    <button class="lh-menu" type="button" aria-expanded="false" aria-controls="top-nav"><span class="sr">Menu</span><span class="bars" aria-hidden="true"></span></button>
-    <nav class="lh-links" id="top-nav" aria-label="Sections">
-      <a class="is-here" href="#home">Home</a>
-      <a href="#meditronfo">MeditronFO</a>
-      <a href="#join">Join us</a>
-      <a href="#team">Who we are</a>
+  <!-- the v5 header without the hosts: LiGHT's logo, and links to this page's sections -->
+  <header class="top top-flow">
+    <a class="top-lab" href="https://www.light-laboratory.org/" target="_blank" rel="noopener"><img class="logo-color" src="static/img/light-logo-color.png" alt="LiGHT, Laboratory for intelligent Global Health and Humanitarian Response Technologies"><img class="logo-mono" src="static/img/light-logo.png" alt=""></a>
+    <nav class="top-links" aria-label="Sections">
+      <a href="#what">What is Meditron</a>
+      <a href="#meditronfo">Latest</a>
+      <a href="#download">Download</a>
+      <a href="#contact">Contact</a>
     </nav>
   </header>
 
@@ -152,18 +151,35 @@
     </section>
 
     <section class="hero" aria-label="Meditron">
-      <canvas id="globe" aria-hidden="true"></canvas>
-
       <div class="hero-center">
-        <h1 class="wordmark"><span class="cube" aria-hidden="true"><img class="cube-light" src="static/img/cube.png" alt=""><img class="cube-dark" src="static/img/cube-dark.png" alt=""></span><span>Meditron</span></h1>
+        <h1 class="wordmark cube"><img class="cube-light" src="static/img/meditron-logo.png?v=2" alt="Meditron" width="1756" height="488"><img class="cube-dark" src="static/img/meditron-logo-dark.png?v=2" alt="Meditron" width="1756" height="488"></h1>
         <p class="tagline">Open medical AI models, built and tested with clinicians around the world.</p>
-        <a class="talk" href="#chat">Talk to Meditron</a>
+        <p class="hero-cta"><a class="talk" href="#chat">Talk to Meditron</a><a class="talk talk-alt" href="#join">Join us</a></p>
       </div>
 
-      <p class="globe-key"><span class="dot" aria-hidden="true"></span>Where clinicians tested Meditron</p>
+      <!-- the globe rises from under the fold and pins; the scroll position is the story's clock, so scrolling up rewinds it (app.js) -->
+      <section class="story" id="story" aria-labelledby="story-title">
+        <div class="story-stage" id="story-stage">
+          <canvas id="globe" aria-hidden="true"></canvas>
+          <div class="story-rail" id="story-rail">
+            <h2 id="story-title">Where clinicians evaluated Meditron</h2>
+            <ol class="story-stops" id="story-stops"></ol>
+            <p class="story-tally" id="story-tally"></p>
+            <span class="story-bar" aria-hidden="true"></span>
+            <p class="story-ctl"><button type="button" id="story-play">Pause</button><a href="#parts">Skip the story</a></p>
+          </div>
+          <div class="story-card" id="story-card" aria-hidden="true" hidden></div>
+          <!-- the last stop: this card rests in the Indian Ocean, with the sites lit around it -->
+          <div class="ocean-card" id="ocean-card">
+            <h2>What is Meditron</h2>
+            <p>Meditron is a family of open medical AI models: large language models trained to answer clinical questions. Anyone can download them, run them on their own hardware and adapt them, from a hospital in Switzerland to a health post in Malawi.</p>
+            <p class="ocean-links"><a class="talk" href="#chat">Talk to Meditron</a><a href="#what">More about Meditron</a></p>
+          </div>
+        </div>
+      </section>
 
       <!-- five folders under the three commitments; the beam lights each group as it types its name (app.js) -->
-      <div class="folders" aria-label="The parts of Meditron">
+      <div class="folders" id="parts" aria-label="The parts of Meditron">
         <div class="fgroup">
           <h2 class="fgroup-label">Openness</h2>
           <div class="fgroup-cards">
@@ -574,6 +590,6 @@
   <script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/15.0.7/marked.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.2.4/purify.min.js"></script>
-  <script src="static/app.js?v=20261028g"></script>
+  <script src="static/app.js?v=20261030d"></script>
 </body>
 </html>

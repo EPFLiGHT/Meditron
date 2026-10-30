@@ -12,5 +12,7 @@ Disallow: /v2/
 Disallow: /v3/
 Disallow: /v4/
 Disallow: /v5/
+Disallow: /v6/
+Disallow: /v7/
 
 Sitemap: https://epflight.github.io/Meditron/sitemap.xml

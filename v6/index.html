@@ -1,0 +1,580 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Meditron: open medical AI models | LiGHT, EPFL</title>
+  <link rel="canonical" href="https://epflight.github.io/Meditron/">
+  <meta name="description" content="Meditron is open medical AI from EPFL's LiGHT lab: a fully open model, its training data, and an evaluation built with clinicians from Switzerland to Kenya.">
+  <meta name="theme-color" content="#0c43a0">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Meditron">
+  <meta property="og:title" content="Meditron: open medical AI models">
+  <meta property="og:description" content="Open medical AI, built with clinicians and tested by them. A fully open model, its training data, and an evaluation you can play.">
+  <meta property="og:url" content="https://epflight.github.io/Meditron/">
+  <meta property="og:image" content="https://epflight.github.io/Meditron/static/img/social-preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="The Meditron wordmark over a dithered globe, surrounded by project folders">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://epflight.github.io/Meditron/static/img/social-preview.png">
+  <script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "WebSite",
+   "@id": "https://epflight.github.io/Meditron/#website",
+   "name": "Meditron",
+   "url": "https://epflight.github.io/Meditron/",
+   "publisher": {
+    "@id": "https://epflight.github.io/Meditron/#light"
+   }
+  },
+  {
+   "@type": "ResearchOrganization",
+   "@id": "https://epflight.github.io/Meditron/#light",
+   "name": "LiGHT, Laboratory for intelligent Global Health and Humanitarian Response Technologies",
+   "alternateName": "LiGHT",
+   "url": "https://www.light-laboratory.org",
+   "sameAs": [
+    "https://www.linkedin.com/company/light-laboratory/"
+   ],
+   "parentOrganization": {
+    "@type": "CollegeOrUniversity",
+    "name": "EPFL",
+    "url": "https://www.epfl.ch"
+   }
+  },
+  {
+   "@type": "Dataset",
+   "name": "Fully Open Meditron training data",
+   "description": "533,888 medical training examples behind the MeditronFO models: public medical QA, questions built from clinical guidelines and vignettes modelled on MOOVE.",
+   "url": "https://huggingface.co/datasets/EPFLiGHT/fully-open-meditron",
+   "creator": {
+    "@id": "https://epflight.github.io/Meditron/#light"
+   }
+  },
+  {
+   "@type": "SoftwareSourceCode",
+   "name": "Fully Open Meditron",
+   "codeRepository": "https://github.com/EPFLiGHT/FullyOpenMeditron",
+   "programmingLanguage": "Python",
+   "author": {
+    "@id": "https://epflight.github.io/Meditron/#light"
+   }
+  },
+  {
+   "@type": "ScholarlyArticle",
+   "headline": "Fully Open Meditron: An Auditable Pipeline for Clinical LLMs",
+   "url": "https://arxiv.org/abs/2605.16215",
+   "datePublished": "2026",
+   "author": [
+    {
+     "@type": "Person",
+     "name": "Xavier Theimer-Lienhard"
+    },
+    {
+     "@type": "Person",
+     "name": "Mushtaha El-Amin"
+    },
+    {
+     "@type": "Person",
+     "name": "Fay Elhassan"
+    },
+    {
+     "@type": "Person",
+     "name": "Sahaj Vaidya"
+    },
+    {
+     "@type": "Person",
+     "name": "Victor Cartier-Negadi"
+    },
+    {
+     "@type": "Person",
+     "name": "David Sasu"
+    },
+    {
+     "@type": "Person",
+     "name": "Lars Klein"
+    },
+    {
+     "@type": "Person",
+     "name": "Mary-Anne Hartley"
+    }
+   ]
+  }
+ ]
+}
+  </script>
+  <link rel="icon" href="static/img/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400..800&display=swap">
+  <link rel="stylesheet" href="https://use.typekit.net/ssi4ehi.css">
+  <link rel="stylesheet" href="static/style.css?v=20261028q">
+  <link rel="preload" href="static/data/land-110m.json" as="fetch" crossorigin>
+  <!-- page variants, to compare: ?withbeam shows the LiGHT beam (withbeam/), ?w400 sets every title at weight 400 (400/); links within the site keep them -->
+  <script>
+  (() => {
+    const q = new URLSearchParams(location.search), on = ['withbeam', 'w400'].filter((k) => q.has(k));
+    on.forEach((k) => document.documentElement.classList.add(k));
+    if (on.length) addEventListener('DOMContentLoaded', () => {
+      for (const el of document.querySelectorAll('a[href]:not([href^="#"]):not([href*=":"]), [data-href]:not([data-href*=":"])')) {
+        const u = new URL(el.getAttribute('href') ?? el.dataset.href, location.href);
+        u.search = '?' + on.join('&');
+        if (el.hasAttribute('href')) el.setAttribute('href', u.href); else el.dataset.href = u.href;
+      }
+    });
+  })();
+  </script>
+</head>
+<body id="home">
+  <a class="skip" href="#chat">Skip to the chat</a>
+
+  <!-- the LiGHT header, as on light-laboratory.org: the lab's logo, and a menu of this page's parts; the part in view is underlined, as LiGHT marks its current page (app.js) -->
+  <header class="lh">
+    <a class="lh-logo" href="https://www.light-laboratory.org"><img class="logo-color" src="static/img/light-logo-color.png" alt="LiGHT, Laboratory for intelligent Global Health and Humanitarian Response Technologies"><img class="logo-mono" src="static/img/light-logo.png" alt=""></a>
+    <button class="lh-menu" type="button" aria-expanded="false" aria-controls="top-nav"><span class="sr">Menu</span><span class="bars" aria-hidden="true"></span></button>
+    <nav class="lh-links" id="top-nav" aria-label="Sections">
+      <a class="is-here" href="#home">Home</a>
+      <a href="#meditronfo">MeditronFO</a>
+      <a href="#join">Join us</a>
+      <a href="#team">Who we are</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- the LiGHT beam: the homepage's "Health Equity = ƒ(…)", with Meditron's three commitments as the arguments (app.js types them) -->
+    <section class="beam" aria-label="Trustworthy medical AI is a function of openness, clinical grounding and real-world evaluation">
+      <svg class="beam-bg" viewBox="0 0 1350 342" preserveAspectRatio="xMinYMid slice" aria-hidden="true"><rect width="1350" height="342" fill="#22459b"/><polygon points="104,0 354,0 1350,290 1350,342 210,342" fill="#64a7e0"/></svg>
+      <p class="beam-eq" aria-hidden="true"><span class="beam-lhs">Trustworthy medical AI =</span> <span class="beam-fx"><i>ƒ</i><span id="beam-word" data-words="(openness)|(clinical grounding)|(real-world evaluation)">(openness)</span><span class="beam-cursor">|</span></span></p>
+    </section>
+
+    <section class="hero" aria-label="Meditron">
+      <canvas id="globe" aria-hidden="true"></canvas>
+
+      <div class="hero-center">
+        <h1 class="wordmark"><span class="cube" aria-hidden="true"><img class="cube-light" src="static/img/cube.png" alt=""><img class="cube-dark" src="static/img/cube-dark.png" alt=""></span><span>Meditron</span></h1>
+        <p class="tagline">Open medical AI models, built and tested with clinicians around the world.</p>
+        <a class="talk" href="#chat">Talk to Meditron</a>
+      </div>
+
+      <p class="globe-key"><span class="dot" aria-hidden="true"></span>Where clinicians tested Meditron</p>
+
+      <!-- five folders under the three commitments; the beam lights each group as it types its name (app.js) -->
+      <div class="folders" aria-label="The parts of Meditron">
+        <div class="fgroup">
+          <h2 class="fgroup-label">Openness</h2>
+          <div class="fgroup-cards">
+            <button id="f-open" class="folder folder-portal" type="button" data-open="data">
+              <span class="folder-tab">Data &amp; code</span>
+              <span class="folder-body">
+                <span class="folder-desc"><span>All 533,888 training examples and the code that made them, built on Apertus, the fully open base model from EPFL, ETH Zurich and CSCS.</span></span>
+                <img class="folder-fig" src="static/img/portal-hf.jpg" alt="The training data on Hugging Face: 534k rows" width="960" height="453">
+                <span class="folder-cta">See what's open</span>
+              </span>
+            </button>
+            <button id="f-models" class="folder folder-portal" type="button" data-href="https://huggingface.co/collections/EPFLiGHT/meditronfo">
+              <span class="folder-tab">Models</span>
+              <span class="folder-body">
+                <span class="folder-desc"><span>Six MeditronFO models on Hugging Face, from 8B to 70B: Apertus, OLMo-2, EuroLLM and Gemma-3, each finetuned on our open corpus.</span></span>
+                <img class="folder-fig" src="static/img/portal-models.jpg" alt="The MeditronFO collection on Hugging Face" width="960" height="453">
+                <span class="folder-cta">Download</span>
+              </span>
+            </button>
+          </div>
+        </div>
+        <div class="fgroup">
+          <h2 class="fgroup-label">Clinical grounding</h2>
+          <div class="fgroup-cards">
+            <button id="f-projects" class="folder folder-portal" type="button" data-href="meditronfo/">
+              <span class="folder-tab">Projects</span>
+              <span class="folder-body">
+                <span class="folder-desc"><span>MeditronFO: the first medical AI where every step is open, from the data to the evaluation.</span></span>
+                <img class="folder-fig" src="static/img/portal-projects.jpg" alt="The MeditronFO project page: the title over a globe rising at dawn" width="960" height="453">
+                <span class="folder-cta">Read the blog</span>
+              </span>
+            </button>
+            <button id="f-paper" class="folder folder-portal" type="button" data-open="publications">
+              <span class="folder-tab">Publications</span>
+              <span class="folder-body">
+                <span class="folder-desc"><span>Four papers over three generations of Meditron, from MEDITRON-70B on Llama-2 in 2023 to Fully Open Meditron, an auditable pipeline where every finetune is preferred over its base.</span></span>
+                <img class="folder-fig" src="static/img/paper-fig1.jpg" alt="Figure 1 of the Fully Open Meditron paper: the Meditron pipeline, from data and model to clinical evaluation" width="960" height="453">
+                <span class="folder-cta">See the papers</span>
+              </span>
+            </button>
+          </div>
+        </div>
+        <div class="fgroup">
+          <h2 class="fgroup-label">Real-world evaluation</h2>
+          <div class="fgroup-cards">
+            <button id="f-moove" class="folder folder-portal" type="button" data-open="moove">
+              <span class="folder-tab">Tested by clinicians</span>
+              <span class="folder-body">
+                <span class="folder-desc"><span>Clinicians and humanitarian experts put tough questions from their own practice to the models, compare two anonymous answers and vote for the better one.</span></span>
+                <img class="folder-fig fig-low" src="static/img/portal-moove.jpg" alt="The MOOVE platform, where clinicians write questions and judge the answers" width="960" height="453">
+                <span class="folder-cta">Explore MOOVE</span>
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- the chat as a card, right under the folders; the greeting is page text, not part of the conversation sent to the model -->
+    <section id="chat" class="chat-section" aria-labelledby="chat-title">
+      <h2 id="chat-title">Talk to Meditron</h2>
+      <div class="chat-wrap">
+        <p class="chat-model" id="chat-model" hidden></p>
+        <div class="chat-log" id="chat-log" aria-live="polite">
+          <div class="msg-row"><span class="cube chat-cube" aria-hidden="true"><img class="cube-light" src="static/img/cube.png" alt=""><img class="cube-dark" src="static/img/cube-dark.png" alt=""></span><div class="msg bot"><p>Hello, I'm Meditron, an open medical AI model. Ask me a medical question.</p><p>I'm a research model, not a doctor: I can be wrong, and I know nothing about you beyond what you type.</p></div></div>
+        </div>
+        <div class="chat-suggest" id="chat-suggest">
+          <button type="button">A 2-year-old has sunken eyes and drinks eagerly. How should a health post manage this?</button>
+          <button type="button">What should I ask a farmer with pneumonia before choosing an antibiotic?</button>
+          <button type="button">When does a sore throat in a child need antibiotics?</button>
+        </div>
+        <form class="chat-form" id="chat-form">
+          <label class="sr" for="chat-input">Your question</label>
+          <textarea id="chat-input" rows="2" placeholder="Ask Meditron a question"></textarea>
+          <button type="submit" class="send" id="chat-send">Send</button>
+        </form>
+        <p class="chat-disclaimer"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/></svg>Meditron can be wrong. It is a research model, not a doctor. Use with care.</p>
+        <p class="chat-status" id="chat-status" role="status"></p>
+      </div>
+    </section>
+
+    <section class="why-section" id="what" aria-labelledby="why-title">
+      <div class="why-wrap">
+        <h2 id="why-title">What is Meditron</h2>
+        <p>Meditron is a family of open medical AI models: large language models trained to answer clinical questions. Anyone can download them, run them on their own hardware and adapt them, from a hospital in Switzerland to a health post in Malawi. We commit to keep the family open down to the training data, so clinicians, regulators and patients can check what it learned. And thanks to our MOOVE events, where clinicians evaluate the models with questions from their own practice, we commit to keep the family tested by clinicians.</p>
+      </div>
+      <ol class="timeline" aria-label="Meditron over the years">
+        <li>
+          <span class="tl-year">2023</span>
+          <strong><a href="https://arxiv.org/abs/2311.16079" target="_blank" rel="noopener">Meditron 1</a></strong>
+          <span class="tl-tag">Open weights</span>
+          <p>7B and 70B models based on Llama-2, pretrained on PubMed and clinical guidelines.</p>
+        </li>
+        <li>
+          <span class="tl-year">2024</span>
+          <strong><a href="https://www.researchsquare.com/article/rs-4139743/v1" target="_blank" rel="noopener">Clinicians step in</a></strong>
+          <p>Sixteen physicians grade Meditron's answers and provide their first clinician analysis.</p>
+        </li>
+        <li>
+          <span class="tl-year">2025</span>
+          <strong><a href="https://openreview.net/forum?id=ZcD35zKujO" target="_blank" rel="noopener">Meditron 3</a></strong>
+          <span class="tl-tag">Open weights</span>
+          <p>Co-designed with clinicians, 8B and 70B models based on Llama-3.1.</p>
+        </li>
+        <li class="tl-now">
+          <span class="tl-year">2026</span>
+          <strong><a href="meditronfo/">MeditronFO</a></strong>
+          <span class="tl-tag">Fully open</span>
+          <p>Open data, open weights and open science, models based on Apertus-1 and four other open bases.</p>
+        </li>
+      </ol>
+    </section>
+
+    <section id="meditronfo" class="feature-section" aria-labelledby="meditronfo-title">
+      <div class="feature-wrap">
+        <h2 id="meditronfo-title">Meet our latest project</h2>
+        <p>The first medical AI where every step is open, from the data to the evaluation.</p>
+        <a class="feature-thumb" href="meditronfo/"><img src="static/img/meditronfo-thumb.jpg" alt="The MeditronFO project page: the title over a globe rising at dawn" width="1920" height="906" loading="lazy"><span class="feature-cta">Read about MeditronFO</span></a>
+      </div>
+    </section>
+
+    <section id="game-feature" class="feature-section" aria-labelledby="game-feature-title">
+      <div class="feature-wrap">
+        <h2 id="game-feature-title">Can you judge like a clinician?</h2>
+        <p>Five real MOOVE cases written by clinicians in Ethiopia, Switzerland and Kenya: read two anonymous answers, vote for the better one, and see whether you agree with the clinicians and with AutoMOOVE, our AI judge.</p>
+        <a class="feature-thumb" href="#automoove"><img src="static/img/automoove-thumb.jpg" alt="A round of the AutoMOOVE game: a clinician's question and two anonymous answers to compare" width="1920" height="906" loading="lazy"><span class="feature-cta">Play the game</span></a>
+      </div>
+    </section>
+
+    <section id="download" class="feature-section" aria-labelledby="download-title">
+      <div class="feature-wrap">
+        <h2 id="download-title">Download Meditron</h2>
+        <p>Six MeditronFO models on Hugging Face, from 8B to 70B: Apertus, OLMo-2, EuroLLM and Gemma-3, each finetuned on our open corpus.</p>
+        <a class="feature-thumb" href="https://huggingface.co/collections/EPFLiGHT/meditronfo" target="_blank" rel="noopener"><img src="static/img/portal-models.jpg" alt="The MeditronFO collection on Hugging Face" width="960" height="453" loading="lazy"><span class="feature-cta ext">Download on Hugging Face</span></a>
+      </div>
+    </section>
+
+    <!-- one way in for each kind of contributor; the image is the community folder's -->
+    <section id="join" class="join-section" aria-labelledby="join-title">
+      <div class="join-wrap">
+        <img class="join-thumb" src="static/img/portal-community.jpg" alt="The globe with the places where clinicians have tested Meditron" width="960" height="453" loading="lazy">
+        <div class="join-text">
+          <h2 id="join-title">Join us</h2>
+          <p>Meditron is built with the people who use it.</p>
+          <div class="join-paths">
+            <div class="join-path">
+              <h3>Clinicians</h3>
+              <p>Put tough questions from your own practice to the models at a MOOVE event, compare two anonymous answers and vote for the better one.</p>
+              <a class="btn btn-solid" href="https://jointhemoove.org/" target="_blank" rel="noopener">Join MOOVE</a>
+            </div>
+            <div class="join-path">
+              <h3>Community</h3>
+              <p>Everyone else: researchers, engineers, health workers or simply curious. Stay up to date with Meditron and join the community: fill in a short form and we send you an invite to our Slack.</p>
+              <!-- TODO: replace the placeholder with the sign-up form, whose confirmation page gives the Slack invite -->
+              <a class="btn btn-solid" href="https://example.org/meditron-community-form" target="_blank" rel="noopener">Join the community</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="cite" class="cite-section" aria-labelledby="cite-title">
+      <div class="cite-wrap">
+        <div class="cite-head">
+          <h2 id="cite-title">Cite Meditron</h2>
+          <button type="button" class="cite-copy" id="cite-copy">Copy BibTeX</button>
+        </div>
+        <p class="cite-ref">Theimer-Lienhard, X., El-Amin, M., Elhassan, F., Vaidya, S., Cartier-Negadi, V., Sasu, D., Klein, L., &amp; Hartley, M.-A. (2026). <a href="https://arxiv.org/abs/2605.16215" target="_blank" rel="noopener">Fully Open Meditron: An Auditable Pipeline for Clinical LLMs</a>. arXiv:2605.16215.</p>
+        <pre class="bibtex" id="cite-bibtex"><code>@misc{theimerlienhard2026fullyopenmeditronauditable,
+  title={Fully Open Meditron: An Auditable Pipeline for Clinical LLMs},
+  author={Xavier Theimer-Lienhard and Mushtaha El-Amin and Fay Elhassan and Sahaj Vaidya and Victor Cartier-Negadi and David Sasu and Lars Klein and Mary-Anne Hartley},
+  year={2026},
+  eprint={2605.16215},
+  archivePrefix={arXiv},
+  primaryClass={cs.AI},
+  url={https://arxiv.org/abs/2605.16215}
+}</code></pre>
+      </div>
+    </section>
+
+    <section class="credits" id="contact" aria-label="Contact and credits">
+      <div>
+        <h2>Contact</h2>
+        <p>Questions about Meditron? Write to <a href="mailto:admin-light@epfl.ch?subject=Meditron">admin-light@epfl.ch</a>.</p>
+        <a class="team-thumb" href="#team"><img src="static/img/team-thumb.jpg" alt="" width="1920" height="906" loading="lazy"><span>Meet the Meditron team</span></a>
+      </div>
+      <div>
+        <h2>Credits</h2>
+        <p>Built at EPFL's LiGHT lab with the Swiss AI Initiative and compute from CSCS (Alps). Thanks to the clinicians of the MOOVE initiative and the LiGHT physician review panel.</p>
+        <ul class="credit-logos" aria-label="Swiss AI Initiative">
+          <li><a href="https://ai.epfl.ch/" target="_blank" rel="noopener"><img class="h-epfl-ai" src="static/img/hosts/epfl-ai-center.png" alt="EPFL AI Center"></a></li>
+          <li><a href="https://ai.ethz.ch/" target="_blank" rel="noopener"><img class="h-eth-ai" src="static/img/hosts/eth-ai-center.png" alt="ETH AI Center"></a></li>
+          <li><a href="https://www.cscs.ch/" target="_blank" rel="noopener"><img class="h-cscs" src="static/img/hosts/cscs.svg" alt="CSCS, Swiss National Supercomputing Centre"></a></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <!-- the LiGHT footer, as on light-laboratory.org: logo, the four hosts, three links -->
+  <footer class="lf">
+    <div class="lf-row">
+      <a class="lf-logo" href="https://www.light-laboratory.org"><img src="static/img/light/footer-logo.png" alt="LiGHT, Laboratory for intelligent Global Health and Humanitarian Response Technologies" width="166" height="118"></a>
+      <ul class="lf-hosts" aria-label="LiGHT is hosted by">
+        <li><a href="https://www.epfl.ch/" target="_blank" rel="noopener"><img src="static/img/light/host1.png" alt="EPFL" width="130" height="130"></a></li>
+        <li><a href="https://www.ariadnelabs.org/" target="_blank" rel="noopener"><img src="static/img/light/host2.png" alt="Ariadne Labs, Harvard" width="130" height="130"></a></li>
+        <li><a href="https://www.ashoka.edu.in/" target="_blank" rel="noopener"><img src="static/img/light/host3.png" alt="Ashoka University" width="130" height="130"></a></li>
+        <li><a href="https://c4ir.rw/" target="_blank" rel="noopener"><img src="static/img/light/host4.png" alt="World Economic Forum, Rwanda Centre for the Fourth Industrial Revolution" width="130" height="125"></a></li>
+      </ul>
+      <nav class="lf-links" aria-label="LiGHT">
+        <a href="https://www.light-laboratory.org">Home</a>
+        <a href="#team">Who we are</a>
+        <a href="mailto:admin-light@epfl.ch">Contact</a>
+        <p class="lf-copy">© 2026 by LiGHT</p>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- One dialog; its content comes from the templates below, chosen by the URL hash. -->
+  <dialog class="panel" id="panel" aria-labelledby="panel-title">
+    <div class="panel-head">
+      <span class="panel-tab" id="panel-title"></span>
+      <button type="button" class="panel-close" id="panel-close">Close</button>
+    </div>
+    <div class="panel-body" id="panel-body"></div>
+  </dialog>
+
+  <template id="tpl-open" data-title="Open down to the data">
+    <h2>Open down to the data</h2>
+    <p class="lead">Meditron is open at every layer: the base model it starts from, the data it learned from, and the code that trained it.</p>
+    <h3>The base model: Apertus</h3>
+    <p>Apertus is the large language model built in Switzerland by EPFL, ETH Zurich and CSCS. Its weights, training data and training code are all public. That is why we build Meditron on it: if the base model is open all the way down, so is Meditron.</p>
+    <h4>What you can check</h4>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Model</th><th>Open base model</th><th>Open medical data</th><th>Open data pipeline</th><th>Open training code</th></tr></thead>
+        <tbody>
+          <tr><td>MedGemma-27B (Google)</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td></tr>
+          <tr><td>Meditron-70B (2023)</td><td class="no">No</td><td>Partial</td><td>Partial</td><td>Partial</td></tr>
+          <tr class="ours"><td>Meditron on Apertus</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h3>The training data: 533,888 examples</h3>
+    <p>Commercial medical assistants don't show what they learned from. Meditron's training set is on Hugging Face, row by row. Here is one row.</p>
+    <div class="specimen">
+      <div class="specimen-head"><strong>Training example</strong><span>Guidelines QA</span></div>
+      <div class="field">
+        <div class="field-label">Question</div>
+        <p>A 12-year-old boy, weight 38 kg, is being considered for fingolimod therapy. What is the recommended starting dose?</p>
+        <ol class="opts"><li class="key">0.25 mg once daily</li><li>0.5 mg once daily</li><li>0.75 mg once daily</li><li>No dose is approved for his age/weight</li></ol>
+      </div>
+      <div class="field">
+        <div class="field-label">Answer the model was trained on, written by gpt-oss-120b</div>
+        <p>Fingolimod (Gilenya) is approved for pediatric patients &ge; 10 years of age, but the dose is adjusted for body weight.</p>
+        <ul><li>Weight &ge; 40 kg: the same adult dose of 0.5 mg once daily is used.</li><li>Weight &lt; 40 kg: the recommended pediatric dose is 0.25 mg once daily (to reduce the risk of dose-related cardiac and infection side-effects).</li></ul>
+        <p>The boy is 12 years old and weighs 38 kg, which places him in the &lt; 40 kg category. Therefore the appropriate starting dose is the lower, weight-adjusted dose of 0.25 mg once daily. <strong>The answer is A.</strong></p>
+      </div>
+      <div class="record">
+        <div class="field-label">How this example was checked</div>
+        <ul>
+          <li class="ok">Answer key: A, from the source document</li>
+          <li class="drop">First answer: wrong, discarded</li>
+          <li class="ok">Later answer: A, kept</li>
+          <li class="ok">Checked against all test benchmarks</li>
+        </ul>
+      </div>
+    </div>
+    <h4>How the set was made</h4>
+    <ol class="steps">
+      <li>Four clinicians rewrote the generation prompts.</li>
+      <li>gpt-oss-120b wrote 340,000 new questions from exams, clinical guidelines and clinician cases.</li>
+      <li>Each answer had to match the answer key, within 8 tries, or the question was dropped.</li>
+      <li>Every question that overlaps a test benchmark was removed.</li>
+    </ol>
+    <p class="note">Not perfect: AI reviewers still flag about 1 in 10 sampled rows. You can check them yourself.</p>
+    <p class="links"><a href="https://huggingface.co/swiss-ai" target="_blank" rel="noopener">Apertus on Hugging Face</a><a href="https://huggingface.co/collections/EPFLiGHT/meditronfo" target="_blank" rel="noopener">Meditron models</a><a href="https://huggingface.co/datasets/EPFLiGHT/fully-open-meditron" target="_blank" rel="noopener">Browse the training data</a><a href="https://github.com/EPFLiGHT/FullyOpenMeditron" target="_blank" rel="noopener">Training code on GitHub</a></p>
+  </template>
+
+  <template id="tpl-publications" data-title="Publications">
+    <h2>Publications</h2>
+    <p class="lead">Meditron has been open medical AI from EPFL since 2023, one model generation at a time.</p>
+    <ol class="pubs">
+      <li>
+        <span class="pub-gen">MeditronFO · 2026</span>
+        <a href="https://arxiv.org/abs/2605.16215" target="_blank" rel="noopener">Fully Open Meditron: An Auditable Pipeline for Clinical LLMs</a>
+        <span class="pub-meta">Theimer-Lienhard et al. · arXiv preprint</span>
+        <p>A clinician-vetted corpus, decontamination and training code, applied to five fully open base models, Apertus among them.</p>
+      </li>
+      <li>
+        <span class="pub-gen">Meditron 3 · 2025</span>
+        <a href="https://openreview.net/forum?id=ZcD35zKujO" target="_blank" rel="noopener">Llama-3-Meditron: An Open-Weight Suite of Medical LLMs Based on Llama-3.1</a>
+        <span class="pub-meta">Sallinen et al. · GenAI4Health workshop, AAAI 2025</span>
+        <p>8B and 70B open-weight models on Llama-3.1, pretrained on medical literature and guidelines and instruction-tuned on synthetic data.</p>
+      </li>
+      <li>
+        <span class="pub-gen">Meditron 1 · 2024</span>
+        <a href="https://www.researchsquare.com/article/rs-4139743/v1" target="_blank" rel="noopener">MEDITRON: Open Medical Foundation Models Adapted for Clinical Practice</a>
+        <span class="pub-meta">Chen et al. · Research Square preprint</span>
+        <p>The extended Meditron paper, with a vision variant and an evaluation by sixteen independent physicians.</p>
+      </li>
+      <li>
+        <span class="pub-gen">Meditron 1 · 2023</span>
+        <a href="https://arxiv.org/abs/2311.16079" target="_blank" rel="noopener">MEDITRON-70B: Scaling Medical Pretraining for Large Language Models</a>
+        <span class="pub-meta">Chen et al. · arXiv preprint</span>
+        <p>7B and 70B models on Llama-2, pretrained on PubMed and international clinical guidelines.</p>
+      </li>
+    </ol>
+  </template>
+
+  <template id="tpl-moove" data-title="MOOVE">
+    <h2>Tested by clinicians</h2>
+    <p class="lead">MOOVE is a global, expert-led initiative: clinicians and humanitarian experts probe the models with tough questions from their own practice, then compare two anonymous answers and vote for the better one.</p>
+    <p>Thousands of votes add up to a ranking of the models at each event. Between events, AutoMOOVE stands in: an LLM judge reads a MOOVE vignette and two answers and picks the better one, the way clinicians do, and agrees with blinded clinicians' votes.</p>
+    <p class="links"><a href="https://jointhemoove.org/" target="_blank" rel="noopener">Visit MOOVE</a><a href="#swiss-moove">How clinicians ranked the models</a><a href="#automoove">Judge like a clinician: play AutoMOOVE</a></p>
+  </template>
+
+  <template id="tpl-team" data-title="Meditron team">
+    <div class="people-cols">
+    <div>
+    <h3>Lead</h3>
+    <ul class="people">
+      <li><img class="face" src="static/img/team/theimer-lienhard.jpg" alt="" width="28" height="28" loading="lazy"><a href="https://xaviertheimerlienhard.com/" target="_blank" rel="noopener">Xavier Theimer-Lienhard</a><span>PhD Student · EPFL</span></li>
+    </ul>
+    <h3>Directors</h3>
+    <ul class="people">
+      <li><img class="face" src="static/img/team/hartley.jpg" alt="" width="28" height="28" loading="lazy"><a href="https://www.linkedin.com/in/anniehartley/" target="_blank" rel="noopener">Mary-Anne Hartley, MD</a><span>Director · EPFL</span></li>
+      <li><img class="face" src="static/img/team/keitel.jpg" alt="" width="28" height="28" loading="lazy"><a href="https://www.linkedin.com/in/kristinakeitel/" target="_blank" rel="noopener">Kristina Keitel, MD</a><span>Clinical Director · EPFL</span></li>
+      <li><img class="face" src="static/img/team/klein.jpg" alt="" width="28" height="28" loading="lazy"><a href="https://www.linkedin.com/in/lars-henning-klein/" target="_blank" rel="noopener">Lars Klein</a><span>Academic Director · EPFL</span></li>
+      <li><img class="face" src="static/img/team/sasu.jpg" alt="" width="28" height="28" loading="lazy"><a href="https://sasudavid.github.io/dsasu/" target="_blank" rel="noopener">David Sasu</a><span>Technology Director · EPFL</span></li>
+      <li><img class="face" src="static/img/team/brokowski.jpg" alt="" width="28" height="28" loading="lazy"><a href="https://www.linkedin.com/in/trevorbrokowski/" target="_blank" rel="noopener">Trevor Brokowski</a><span>Innovation Director · Ariadne Labs</span></li>
+    </ul>
+    <h3>Clinical advisors</h3>
+    <ul class="people">
+      <li><img class="face" src="static/img/team/suttels.jpg" alt="" width="28" height="28" loading="lazy"><span class="name">Veronique Suttels, MD</span><span>EPFL</span></li>
+      <li><img class="face" src="static/img/team/knusel.jpg" alt="" width="28" height="28" loading="lazy"><span class="name">Evelyne Knüsel, MD</span><span>EPFL</span></li>
+      <li><img class="face" src="static/img/team/placeholder.jpg" alt="" width="28" height="28" loading="lazy"><span class="name">Carl Starvaggi, MD</span><span>EPFL</span></li>
+      <li><img class="face" src="static/img/team/hartley.jpg" alt="" width="28" height="28" loading="lazy"><a href="https://www.linkedin.com/in/anniehartley/" target="_blank" rel="noopener">Mary-Anne Hartley, MD</a><span>EPFL</span></li>
+      <li><img class="face" src="static/img/team/keitel.jpg" alt="" width="28" height="28" loading="lazy"><a href="https://www.linkedin.com/in/kristinakeitel/" target="_blank" rel="noopener">Kristina Keitel, MD</a><span>EPFL</span></li>
+    </ul>
+    </div>
+    <div>
+    <h3>Team</h3>
+    <ul class="people">
+      <li><img class="face" src="static/img/team/placeholder.jpg" alt="" width="28" height="28" loading="lazy"><span class="name">Aitor Deschryver</span><span>Master Student · EPFL</span></li>
+      <li><img class="face" src="static/img/team/placeholder.jpg" alt="" width="28" height="28" loading="lazy"><a href="https://people.epfl.ch/vadim.elguedj" target="_blank" rel="noopener">Vadim El Guedj</a><span>Master Student · EPFL</span></li>
+      <li><img class="face" src="static/img/team/placeholder.jpg" alt="" width="28" height="28" loading="lazy"><span class="name">Mushtaha El-Amin</span><span>Visiting Researcher</span></li>
+      <li><img class="face" src="static/img/team/elhassan.jpg" alt="" width="28" height="28" loading="lazy"><a href="https://people.epfl.ch/fay.elhassan" target="_blank" rel="noopener">Fay Elhassan</a><span>PhD Student · EPFL</span></li>
+      <li><img class="face" src="static/img/team/kesmen.jpg" alt="" width="28" height="28" loading="lazy"><a href="https://people.epfl.ch/yusuf.kesmen" target="_blank" rel="noopener">Yusuf Kesmen</a><span>PhD Fellow · EPFL AI Center</span></li>
+      <li><img class="face" src="static/img/team/vaidya.jpg" alt="" width="28" height="28" loading="lazy"><span class="name">Sahaj Vaidya</span><span>Visiting Researcher · Ashoka University</span></li>
+    </ul>
+    <h3>Alumni</h3>
+    <ul class="people">
+      <li><span class="name">Bastien Bernath</span><span>Master Student · EPFL</span></li>
+      <li><span class="name">Etienne Boisson</span><span>Master Student · EPFL</span></li>
+      <li><span class="name">Guillaume Boyé</span><span>Master Student · EPFL</span></li>
+      <li><span class="name">Maud Dupont-Roc</span><span>Master Student · EPFL</span></li>
+      <li><span class="name">Hichem Hadhri</span><span>Master Student · EPFL</span></li>
+      <li><span class="name">Tahseen Rabbani</span><span>Postdoc · Yale</span></li>
+      <li><span class="name">Tim G. J. Rudner</span><span>Professor · NYU</span></li>
+      <li><span class="name">Alexandre Sallinen</span><span>Master Student · EPFL</span></li>
+      <li><span class="name">Antoni-Joan Solergibert</span><span>Master Student · EPFL</span></li>
+      <li><span class="name">Antoine Tran</span><span>Master Student · EPFL</span></li>
+      <li><span class="name">Michael Zhang</span><span>Master Student · EPFL</span></li>
+    </ul>
+    </div>
+    </div>
+  </template>
+
+  <template id="tpl-results" data-title="Results">
+    <h2>How good is it?</h2>
+    <p class="lead">Two kinds of evidence: a public benchmark graded against physician rubrics, and blind votes by clinicians at MOOVE events.</p>
+    <h3>HealthBench</h3>
+    <p>5,000 health conversations, each graded against rubrics written by physicians.</p>
+    <ul class="bars" aria-label="HealthBench full scores">
+      <li><span class="who">gpt-oss-120b<small>OpenAI; wrote our training answers</small></span><span class="track"><span class="fill" style="width:85.6%"></span></span><span class="val">59.9</span></li>
+      <li class="ours"><span class="who">Gemma-3-27B-Meditron<small>Our recipe on Google's Gemma</small></span><span class="track"><span class="fill" style="width:80.3%"></span></span><span class="val">56.2</span></li>
+      <li><span class="who">MedGemma-27B<small>Google; training data not released</small></span><span class="track"><span class="fill" style="width:78.3%"></span></span><span class="val">54.8</span></li>
+      <li class="ours"><span class="who">Apertus-70B-Meditron<small>Fully open, end to end</small></span><span class="track"><span class="fill" style="width:70.4%"></span></span><span class="val">49.3</span></li>
+      <li><span class="who">Apertus-70B-Instruct<small>Its starting point</small></span><span class="track"><span class="fill" style="width:56.3%"></span></span><span class="val">39.4</span></li>
+    </ul>
+    <ul class="points">
+      <li>Training adds 10 points to the fully open Apertus model.</li>
+      <li>The fully open model is still behind MedGemma and gpt-oss-120b.</li>
+      <li>Our recipe on Gemma, MedGemma's own base model, is level with MedGemma.</li>
+      <li>About half the gain comes from longer, more complete answers.</li>
+      <li>In blind side-by-side comparisons, the AI judges prefer Meditron's answer over the starting model's in 90% of 516 clinician-written cases.</li>
+    </ul>
+    <p class="note">Graded by Gemma-4-31B, so the scores are not comparable to OpenAI's published numbers.</p>
+    <div id="boards">
+      <h3>How clinicians ranked the models</h3>
+      <p>At MOOVE events, clinicians read two anonymous answers to the same question and vote for the better one. Thousands of votes add up to a ranking: the share of matchups each model would win against an average model at that event.</p>
+      <div class="board-tabs" role="group" aria-label="Choose a leaderboard">
+        <button type="button" data-board="chuv" aria-pressed="true">Swiss MOOVE</button>
+        <button type="button" data-board="phc" aria-pressed="false">East Africa MOOVE</button>
+      </div>
+      <p class="board-note" data-note="chuv">Three events at CHUV, Lausanne, Aug 2024 to Nov 2025: 684 questions from hospital specialists, 1,788 clinician-ranked pairs. Not every pair of models met equally often.</p>
+      <p class="board-note" data-note="phc" hidden>Kenya PHC, Tanzania PHC and Malawi PHC, May to Aug 2026: 605 primary-care questions, 4,235 clinician-ranked pairs, every system against every other. During these events Apertus-70B-MeditronFO was served at temperature 1.0, which cut off many of its answers.</p>
+      <ol class="lb" aria-label="Leaderboard"></ol>
+      <p class="note">The axis runs from 20% to 80%; bars show the 95% range over 1,000 bootstrap resamples, and the dashed line is 50%. Ranking: Bradley–Terry on clinician votes, ties counting half. An AI judge replaying both events reproduces these rankings (rank correlation 1.00 at CHUV, 0.96 in primary care), which is what lets <a href="#automoove">AutoMOOVE</a> stand in between events.</p>
+    </div>
+  </template>
+
+  <template id="tpl-automoove" data-title="AutoMOOVE, the evaluation">
+    <div id="game"></div>
+  </template>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/15.0.7/marked.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.2.4/purify.min.js"></script>
+  <script src="static/app.js?v=20261028g"></script>
+</body>
+</html>

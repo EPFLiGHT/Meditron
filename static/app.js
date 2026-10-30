@@ -14,38 +14,71 @@ const css = (name) => getComputedStyle(document.documentElement).getPropertyValu
 
 /* ---------------------------------------------------------------- globe */
 
-// Where the MOOVE events ran: city where the event is known, the capital otherwise.
+// Where clinicians evaluated Meditron, in the order the story visits them: the month of the first vote on a Meditron
+// answer there (`since`). `meditron` counts the votes on a pair with a Meditron answer; `lines` describe every MOOVE
+// event at the place, with or without Meditron. City where the event is known, the capital otherwise.
 // Counts are distinct questions and clinician votes per place (two Kenya events shared one question set).
 const SITES = [
-  { at: [6.63, 46.52], name: 'CHUV, Lausanne', lines: ['4 events, Aug 2024 to Nov 2025', '4,320 questions, 13,112 clinician votes', 'Specialist hospital care'] },
-  { at: [6.15, 46.20], name: 'HUG, Geneva', lines: ['1 event, Sep to Dec 2024', '320 questions, 1,704 clinician votes', 'Specialist hospital care'] },
-  { at: [4.35, 50.85], name: 'Belgium', lines: ['1 event, Oct 2025', '108 questions, 126 clinician votes', 'Specialist hospital care'] },
-  { at: [36.82, -1.29], name: 'Kenya', lines: ['7 events, Oct 2024 to Oct 2026', '2,130 questions, 7,549 clinician votes', 'Primary care, maternal, newborn and child health'] },
-  { at: [39.21, -6.79], name: 'Tanzania', lines: ['5 events, Aug 2024 to Aug 2026', '1,055 questions, 4,621 clinician votes', 'Primary care, paediatric emergency care'] },
-  { at: [33.79, -13.96], name: 'Malawi', lines: ['2 events, May to Jul 2026', '300 questions, 1,700 clinician votes', 'Primary care'] },
-  { at: [38.74, 9.03], name: 'Ethiopia', lines: ['3 events, Mar to Sep 2026', '812 questions, 2,734 clinician votes', 'Primary care, paediatric emergency care'] },
-  { at: [73.05, 33.68], name: 'Pakistan', lines: ['1 event, Sep 2026', '278 questions, 834 clinician votes', 'Primary care, maternal and newborn health'] },
-  { at: [77.59, 12.97], name: 'Bengaluru, India', lines: ['1 event, Jan to Mar 2026', '305 questions, 491 clinician votes', 'Specialist hospital care'] },
-  { at: [78.49, 17.39], name: 'Hyderabad, India', lines: ['1 event, Jan to Feb 2026', '98 questions, 87 clinician votes', 'Specialist hospital care'] },
-  { at: [77.02, 28.99], name: 'Ashoka University, India', lines: ['1 event, Jan to Apr 2026', '86 questions, 138 clinician votes', 'Specialist hospital care'] },
-  { at: [76.27, 9.93], name: 'Amrita, India', lines: ['1 event, Jul to Sep 2026', '306 questions, 684 clinician votes', 'Primary care, maternal and newborn health'] },
-  { at: [100.49, 13.76], name: 'Siriraj Hospital, Bangkok', lines: ['1 event, Dec 2024 to Aug 2025', '339 questions, 1,126 clinician votes', 'Specialist hospital care'] },
-  { at: [-47.88, -15.79], name: 'Brazil', lines: ['2 events, Jan to Nov 2025', '450 questions, 1,514 clinician votes', 'Specialist hospital care'] },
+  { at: [39.21, -6.79], name: 'Tanzania', since: 'Aug 2024', meditron: 2838, lines: ['5 events, Aug 2024 to Aug 2026', '1,055 questions, 4,621 clinician votes', 'Primary care, paediatric emergency care'] },
+  { at: [6.15, 46.20], name: 'HUG, Geneva', since: 'Sep 2024', meditron: 1704, lines: ['1 event, Sep to Dec 2024', '320 questions, 1,704 clinician votes', 'Specialist hospital care'] },
+  { at: [36.82, -1.29], name: 'Kenya', since: 'Oct 2024', meditron: 5417, lines: ['7 events, Oct 2024 to Oct 2026', '2,130 questions, 7,549 clinician votes', 'Primary care, maternal, newborn and child health'] },
+  { at: [6.63, 46.52], name: 'CHUV, Lausanne', since: 'Oct 2024', meditron: 3883, lines: ['4 events, Aug 2024 to Nov 2025', '4,320 questions, 13,112 clinician votes', 'Specialist hospital care'] },
+  { at: [100.49, 13.76], name: 'Siriraj Hospital, Bangkok', since: 'Dec 2024', meditron: 1126, lines: ['1 event, Dec 2024 to Aug 2025', '339 questions, 1,126 clinician votes', 'Specialist hospital care'] },
+  { at: [-47.88, -15.79], name: 'Brazil', since: 'Jan 2025', meditron: 173, lines: ['2 events, Jan to Nov 2025', '450 questions, 1,514 clinician votes', 'Specialist hospital care'] },
+  { at: [4.35, 50.85], name: 'Belgium', since: 'Oct 2025', meditron: 58, lines: ['1 event, Oct 2025', '108 questions, 126 clinician votes', 'Specialist hospital care'] },
+  { at: [77.02, 28.99], name: 'Ashoka University, India', since: 'Jan 2026', meditron: 41, lines: ['1 event, Jan to Apr 2026', '86 questions, 138 clinician votes', 'Specialist hospital care'] },
+  { at: [77.59, 12.97], name: 'Bengaluru, India', since: 'Jan 2026', meditron: 201, lines: ['1 event, Jan to Mar 2026', '305 questions, 491 clinician votes', 'Specialist hospital care'] },
+  { at: [78.49, 17.39], name: 'Hyderabad, India', since: 'Jan 2026', meditron: 33, lines: ['1 event, Jan to Feb 2026', '98 questions, 87 clinician votes', 'Specialist hospital care'] },
+  { at: [33.79, -13.96], name: 'Malawi', since: 'May 2026', meditron: 1033, lines: ['2 events, May to Jul 2026', '300 questions, 1,700 clinician votes', 'Primary care'] },
+  { at: [76.27, 9.93], name: 'Amrita, India', since: 'Jul 2026', meditron: 458, lines: ['1 event, Jul to Sep 2026', '306 questions, 684 clinician votes', 'Primary care, maternal and newborn health'] },
+  { at: [38.74, 9.03], name: 'Ethiopia', since: 'Sep 2026', meditron: 720, lines: ['3 events, Mar to Sep 2026', '812 questions, 2,734 clinician votes', 'Primary care, paediatric emergency care'] },
+  { at: [73.05, 33.68], name: 'Pakistan', since: 'Sep 2026', meditron: 556, lines: ['1 event, Sep 2026', '278 questions, 834 clinician votes', 'Primary care, maternal and newborn health'] },
 ];
 
 (function globe() {
   const canvas = document.getElementById('globe');
   const ctx = canvas.getContext('2d');
+  const story = document.getElementById('story'), stage = document.getElementById('story-stage');
+  const rail = document.getElementById('story-rail'), stops = document.getElementById('story-stops');
+  const tally = document.getElementById('story-tally'), play = document.getElementById('story-play');
+  const card = document.getElementById('story-card'), ocean = document.getElementById('ocean-card');
   // the globe all sea and all land, drawn once per size; a frame lays the land layer over the sea one, clipped to the coasts
   const seaLayer = document.createElement('canvas'), landLayer = document.createElement('canvas');
   let land = null, size = 0, ink = [12, 67, 160], marker = '#efcd5f';
-  let lon = -100, last = 0, visible = true, hovered = null, shown = [];
+  let hovered = null, shown = [];
 
   // the MeditronFO page's globe: a navy night side, light blue land and a warm limb
   const NIGHT = [13, 29, 64], LAND = [104, 175, 231], RIM = [255, 222, 172], LIMB = [255, 240, 210];
 
   const projection = d3.geoOrthographic().clipAngle(90).precision(0.5);
   const path = d3.geoPath(projection, ctx);
+
+  // The story's clock T counts stops and is the scroll position, so the story plays both ways: the camera reaches
+  // stop i at T = i + 0.5, after MOVE of a step in flight, and rests there for the rest of the step.
+  // Stop n, after the last site, is the ocean, where the card about Meditron rests until the clock ends.
+  const n = SITES.length, MOVE = 0.4, END = n + 1.9, STEP_SVH = 34, STEP_MS = 2600;
+  const START = [-5, 12], OCEAN_VIEW = [70, -15], OCEAN_SPOT = [79, -23];   // where the camera starts; the ocean's view, and where its card sits
+  const docked = matchMedia('(max-width: 900px)');   // phones: the site's card sits under the globe instead of beside its square
+  const arrive = (i) => i + 0.5;
+  const clamp = (x) => Math.min(1, Math.max(0, x));
+  const ease = (x) => x * x * (3 - 2 * x);
+  const wrap = (d) => ((d + 540) % 360) - 180;
+  const count = (v) => v.toLocaleString('en-US');
+  const legs = SITES.map((s, i) => (i ? d3.geoInterpolate(SITES[i - 1].at, s.at) : null));
+  let T = reduceMotion ? END : 0, spin = 0;   // the turn of the idle globe, in degrees from its start
+
+  const view = (i) => {
+    if (i < 0) return START;
+    if (i >= n) return OCEAN_VIEW;
+    // the site a little left of centre, with room for its card on the right, and nearer the equator than the camera
+    const [lon, lat] = SITES[i].at;
+    return [lon + (docked.matches ? 0 : 16), lat * 0.7];
+  };
+  function camera() {
+    const k = Math.min(n, Math.max(0, Math.ceil(T - 0.5)));
+    const [lon0, lat0] = view(k - 1), [lon1, lat1] = view(k), e = ease(clamp((T - arrive(k) + MOVE) / MOVE));
+    return [lon0 + wrap(lon1 - lon0) * e + spin, lat0 + (lat1 - lat0) * e];
+  }
 
   function hexToRgb(h) {
     const n = parseInt(h.replace('#', ''), 16);
@@ -91,25 +124,105 @@ const SITES = [
     landLayer.getContext('2d').putImageData(landImg, 0, 0);
   }
 
-  function draw() {
-    projection.rotate([lon, -12]);
+  function draw(now = 0) {
+    const [lon, lat] = camera(), center = [lon, lat];
+    projection.rotate([-lon, -lat]);
     ctx.clearRect(0, 0, size, size);
     ctx.drawImage(seaLayer, 0, 0);
     if (land) { ctx.save(); ctx.beginPath(); path(land); ctx.clip(); ctx.drawImage(landLayer, 0, 0); ctx.restore(); }
+    const d = Math.max(3, Math.round(size / 95)), b = Math.max(1, Math.round(size / 500));
+    const lit = Math.min(n, Math.max(0, Math.floor(T - 0.45) + 1));
+    // the way from site to site, dotted like the dither, drawn out as the camera flies it
+    ctx.strokeStyle = marker; ctx.lineWidth = b * 1.5; ctx.setLineDash([b * 1.5, b * 3.5]); ctx.globalAlpha = 0.8;
+    for (let i = 1; i < n; i++) {
+      const k = ease(clamp((T - arrive(i) + MOVE) / MOVE));
+      if (k <= 0) break;
+      ctx.beginPath(); path({ type: 'LineString', coordinates: [SITES[i - 1].at, legs[i](k)] }); ctx.stroke();
+    }
+    ctx.setLineDash([]); ctx.globalAlpha = 1;
     // event sites on the near side, as solid squares so they sit in the dither's pixel grid;
-    // a globe-ink rim sets the yellow off from the light blue land
-    const center = [-lon, 12], d = Math.max(3, Math.round(size / 95)), b = Math.max(1, Math.round(size / 500));
+    // a globe-ink rim sets the yellow off from the light blue land; each lands big and settles
     shown = [];
-    for (const s of SITES) {
-      if (d3.geoDistance(s.at, center) > Math.PI / 2 - 0.08) continue;
+    SITES.slice(0, lit).forEach((s, i) => {
+      if (d3.geoDistance(s.at, center) > Math.PI / 2 - 0.04) return;
       const [px, py] = projection(s.at);
-      const k = s === hovered ? 2 * d : d;
+      const k = Math.round(s === hovered ? 2 * d : d * (2 - clamp((T - arrive(i) + 0.05) / 0.2)));
       const x0 = Math.round(px - k / 2), y0 = Math.round(py - k / 2);
       ctx.fillStyle = `rgb(${ink})`; ctx.fillRect(x0 - b, y0 - b, k + 2 * b, k + 2 * b);
       ctx.fillStyle = marker; ctx.fillRect(x0, y0, k, k);
       shown.push({ s, px, py });
+    });
+    // the site of the moment sends out a square ring
+    const cur = showing();
+    const m = cur && shown.find((x) => x.s === cur.s);
+    if (m) {
+      const q = (now / 1300) % 1, k = d * (1.5 + 3.5 * q);
+      ctx.strokeStyle = marker; ctx.lineWidth = b * 1.5; ctx.globalAlpha = (1 - q) * cur.a;
+      ctx.strokeRect(m.px - k / 2, m.py - k / 2, k, k);
+      ctx.globalAlpha = 1;
     }
+    placeCards(cur);
+    showProgress(lit);
     if (hovered) placeTip();
+  }
+
+  // the site whose card is up at this T, and how far it has faded in
+  function showing() {
+    const i = Math.floor(T - 0.44);
+    if (i < 0 || i >= n) return null;
+    const x = T - arrive(i), a = clamp((x + 0.06) / 0.1) * clamp((0.56 - x) / 0.07);
+    return a > 0 ? { s: SITES[i], i, a } : null;
+  }
+
+  let cardFor = -1;
+  function placeCards(cur) {
+    const r = canvas.getBoundingClientRect(), h = stage.getBoundingClientRect(), k = r.width / size;
+    const inStage = (at) => { const [x, y] = projection(at); return [r.left - h.left + x * k, r.top - h.top + y * k]; };
+    card.hidden = !cur;
+    if (cur) {
+      if (cur.i !== cardFor) {
+        cardFor = cur.i;
+        card.innerHTML = `<small>${cur.s.since}, ${cur.i ? 'then here' : 'first evaluated here'}</small><strong>${cur.s.name}</strong>`
+          + `<b>${count(cur.s.meditron)} votes on Meditron's answers</b>${cur.s.lines.map((l) => `<span>${l}</span>`).join('')}`;
+      }
+      card.style.opacity = cur.a;
+      if (docked.matches) card.style.transform = '';
+      else {
+        const [x, y] = inStage(cur.s.at), left = Math.min(x + 26 * (1 + 0.3 * (1 - cur.a)), h.width - card.offsetWidth - 16);
+        card.style.transform = `translate(${left}px, ${Math.max(8, y - card.offsetHeight / 2)}px)`;
+      }
+    }
+    const o = ease(clamp((T - arrive(n) + 0.12) / 0.3));
+    ocean.style.visibility = o > 0 ? 'visible' : 'hidden';
+    ocean.style.opacity = o;
+    if (o > 0) {
+      const [x, y] = inStage(OCEAN_SPOT), w = ocean.offsetWidth, top = y - ocean.offsetHeight / 2;
+      ocean.style.transform = `translate(${Math.max(16, Math.min(x - w / 2, h.width - w - 16))}px, ${Math.max(8, top + 12 * (1 - o))}px)`;
+    }
+  }
+
+  // the rail, one button per stop: it follows the story, and a click takes the story there
+  const items = [...SITES.map((s, i) => [s.name, arrive(i) + 0.15, `${s.since}. ${s.lines.join('. ')}. ${count(s.meditron)} votes on Meditron's answers.`]),
+    ['What is Meditron', END - 0.2, '']];
+  stops.innerHTML = items.map(([name, , more]) => `<li><button type="button">${name}${more ? `<span class="sr"> ${more}</span>` : ''}</button></li>`).join('');
+  const rows = [...stops.children];
+  rows.forEach((li, i) => li.addEventListener('click', () => {
+    wanted = false; held = false;
+    scrollTo({ top: scrollFor(items[i][1]), behavior: reduceMotion ? 'auto' : 'smooth' });
+  }));
+  let lastLit = -1, lastHere = -1;
+  function showProgress(lit) {
+    rail.style.setProperty('--p', (T / END).toFixed(4));
+    const here = T >= arrive(n) - 0.12 ? n : lit - 1;
+    if (here !== lastHere) {
+      lastHere = here;
+      rows.forEach((li, i) => { li.classList.toggle('lit', i < lit); if (i === here) li.setAttribute('aria-current', 'step'); else li.removeAttribute('aria-current'); });
+    }
+    if (lit !== lastLit) {
+      lastLit = lit;
+      const votes = SITES.slice(0, lit).reduce((sum, s) => sum + s.meditron, 0);
+      tally.innerHTML = `<b>${count(votes)}</b> clinician votes on Meditron's answers, ${lit} of ${n} places`;
+    }
   }
 
   // A site's description follows its square as the globe turns, until the pointer moves off it or it turns out of view.
@@ -133,36 +246,93 @@ const SITES = [
     if (s === hovered) return;
     hovered = s;
     canvas.style.cursor = s ? 'pointer' : '';
-    if (s) tip.innerHTML = `<strong>${s.name}</strong>${s.lines.map((l) => `<span>${l}</span>`).join('')}`;
+    if (s) tip.innerHTML = `<strong>${s.name}</strong><span>${count(s.meditron)} votes on Meditron's answers</span>${s.lines.map((l) => `<span>${l}</span>`).join('')}`;
     tip.hidden = !s;
     draw();
   }
   function placeTip() {
     const m = shown.find((x) => x.s === hovered);
     if (!m) { hover(null); return; }
-    const r = canvas.getBoundingClientRect(), h = canvas.parentElement.getBoundingClientRect(), k = r.width / size;
+    const r = canvas.getBoundingClientRect(), h = stage.getBoundingClientRect(), k = r.width / size;
     tip.style.left = `${r.left - h.left + m.px * k}px`;
     tip.style.top = `${r.top - h.top + m.py * k}px`;
   }
-  canvas.addEventListener('pointermove', (e) => hover(siteAt(e)));
-  canvas.addEventListener('pointerdown', (e) => hover(siteAt(e)));
-  canvas.addEventListener('pointerleave', () => hover(null));
+
+  /* the clock: the scroll position, which the story moves on by itself while nobody else is scrolling */
+  const stepPx = () => (story.offsetHeight - stage.offsetHeight) / END;
+  const scrollFor = (t) => scrollY + story.getBoundingClientRect().top + t * stepPx();
+  let wanted = !reduceMotion;   // the story plays until someone scrolls it back or pauses it
+  let held = false;             // paused with the button: stays paused, even back at the top of the page
+  let lastInput = -1e9, pos = null, lastY = scrollY, last = 0, drawn = null;
+  const idle = 1400;
+  for (const ev of ['wheel', 'touchmove', 'keydown', 'pointerdown']) addEventListener(ev, () => { lastInput = performance.now(); }, { passive: true });
 
   function frame(t) {
-    if (visible && !document.hidden && t - last > 50 && !document.querySelector('dialog[open]')) {
-      lon += (t - last > 200 ? 0 : (t - last) * 0.0042);
-      last = t; draw();
-    } else if (t - last > 200) last = t;
     requestAnimationFrame(frame);
+    const dt = Math.min(100, t - last);
+    if (dt < 30) return;
+    last = t;
+    const top = story.getBoundingClientRect().top, step = stepPx(), vh = innerHeight;
+    // someone else moved the page: going back means they want to look at something, so the story stops playing;
+    // back at the top it may start again
+    if (pos !== null && Math.abs(scrollY - pos) > 8) { pos = null; lastInput = t; }
+    if (pos === null && scrollY < lastY - 1) wanted = false;
+    if (top > vh * 0.5 && !held) wanted = true;
+    lastY = scrollY;
+    T = clamp(-top / (step * END)) * END;
+    const playing = wanted && !document.hidden && t - lastInput > idle && top < vh * 0.3 && T < END && !document.querySelector('dialog[open]');
+    if (playing) {
+      pos = (pos ?? scrollY) + dt * step / STEP_MS;
+      scrollTo({ top: pos, behavior: 'instant' });
+      lastY = scrollY;
+    } else pos = null;
+    play.textContent = T >= END - 0.01 ? 'Replay' : wanted ? 'Pause' : 'Play';
+    // the rail joins once the stage is nearly in place, so it is never cut off by the fold
+    const railIn = clamp(1 - top / (vh * 0.2));
+    rail.style.opacity = railIn; rail.style.visibility = railIn > 0 ? 'visible' : 'hidden';
+    // the globe turns by itself until the story starts, then comes round to the camera the short way
+    spin = top >= 0 ? wrap(spin + dt * 0.0042) : Math.abs(spin) < 0.05 ? 0 : spin * Math.exp(-dt / 220);
+    const state = `${T}|${spin}|${size}`;
+    if (visible && !document.querySelector('dialog[open]') && (state !== drawn || showing())) { drawn = state; draw(t); }
   }
+  let visible = true;
+  new IntersectionObserver(([e]) => { visible = e.isIntersecting; }).observe(canvas);
+
+  play.addEventListener('click', () => {
+    if (T >= END - 0.01) { scrollTo({ top: scrollFor(0), behavior: 'instant' }); lastY = scrollY; wanted = true; held = false; }
+    else { wanted = !wanted; held = !wanted; }
+    lastInput = -1e9;
+  });
+
+  // the globe also turns by hand: a sideways drag runs the story, to the right to go back
+  let dragX = null;
+  canvas.addEventListener('pointermove', (e) => {
+    if (dragX === null) { hover(siteAt(e)); return; }
+    const top = story.getBoundingClientRect().top;
+    if (top <= 0 && T < END) scrollBy({ top: (dragX - e.clientX) * stepPx() / 110, behavior: 'instant' });
+    dragX = e.clientX;
+  });
+  canvas.addEventListener('pointerdown', (e) => {
+    hover(siteAt(e));
+    if (!reduceMotion && e.button === 0) { dragX = e.clientX; canvas.setPointerCapture(e.pointerId); canvas.classList.add('dragging'); }
+  });
+  const dragEnd = () => { dragX = null; canvas.classList.remove('dragging'); };
+  canvas.addEventListener('pointerup', dragEnd);
+  canvas.addEventListener('pointercancel', dragEnd);
+  canvas.addEventListener('pointerleave', () => hover(null));
 
   // hidden until the continents are in (or the map is slow or missing), then faded in: no empty sphere first
   const reveal = () => canvas.classList.remove('pending');
   canvas.classList.add('pending'); setTimeout(reveal, 1500);
+  if (reduceMotion) story.classList.add('still');
+  else {
+    story.style.height = `calc(100svh + ${END * STEP_SVH}svh)`;
+    // the story's height just moved every section below it: a link into the page lands on its section again
+    if (location.hash.length > 1) document.getElementById(location.hash.slice(1))?.scrollIntoView({ behavior: 'instant' });
+  }
   readColors(); resize(); draw();
   addEventListener('resize', () => { resize(); draw(); });
   matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { readColors(); draw(); });
-  new IntersectionObserver(([e]) => { visible = e.isIntersecting; }).observe(canvas);
 
   fetch('static/data/land-110m.json')
     .then((r) => r.json())
@@ -221,36 +391,7 @@ const SITES = [
   });
 })();
 
-/* ---------------------------------------------------------- LiGHT header and beam */
-
-// Phones: the LiGHT menu folds behind a button.
-(function lightMenu() {
-  const top = document.querySelector('.lh');
-  const btn = top && top.querySelector('.lh-menu');
-  if (!btn) return;
-  btn.addEventListener('click', () => btn.setAttribute('aria-expanded', String(top.classList.toggle('open'))));
-  // a tap outside the menu, or on one of its links (Who we are opens the team panel in place), closes it
-  document.addEventListener('click', (e) => {
-    if (top.classList.contains('open') && (!top.contains(e.target) || e.target.closest('.lh-links a'))) {
-      top.classList.remove('open'); btn.setAttribute('aria-expanded', 'false');
-    }
-  });
-  // the link of the part in view is underlined: Home over the hero, a section while it crosses the upper third, Who we are while the team panel is open
-  const links = [...top.querySelectorAll('.lh-links a')];
-  const part = (a) => (a.hash === '#home' ? document.querySelector('.hero') : document.getElementById(a.hash.slice(1)));
-  function mark() {
-    const line = innerHeight / 3;
-    const here = location.hash === '#team' ? links.find((a) => a.hash === '#team')
-      : links.find((a) => { const r = part(a)?.getBoundingClientRect(); return r && r.top <= line && r.bottom > line; })
-        ?? (scrollY < innerHeight / 2 ? links[0] : null);
-    links.forEach((a) => a.classList.toggle('is-here', a === here));
-  }
-  let queued = false;
-  addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(() => { queued = false; mark(); }); } }, { passive: true });
-  addEventListener('hashchange', mark); addEventListener('resize', mark);
-  // the panel's own close handler drops the hash after this one runs
-  document.getElementById('panel')?.addEventListener('close', () => requestAnimationFrame(mark)); mark();
-})();
+/* ---------------------------------------------------------------- beam */
 
 // The beam types its arguments one after another, with the LiGHT homepage's timings, and lights the
 // matching folder group; with reduced motion it shows all three at once.
