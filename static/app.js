@@ -277,7 +277,7 @@ const SITES = [
     // back at the top it may start again
     if (pos !== null && Math.abs(scrollY - pos) > 8) { pos = null; lastInput = t; }
     if (pos === null && scrollY < lastY - 1) wanted = false;
-    if (top > vh * 0.5 && !held) wanted = true;
+    if (top > vh * 0.32 && !held) wanted = true;
     lastY = scrollY;
     T = clamp(-top / (step * END)) * END;
     const playing = wanted && !document.hidden && t - lastInput > idle && top < vh * 0.3 && T < END && !document.querySelector('dialog[open]');
