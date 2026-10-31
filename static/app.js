@@ -1,4 +1,4 @@
-// Meditron site: dithered globe, draggable folders, project panels, the AutoMOOVE game, chat.
+// Meditron site: dithered globe, project panels, the AutoMOOVE game, chat.
 
 // The public chat goes through the MOOVE gateway's meditron-chat relay, which holds the RCP key
 // and pins the model, temperature and token budget; the page only sends the conversation.
@@ -328,61 +328,24 @@ const SITES = [
   if (!reduceMotion) requestAnimationFrame(frame);
 })();
 
-/* -------------------------------------------------------------- folders */
+/* ---------------------------------------------------------- commitments */
 
-(function folders() {
-  const desktop = matchMedia('(min-width: 901px)');
-  let top = 10;
-  // Each group comes in once as the scroll reaches it, label first; without motion they are simply there.
-  const row = document.querySelector('.folders');
-  if (row && !reduceMotion) {
-    row.classList.add('reveal');
-    const seen = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
-        if (!e.isIntersecting) return;
-        e.target.classList.add('is-in');
-        seen.unobserve(e.target);
-      });
-    }, { rootMargin: '0px 0px -20% 0px' });
-    row.querySelectorAll('.fgroup').forEach((g) => seen.observe(g));
-  }
-  document.querySelectorAll('.folder').forEach((el) => {
-    let sx = 0, sy = 0, ox = 0, oy = 0, moved = false, down = false;
-    el.addEventListener('pointerdown', (e) => {
-      if (!desktop.matches || e.button !== 0) return;
-      down = true; moved = false;
-      sx = e.clientX; sy = e.clientY;
-      ox = parseFloat(el.style.getPropertyValue('--x')) || 0;
-      oy = parseFloat(el.style.getPropertyValue('--y')) || 0;
-      el.style.zIndex = ++top;
-      el.setPointerCapture(e.pointerId);
+// Each commitment comes in once as the scroll reaches it, heading first; without motion they are simply there.
+(function commitments() {
+  if (reduceMotion) return;
+  const seen = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      e.target.classList.add('is-in');
+      seen.unobserve(e.target);
     });
-    el.addEventListener('pointermove', (e) => {
-      if (!down) return;
-      const dx = e.clientX - sx, dy = e.clientY - sy;
-      if (!moved && Math.hypot(dx, dy) < 5) return;
-      moved = true; el.classList.add('dragging');
-      el.style.setProperty('--x', `${ox + dx}px`);
-      el.style.setProperty('--y', `${oy + dy}px`);
-    });
-    const end = () => { down = false; el.classList.remove('dragging'); };
-    el.addEventListener('pointerup', end);
-    el.addEventListener('pointercancel', end);
-    // click also fires for Enter/Space; a drag that just ended is not a click
-    el.addEventListener('click', () => {
-      if (moved) { moved = false; return; }
-      // portal folders with a data-href leave the site (a relative one, a page of this site, opens in place);
-      // the others open a panel
-      if (el.dataset.href && !el.dataset.href.includes('://')) location.href = el.dataset.href;
-      else if (el.dataset.href) window.open(el.dataset.href, '_blank', 'noopener');
-      else location.hash = el.dataset.open;
-    });
-  });
+  }, { rootMargin: '0px 0px -20% 0px' });
+  document.querySelectorAll('.commitment').forEach((g) => { g.classList.add('reveal'); seen.observe(g); });
 })();
 
 /* ---------------------------------------------------------------- dawn */
 
-// The dawn sky of the MeditronFO page behind the header and the title, with the horizon just under the buttons.
+// The sky of the MeditronFO page behind the header and the title, blue into the page's ivory, with the horizon just under the buttons.
 (function dawn() {
   const canvas = document.getElementById('sky'), ctas = document.querySelector('.hero-cta');
   if (!canvas || !ctas) return;
@@ -398,15 +361,20 @@ const SITES = [
     canvas.width = W * dpr; canvas.height = H * dpr;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     const f = Math.min(0.9, horizon / H), g = ctx.createLinearGradient(0, 0, 0, H);
-    [[0, '#0a1a44'], [0.38 * f, '#1d4096'], [0.66 * f, '#5b81c9'], [0.86 * f, '#b9a6b6'], [0.97 * f, '#f0bf8c'],
-      [f, '#ffdcaa'], [1, '#f6c48e']].forEach(([o, c]) => g.addColorStop(o, c));
+    const paper = getComputedStyle(document.documentElement).getPropertyValue('--paper').trim();   // the sky ends in the page
+    [[0, '#0a1a44'], [0.38 * f, '#1d4096'], [0.66 * f, '#5b81c9'],
+      [f, paper], [1, paper]].forEach(([o, c]) => g.addColorStop(o, c));
     ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
-    // film grain: grey specks over the sky
+    // film grain: grey specks over the blue, gone by the horizon
     const speck = document.createElement('canvas');
     speck.width = canvas.width; speck.height = canvas.height;
     const sctx = speck.getContext('2d'), img = sctx.createImageData(speck.width, speck.height), d = img.data;
     for (let i = 0; i < d.length; i += 4) { d[i] = d[i + 1] = d[i + 2] = Math.random() * 255; d[i + 3] = 14; }
     sctx.putImageData(img, 0, 0);
+    const fade = sctx.createLinearGradient(0, 0, 0, speck.height);
+    fade.addColorStop(0.66 * f, '#000'); fade.addColorStop(f, 'transparent');
+    sctx.globalCompositeOperation = 'destination-in';
+    sctx.fillStyle = fade; sctx.fillRect(0, 0, speck.width, speck.height);
     ctx.drawImage(speck, 0, 0, W, H);
   }
 
@@ -418,7 +386,7 @@ const SITES = [
 /* ---------------------------------------------------------------- beam */
 
 // The beam types its arguments one after another, with the LiGHT homepage's timings, and lights the
-// matching folder group; with reduced motion it shows all three at once.
+// matching section; with reduced motion it shows all three at once.
 (function beam() {
   const el = document.getElementById('beam-word');
   if (!el || !document.documentElement.classList.contains('withbeam')) return;
@@ -427,8 +395,8 @@ const SITES = [
     el.textContent = `(${words.map((w) => w.slice(1, -1)).join(', ')})`;
     return;
   }
-  // the folder group of the commitment being typed lights up (the words and the groups share their order)
-  const groups = document.querySelectorAll('.fgroup');
+  // the section of the commitment being typed lights up (the words and the sections share their order)
+  const groups = document.querySelectorAll('.commitment');
   const light = (k) => groups.forEach((g, gi) => g.classList.toggle('is-lit', gi === k));
   let w = 0, n = words[0].length;
   light(0);

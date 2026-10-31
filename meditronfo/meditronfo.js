@@ -23,15 +23,20 @@ const fmt = (x, d = 1) => x.toFixed(d);
     canvas.width = W * dpr; canvas.height = H * dpr;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     const f = horizon / H, g = ctx.createLinearGradient(0, 0, 0, H);
-    [[0, '#0a1a44'], [0.38 * f, '#1d4096'], [0.66 * f, '#5b81c9'], [0.86 * f, '#b9a6b6'], [0.97 * f, '#f0bf8c'],
-      [f, '#ffdcaa'], [1, '#f6c48e']].forEach(([o, c]) => g.addColorStop(o, c));
+    const paper = getComputedStyle(document.documentElement).getPropertyValue('--paper').trim();   // the sky ends in the page
+    [[0, '#0a1a44'], [0.38 * f, '#1d4096'], [0.66 * f, '#5b81c9'],
+      [f, paper], [1, paper]].forEach(([o, c]) => g.addColorStop(o, c));
     ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
-    // film grain: grey specks over the sky
+    // film grain: grey specks over the blue, gone by the horizon
     const speck = document.createElement('canvas');
     speck.width = canvas.width; speck.height = canvas.height;
     const sctx = speck.getContext('2d'), img = sctx.createImageData(speck.width, speck.height), d = img.data;
     for (let i = 0; i < d.length; i += 4) { d[i] = d[i + 1] = d[i + 2] = Math.random() * 255; d[i + 3] = 14; }
     sctx.putImageData(img, 0, 0);
+    const fade = sctx.createLinearGradient(0, 0, 0, speck.height);
+    fade.addColorStop(0.66 * f, '#000'); fade.addColorStop(f, 'transparent');
+    sctx.globalCompositeOperation = 'destination-in';
+    sctx.fillStyle = fade; sctx.fillRect(0, 0, speck.width, speck.height);
     ctx.drawImage(speck, 0, 0, W, H);
   }
 

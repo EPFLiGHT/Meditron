@@ -18,7 +18,7 @@
   position: relative; isolation: isolate; margin: 0 -16px; padding: clamp(5.5rem, 11vh, 7rem) 16px clamp(7rem, 20vh, 11rem);
   text-align: center; color: #fbf7ef;
   /* fallback when the canvas can't draw: the same sky */
-  background: linear-gradient(#0a1a44 0%, #1d4096 21%, #5b81c9 37%, #b9a6b6 48%, #f0bf8c 54%, #ffdcaa 56%, #f6c48e);
+  background: linear-gradient(#0a1a44 0%, #1d4096 21%, #5b81c9 37%, var(--paper) 56%);
 }
 /* phones: the seven links need their own lines, under the logo */
 @media (max-width: 700px) {
@@ -42,7 +42,7 @@
 .m-hero .talk:hover { background: #fff; }
 .m-hero .m-ghost { border-color: #fbf7ef; color: #fbf7ef; background: rgb(10 26 68 / 0.6); }
 .m-hero .m-ghost:hover { background: rgb(10 26 68 / 0.85); }
-/* "FO" arrives after "Meditron": the word widens to make room, then each letter rises in, warm as the dawn, and cools to white */
+/* "FO" arrives after "Meditron": the word widens to make room, then each letter rises in, in ivory, and settles to white */
 .m-fo { display: inline-block; white-space: nowrap; }
 .m-fo span { display: inline-block; }
 @media (prefers-reduced-motion: no-preference) {
@@ -51,8 +51,8 @@
   .m-fo span + span { animation-delay: 1s; }
   @keyframes fo-room { from { max-width: 0; } to { max-width: 1.6em; } }
   @keyframes fo-rise {
-    from { opacity: 0; translate: 0 0.35em; filter: blur(8px); color: #ffdcaa; text-shadow: 0 0 40px rgb(255 214 160 / 0.9); }
-    60% { opacity: 1; filter: blur(0); color: #ffe9cc; }
+    from { opacity: 0; translate: 0 0.35em; filter: blur(8px); color: #faf9f5; text-shadow: 0 0 40px rgb(250 249 245 / 0.9); }
+    60% { opacity: 1; filter: blur(0); color: #faf9f5; }
   }
 }
 .m-intro { max-width: 52rem; margin: 0 auto; padding: 3.5rem 0 3rem; text-align: center; }

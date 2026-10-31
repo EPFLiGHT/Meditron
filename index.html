@@ -112,7 +112,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400..800&display=swap">
   <link rel="stylesheet" href="https://use.typekit.net/ssi4ehi.css">
-  <link rel="stylesheet" href="static/style.css?v=20261030m">
+  <link rel="stylesheet" href="static/style.css?v=20261031b">
   <link rel="preload" href="static/data/land-110m.json" as="fetch" crossorigin>
   <!-- page variants, to compare: ?withbeam shows the LiGHT beam (withbeam/), ?chillax the beam with its text and the name in the Meditron logo's font (chillax/), ?logofont only the name in that font (v8-logo/), ?w400 sets every title at weight 400 (400/); links within the site keep them -->
   <script>
@@ -142,9 +142,10 @@
     <a class="top-lab" href="https://www.light-laboratory.org/" target="_blank" rel="noopener"><img class="logo-color" src="static/img/light-logo-color.png" alt="LiGHT, Laboratory for intelligent Global Health and Humanitarian Response Technologies"><img class="logo-mono" src="static/img/light-logo.png" alt=""></a>
     <nav class="top-links" aria-label="Sections">
       <a href="#what">What is Meditron</a>
-      <a href="#meditronfo">Latest</a>
-      <a href="#download">Download</a>
-      <a href="#contact">Contact</a>
+      <a href="#openness">Download</a>
+      <a href="#meditronfo">Latest project</a>
+      <a href="#cite">Cite</a>
+      <a href="#cite">Contact</a>
     </nav>
   </header>
 
@@ -182,68 +183,33 @@
           </div>
         </div>
       </section>
+    </section>
 
-      <!-- five folders under the three commitments; the beam lights each group as it types its name (app.js) -->
-      <div class="folders" id="parts" aria-label="The parts of Meditron">
-        <div class="fgroup">
-          <h2 class="fgroup-label">Openness</h2>
-          <div class="fgroup-cards">
-            <button id="f-open" class="folder folder-portal" type="button" data-open="data">
-              <span class="folder-tab">Data &amp; code</span>
-              <span class="folder-body">
-                <span class="folder-desc"><span>All 533,888 training examples and the code that made them, built on Apertus, the fully open base model from EPFL, ETH Zurich and CSCS.</span></span>
-                <img class="folder-fig" src="static/img/portal-hf.jpg" alt="The training data on Hugging Face: 534k rows" width="960" height="453">
-                <span class="folder-cta">See what's open</span>
-              </span>
-            </button>
-            <button id="f-models" class="folder folder-portal" type="button" data-href="https://huggingface.co/collections/EPFLiGHT/meditronfo">
-              <span class="folder-tab">Models</span>
-              <span class="folder-body">
-                <span class="folder-desc"><span>Six MeditronFO models on Hugging Face, from 8B to 70B: Apertus, OLMo-2, EuroLLM and Gemma-3, each finetuned on our open corpus.</span></span>
-                <img class="folder-fig" src="static/img/portal-models.jpg" alt="The MeditronFO collection on Hugging Face" width="960" height="453">
-                <span class="folder-cta">Download</span>
-              </span>
-            </button>
-          </div>
-        </div>
-        <div class="fgroup">
-          <h2 class="fgroup-label">Clinical grounding</h2>
-          <div class="fgroup-cards">
-            <button id="f-projects" class="folder folder-portal" type="button" data-href="meditronfo/">
-              <span class="folder-tab">Projects</span>
-              <span class="folder-body">
-                <span class="folder-desc"><span>MeditronFO: the first medical AI where every step is open, from the data to the evaluation.</span></span>
-                <img class="folder-fig" src="static/img/portal-projects.jpg?v=2" alt="The MeditronFO project page: the name and the paper's full title under a dawn sky" width="960" height="453">
-                <span class="folder-cta">Read the blog</span>
-              </span>
-            </button>
-            <button id="f-paper" class="folder folder-portal" type="button" data-open="publications">
-              <span class="folder-tab">Publications</span>
-              <span class="folder-body">
-                <span class="folder-desc"><span>Four papers over three generations of Meditron, from MEDITRON-70B on Llama-2 in 2023 to Fully Open Meditron, an auditable pipeline where every finetune is preferred over its base.</span></span>
-                <img class="folder-fig" src="static/img/paper-fig1.jpg" alt="Figure 1 of the Fully Open Meditron paper: the Meditron pipeline, from data and model to clinical evaluation" width="960" height="453">
-                <span class="folder-cta">See the papers</span>
-              </span>
-            </button>
-          </div>
-        </div>
-        <div class="fgroup">
-          <h2 class="fgroup-label">Real-world evaluation</h2>
-          <div class="fgroup-cards">
-            <button id="f-moove" class="folder folder-portal" type="button" data-open="moove">
-              <span class="folder-tab">Tested by clinicians</span>
-              <span class="folder-body">
-                <span class="folder-desc"><span>Clinicians and humanitarian experts put tough questions from their own practice to the models, compare two anonymous answers and vote for the better one.</span></span>
-                <img class="folder-fig fig-low" src="static/img/portal-moove.jpg" alt="The MOOVE platform, where clinicians write questions and judge the answers" width="960" height="453">
-                <span class="folder-cta">Explore MOOVE</span>
-              </span>
-            </button>
-          </div>
-        </div>
+    <!-- the three commitments: a heading and a large linked thumbnail; each comes in as the scroll reaches it, and the beam lights each as it types its name (app.js) -->
+    <section id="openness" class="feature-section commitment" aria-labelledby="openness-title">
+      <div class="feature-wrap">
+        <h2 id="openness-title">Open data, open code, open models</h2>
+        <a class="feature-thumb" href="https://huggingface.co/collections/EPFLiGHT/meditronfo" target="_blank" rel="noopener"><img src="static/img/portal-models.jpg" alt="The MeditronFO collection on Hugging Face" width="960" height="453" loading="lazy"><span class="feature-cta ext">Download</span></a>
       </div>
     </section>
 
-    <!-- the chat as a card, right under the folders; the greeting is page text, not part of the conversation sent to the model -->
+    <section id="evaluation" class="feature-section commitment" aria-labelledby="evaluation-title">
+      <div class="feature-wrap">
+        <h2 id="evaluation-title">Tested by clinicians</h2>
+        <a class="feature-thumb" href="#moove"><img src="static/img/portal-moove.jpg" alt="The MOOVE platform, where clinicians write questions and judge the answers" width="960" height="453" loading="lazy"><span class="feature-cta">Explore MOOVE</span></a>
+      </div>
+    </section>
+
+    <section id="meditronfo" class="feature-section commitment" aria-labelledby="meditronfo-title">
+      <div class="feature-wrap">
+        <h2 id="meditronfo-title">Meet our latest project</h2>
+        <a class="feature-thumb" href="meditronfo/"><img src="static/img/meditronfo-thumb.jpg?v=3" alt="The MeditronFO project page: the name and the paper's full title under a dawn sky" width="1920" height="906" loading="lazy"><span class="feature-cta">Read about MeditronFO</span></a>
+      </div>
+    </section>
+
+    
+
+    <!-- the chat as a card, right under the three commitments; the greeting is page text, not part of the conversation sent to the model -->
     <section id="chat" class="chat-section" aria-labelledby="chat-title">
       <h2 id="chat-title">Talk to Meditron</h2>
       <div class="chat-wrap">
@@ -269,7 +235,7 @@
     <section class="why-section" id="what" aria-labelledby="why-title">
       <div class="why-wrap">
         <h2 id="why-title">What is Meditron</h2>
-        <p>Meditron is a family of open medical AI models: large language models trained to answer clinical questions. Anyone can download them, run them on their own hardware and adapt them, from a hospital in Switzerland to a health post in Malawi. We commit to keep the family open down to the training data, so clinicians, regulators and patients can check what it learned. And thanks to our MOOVE events, where clinicians evaluate the models with questions from their own practice, we commit to keep the family tested by clinicians.</p>
+        <p>Meditron is a family of open models for medicine: large language models trained to answer clinical questions. Anyone can download them, run them on their own hardware and adapt them, from a hospital in Switzerland to a health post in Malawi.</p>
       </div>
       <ol class="timeline" aria-label="Meditron over the years">
         <li>
@@ -298,27 +264,11 @@
       </ol>
     </section>
 
-    <section id="meditronfo" class="feature-section" aria-labelledby="meditronfo-title">
-      <div class="feature-wrap">
-        <h2 id="meditronfo-title">Meet our latest project</h2>
-        <p>The first medical AI where every step is open, from the data to the evaluation.</p>
-        <a class="feature-thumb" href="meditronfo/"><img src="static/img/meditronfo-thumb.jpg?v=2" alt="The MeditronFO project page: the name and the paper's full title under a dawn sky" width="1920" height="906" loading="lazy"><span class="feature-cta">Read about MeditronFO</span></a>
-      </div>
-    </section>
-
     <section id="game-feature" class="feature-section" aria-labelledby="game-feature-title">
       <div class="feature-wrap">
         <h2 id="game-feature-title">Can you judge like a clinician?</h2>
         <p>Five real MOOVE cases written by clinicians in Ethiopia, Switzerland and Kenya: read two anonymous answers, vote for the better one, and see whether you agree with the clinicians and with AutoMOOVE, our AI judge.</p>
         <a class="feature-thumb" href="#automoove"><img src="static/img/automoove-thumb.jpg" alt="A round of the AutoMOOVE game: a clinician's question and two anonymous answers to compare" width="1920" height="906" loading="lazy"><span class="feature-cta">Play the game</span></a>
-      </div>
-    </section>
-
-    <section id="download" class="feature-section" aria-labelledby="download-title">
-      <div class="feature-wrap">
-        <h2 id="download-title">Download Meditron</h2>
-        <p>Six MeditronFO models on Hugging Face, from 8B to 70B: Apertus, OLMo-2, EuroLLM and Gemma-3, each finetuned on our open corpus.</p>
-        <a class="feature-thumb" href="https://huggingface.co/collections/EPFLiGHT/meditronfo" target="_blank" rel="noopener"><img src="static/img/portal-models.jpg" alt="The MeditronFO collection on Hugging Face" width="960" height="453" loading="lazy"><span class="feature-cta ext">Download on Hugging Face</span></a>
       </div>
     </section>
 
@@ -595,6 +545,6 @@
   <script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/15.0.7/marked.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.2.4/purify.min.js"></script>
-  <script src="static/app.js?v=20261030j"></script>
+  <script src="static/app.js?v=20261031c"></script>
 </body>
 </html>
