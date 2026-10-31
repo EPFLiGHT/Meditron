@@ -112,7 +112,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400..800&display=swap">
   <link rel="stylesheet" href="https://use.typekit.net/ssi4ehi.css">
-  <link rel="stylesheet" href="static/style.css?v=20261031d">
+  <link rel="stylesheet" href="static/style.css?v=20261031g">
   <link rel="preload" href="static/data/land-110m.json" as="fetch" crossorigin>
   <!-- page variants, to compare: ?withbeam shows the LiGHT beam (withbeam/), ?chillax the beam with its text and the name in the Meditron logo's font (chillax/), ?logofont only the name in that font (v8-logo/), ?manrope the name in Manrope (manrope/), ?w400 sets every title at weight 400 (400/); links within the site keep them -->
   <script>
@@ -124,6 +124,9 @@
       document.head.insertAdjacentHTML('beforeend', '<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=chillax@500,600,700&display=swap">');
     }
     if (on.length) addEventListener('DOMContentLoaded', () => {
+      // the MeditronFO thumbnail is a picture of that page: it shows the same name
+      const thumb = on.includes('manrope') ? 'manrope' : on.includes('chillax') || on.includes('logofont') ? 'logofont' : '';
+      if (thumb) document.querySelector('img[src*="meditronfo-thumb"]').src = `static/img/meditronfo-thumb-${thumb}.jpg?v=3`;
       for (const el of document.querySelectorAll('a[href]:not([href^="#"]):not([href*=":"]), [data-href]:not([data-href*=":"])')) {
         const u = new URL(el.getAttribute('href') ?? el.dataset.href, location.href);
         u.search = '?' + on.join('&');
@@ -235,7 +238,7 @@
     <section id="meditronfo" class="feature-section commitment" aria-labelledby="meditronfo-title">
       <div class="feature-wrap">
         <h2 id="meditronfo-title">Meet our latest project</h2>
-        <a class="feature-thumb" href="meditronfo/"><img src="static/img/meditronfo-thumb.jpg?v=3" alt="The MeditronFO project page: the name and the paper's full title under a dawn sky" width="1920" height="906" loading="lazy"><span class="feature-cta">Read about MeditronFO</span></a>
+        <a class="feature-thumb" href="meditronfo/"><img src="static/img/meditronfo-thumb.jpg?v=5" alt="The MeditronFO project page: the name and the paper's subtitle under a blue sky" width="1920" height="906" loading="lazy"><span class="feature-cta">Read about MeditronFO</span></a>
       </div>
     </section>
 
@@ -321,7 +324,7 @@
       <div>
         <h2>Contact</h2>
         <p>Questions about Meditron? Write to <a href="mailto:admin-light@epfl.ch?subject=Meditron">admin-light@epfl.ch</a>.</p>
-        <a class="team-thumb" href="#team"><img src="static/img/team-thumb.jpg" alt="" width="1920" height="906" loading="lazy"><span>Meet the Meditron team</span></a>
+        <a class="team-link" href="#team"><span class="team-faces"><img src="static/img/team/theimer-lienhard.jpg?v=2" alt="" width="84" height="84" loading="lazy"><img src="static/img/team/hartley.jpg" alt="" width="84" height="84" loading="lazy"><img src="static/img/team/keitel.jpg" alt="" width="84" height="84" loading="lazy"><img src="static/img/team/klein.jpg" alt="" width="84" height="84" loading="lazy"><img src="static/img/team/sasu.jpg" alt="" width="84" height="84" loading="lazy"><img src="static/img/team/brokowski.jpg" alt="" width="84" height="84" loading="lazy"><img src="static/img/team/elhassan.jpg" alt="" width="84" height="84" loading="lazy"></span><span class="team-label">Meet the Meditron team</span></a>
       </div>
       <div>
         <h2>Credits</h2>
@@ -346,7 +349,7 @@
         <li><a href="https://c4ir.rw/" target="_blank" rel="noopener"><img src="static/img/light/host4.png" alt="World Economic Forum, Rwanda Centre for the Fourth Industrial Revolution" width="130" height="125"></a></li>
       </ul>
       <nav class="lf-links" aria-label="LiGHT">
-        <a href="https://www.light-laboratory.org">Home</a>
+        <a href="https://www.light-laboratory.org">LiGHT</a>
         <a href="#team">Who we are</a>
         <a href="mailto:admin-light@epfl.ch">Contact</a>
         <p class="lf-copy">© 2026 by LiGHT</p>
@@ -458,7 +461,7 @@
     <div>
     <h3>Lead</h3>
     <ul class="people">
-      <li><img class="face" src="static/img/team/theimer-lienhard.jpg" alt="" width="28" height="28" loading="lazy"><a href="https://xaviertheimerlienhard.com/" target="_blank" rel="noopener">Xavier Theimer-Lienhard</a><span>PhD Student · EPFL</span></li>
+      <li><img class="face" src="static/img/team/theimer-lienhard.jpg?v=2" alt="" width="28" height="28" loading="lazy"><a href="https://xaviertheimerlienhard.com/" target="_blank" rel="noopener">Xavier Theimer-Lienhard</a><span>PhD Student · EPFL</span></li>
     </ul>
     <h3>Directors</h3>
     <ul class="people">
