@@ -5,6 +5,7 @@ Disallow: /server/
 Disallow: /nobeam/
 Disallow: /withbeam/
 Disallow: /chillax/
+Disallow: /manrope/
 Disallow: /400/
 Disallow: /versions/
 Disallow: /globes/

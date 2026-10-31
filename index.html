@@ -112,12 +112,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400..800&display=swap">
   <link rel="stylesheet" href="https://use.typekit.net/ssi4ehi.css">
-  <link rel="stylesheet" href="static/style.css?v=20261031b">
+  <link rel="stylesheet" href="static/style.css?v=20261031d">
   <link rel="preload" href="static/data/land-110m.json" as="fetch" crossorigin>
-  <!-- page variants, to compare: ?withbeam shows the LiGHT beam (withbeam/), ?chillax the beam with its text and the name in the Meditron logo's font (chillax/), ?logofont only the name in that font (v8-logo/), ?w400 sets every title at weight 400 (400/); links within the site keep them -->
+  <!-- page variants, to compare: ?withbeam shows the LiGHT beam (withbeam/), ?chillax the beam with its text and the name in the Meditron logo's font (chillax/), ?logofont only the name in that font (v8-logo/), ?manrope the name in Manrope (manrope/), ?w400 sets every title at weight 400 (400/); links within the site keep them -->
   <script>
   (() => {
-    const q = new URLSearchParams(location.search), on = ['withbeam', 'chillax', 'logofont', 'w400'].filter((k) => q.has(k));
+    const q = new URLSearchParams(location.search), on = ['withbeam', 'chillax', 'logofont', 'manrope', 'w400'].filter((k) => q.has(k));
     on.forEach((k) => document.documentElement.classList.add(k));
     if (on.includes('chillax')) document.documentElement.classList.add('withbeam');
     if (on.includes('chillax') || on.includes('logofont')) {
@@ -145,7 +145,7 @@
       <a href="#openness">Download</a>
       <a href="#meditronfo">Latest project</a>
       <a href="#cite">Cite</a>
-      <a href="#cite">Contact</a>
+      <a href="#contact">Contact</a>
     </nav>
   </header>
 
@@ -185,53 +185,6 @@
       </section>
     </section>
 
-    <!-- the three commitments: a heading and a large linked thumbnail; each comes in as the scroll reaches it, and the beam lights each as it types its name (app.js) -->
-    <section id="openness" class="feature-section commitment" aria-labelledby="openness-title">
-      <div class="feature-wrap">
-        <h2 id="openness-title">Open data, open code, open models</h2>
-        <a class="feature-thumb" href="https://huggingface.co/collections/EPFLiGHT/meditronfo" target="_blank" rel="noopener"><img src="static/img/portal-models.jpg" alt="The MeditronFO collection on Hugging Face" width="960" height="453" loading="lazy"><span class="feature-cta ext">Download</span></a>
-      </div>
-    </section>
-
-    <section id="evaluation" class="feature-section commitment" aria-labelledby="evaluation-title">
-      <div class="feature-wrap">
-        <h2 id="evaluation-title">Tested by clinicians</h2>
-        <a class="feature-thumb" href="#moove"><img src="static/img/portal-moove.jpg" alt="The MOOVE platform, where clinicians write questions and judge the answers" width="960" height="453" loading="lazy"><span class="feature-cta">Explore MOOVE</span></a>
-      </div>
-    </section>
-
-    <section id="meditronfo" class="feature-section commitment" aria-labelledby="meditronfo-title">
-      <div class="feature-wrap">
-        <h2 id="meditronfo-title">Meet our latest project</h2>
-        <a class="feature-thumb" href="meditronfo/"><img src="static/img/meditronfo-thumb.jpg?v=3" alt="The MeditronFO project page: the name and the paper's full title under a dawn sky" width="1920" height="906" loading="lazy"><span class="feature-cta">Read about MeditronFO</span></a>
-      </div>
-    </section>
-
-    
-
-    <!-- the chat as a card, right under the three commitments; the greeting is page text, not part of the conversation sent to the model -->
-    <section id="chat" class="chat-section" aria-labelledby="chat-title">
-      <h2 id="chat-title">Talk to Meditron</h2>
-      <div class="chat-wrap">
-        <p class="chat-model" id="chat-model" hidden></p>
-        <div class="chat-log" id="chat-log" aria-live="polite">
-          <div class="msg-row"><span class="cube chat-cube" aria-hidden="true"><img class="cube-light" src="static/img/cube.png" alt=""><img class="cube-dark" src="static/img/cube-dark.png" alt=""></span><div class="msg bot"><p>Hello, I'm Meditron, an open medical AI model. Ask me a medical question.</p><p>I'm a research model, not a doctor: I can be wrong, and I know nothing about you beyond what you type.</p></div></div>
-        </div>
-        <div class="chat-suggest" id="chat-suggest">
-          <button type="button">A 2-year-old has sunken eyes and drinks eagerly. How should a health post manage this?</button>
-          <button type="button">What should I ask a farmer with pneumonia before choosing an antibiotic?</button>
-          <button type="button">When does a sore throat in a child need antibiotics?</button>
-        </div>
-        <form class="chat-form" id="chat-form">
-          <label class="sr" for="chat-input">Your question</label>
-          <textarea id="chat-input" rows="2" placeholder="Ask Meditron a question"></textarea>
-          <button type="submit" class="send" id="chat-send">Send</button>
-        </form>
-        <p class="chat-disclaimer"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/></svg>Meditron can be wrong. It is a research model, not a doctor. Use with care.</p>
-        <p class="chat-status" id="chat-status" role="status"></p>
-      </div>
-    </section>
-
     <section class="why-section" id="what" aria-labelledby="why-title">
       <div class="why-wrap">
         <h2 id="why-title">What is Meditron</h2>
@@ -263,6 +216,55 @@
         </li>
       </ol>
     </section>
+
+    <!-- the three commitments: a heading and a large linked thumbnail; each comes in as the scroll reaches it, and the beam lights each as it types its name (app.js) -->
+    <section id="openness" class="feature-section commitment" aria-labelledby="openness-title">
+      <div class="feature-wrap">
+        <h2 id="openness-title">Open data, open code, open models</h2>
+        <a class="feature-thumb" href="https://huggingface.co/collections/EPFLiGHT/meditronfo" target="_blank" rel="noopener"><img src="static/img/portal-models.jpg" alt="The MeditronFO collection on Hugging Face" width="960" height="453" loading="lazy"><span class="feature-cta ext">Download</span></a>
+      </div>
+    </section>
+
+    <section id="evaluation" class="feature-section commitment" aria-labelledby="evaluation-title">
+      <div class="feature-wrap">
+        <h2 id="evaluation-title">Tested by clinicians</h2>
+        <a class="feature-thumb" href="#moove"><img src="static/img/portal-moove.jpg" alt="The MOOVE platform, where clinicians write questions and judge the answers" width="960" height="453" loading="lazy"><span class="feature-cta">Explore MOOVE</span></a>
+      </div>
+    </section>
+
+    <section id="meditronfo" class="feature-section commitment" aria-labelledby="meditronfo-title">
+      <div class="feature-wrap">
+        <h2 id="meditronfo-title">Meet our latest project</h2>
+        <a class="feature-thumb" href="meditronfo/"><img src="static/img/meditronfo-thumb.jpg?v=3" alt="The MeditronFO project page: the name and the paper's full title under a dawn sky" width="1920" height="906" loading="lazy"><span class="feature-cta">Read about MeditronFO</span></a>
+      </div>
+    </section>
+
+    
+
+    <!-- the chat as a band, right under the three commitments; the greeting is page text, not part of the conversation sent to the model -->
+    <section id="chat" class="chat-section" aria-labelledby="chat-title">
+      <h2 id="chat-title">Talk to Meditron</h2>
+      <div class="chat-wrap">
+        <p class="chat-model" id="chat-model" hidden></p>
+        <div class="chat-log" id="chat-log" aria-live="polite">
+          <div class="msg-row"><span class="cube chat-cube" aria-hidden="true"><img class="cube-light" src="static/img/cube.png" alt=""><img class="cube-dark" src="static/img/cube-dark.png" alt=""></span><div class="msg bot"><p>Hello, I'm Meditron, an open medical AI model. Ask me a medical question.</p><p>I'm a research model, not a doctor: I can be wrong, and I know nothing about you beyond what you type.</p></div></div>
+        </div>
+        <div class="chat-suggest" id="chat-suggest">
+          <button type="button">A 2-year-old has sunken eyes and drinks eagerly. How should a health post manage this?</button>
+          <button type="button">What should I ask a farmer with pneumonia before choosing an antibiotic?</button>
+          <button type="button">When does a sore throat in a child need antibiotics?</button>
+        </div>
+        <form class="chat-form" id="chat-form">
+          <label class="sr" for="chat-input">Your question</label>
+          <textarea id="chat-input" rows="2" placeholder="Ask Meditron a question"></textarea>
+          <button type="submit" class="send" id="chat-send">Send</button>
+        </form>
+        <p class="chat-disclaimer"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/></svg>Meditron can be wrong. It is a research model, not a doctor. Use with care.</p>
+        <p class="chat-status" id="chat-status" role="status"></p>
+      </div>
+    </section>
+
+    
 
     <section id="game-feature" class="feature-section" aria-labelledby="game-feature-title">
       <div class="feature-wrap">

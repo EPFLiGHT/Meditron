@@ -215,3 +215,6 @@
 
 /* headlines: as on the main page (style.css) */
 .m-hero h1, .m-sec h2, .m-h3, .m-card-head h4 { font-family: var(--display); font-weight: 700; letter-spacing: 0; }
+/* the main page's variants of the name: ?chillax and ?logofont in the logo's font, in capitals; ?manrope in the text font */
+:is(.chillax, .logofont) .m-hero h1 { font-family: 'Chillax', var(--font); text-transform: uppercase; font-size: clamp(1.8rem, 9.4vw, 5.6rem); }
+.manrope .m-hero h1 { font-family: var(--font); font-weight: 800; letter-spacing: -0.035em; }
