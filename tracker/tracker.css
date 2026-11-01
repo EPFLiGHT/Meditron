@@ -1,6 +1,9 @@
 /* Run tracker. Tokens, top line and footer come from ../static/style.css; studies are folders like the hero's. */
 body.tracker { overflow-x: hidden; }
 .tracker .top { position: static; }
+/* the header's logo is the black one */
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .tracker .top-lab img { filter: invert(1); } }
+:root[data-theme="dark"] .tracker .top-lab img { filter: invert(1); }
 .tracker code { font-size: 0.85em; }
 .tr { max-width: 96rem; margin: 0 auto; padding: 1.5rem 16px 3rem; display: grid; gap: 2.5rem; }
 .tr h1 { font-size: clamp(2.4rem, 6vw, 3.6rem); font-weight: 800; letter-spacing: -0.03em; }
@@ -70,8 +73,8 @@ body.tracker { overflow-x: hidden; }
 .study .fold-body > .study-top { padding-top: 0; }
 .study .fold-body > .study-top:empty { display: none; }
 .c-done { color: var(--green); }
-/* on the blue folder tab: white label, the square keeps the status colour */
-.folder-tab .chip { color: var(--paper); }
+/* on the folder tab: a quiet label, the square keeps the status colour */
+.folder-tab .chip { color: var(--muted); }
 .folder-tab .chip::before { background: var(--chip, currentColor); }
 .c-ok, .c-done, .c-concluded { --chip: var(--green); }
 .c-live, .c-open { --chip: var(--sky); }
