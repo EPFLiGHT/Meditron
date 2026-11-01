@@ -112,7 +112,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400..800&display=swap">
   <link rel="stylesheet" href="https://use.typekit.net/ssi4ehi.css">
-  <link rel="stylesheet" href="static/style.css?v=20261031g">
+  <link rel="stylesheet" href="static/style.css?v=20261101f">
   <link rel="preload" href="static/data/land-110m.json" as="fetch" crossorigin>
   <!-- page variants, to compare: ?withbeam shows the LiGHT beam (withbeam/), ?chillax the beam with its text and the name in the Meditron logo's font (chillax/), ?logofont only the name in that font (v8-logo/), ?manrope the name in Manrope (manrope/), ?w400 sets every title at weight 400 (400/); links within the site keep them -->
   <script>
@@ -145,8 +145,8 @@
     <a class="top-lab" href="https://www.light-laboratory.org/" target="_blank" rel="noopener"><img class="logo-color" src="static/img/light-logo-color.png" alt="LiGHT, Laboratory for intelligent Global Health and Humanitarian Response Technologies"><img class="logo-mono" src="static/img/light-logo.png" alt=""></a>
     <nav class="top-links" aria-label="Sections">
       <a href="#what">What is Meditron</a>
-      <a href="#openness">Download</a>
       <a href="#meditronfo">Latest project</a>
+      <a href="#openness">Download</a>
       <a href="#cite">Cite</a>
       <a href="#contact">Contact</a>
     </nav>
@@ -161,7 +161,7 @@
 
     <section class="hero" aria-label="Meditron">
       <div class="hero-center">
-        <h1 class="wordmark"><span class="cube" aria-hidden="true"><img class="cube-light" src="static/img/cube.png" alt=""><img class="cube-dark" src="static/img/cube-dark.png" alt=""></span><span>Meditron</span></h1>
+        <h1 class="wordmark"><span class="cube" aria-hidden="true"><img src="static/img/cube.png" alt=""></span><span>Meditron</span></h1>
         <p class="tagline">Open medical AI models, built and tested with clinicians around the world.</p>
         <p class="hero-cta"><a class="talk" href="#chat">Talk to Meditron</a><a class="talk talk-alt" href="#join">Join us</a></p>
       </div>
@@ -180,9 +180,9 @@
           <div class="story-card" id="story-card" aria-hidden="true" hidden></div>
           <!-- the last stop: this card rests in the Indian Ocean, with the sites lit around it -->
           <div class="ocean-card" id="ocean-card">
-            <h2>What is Meditron</h2>
-            <p>Meditron is a family of open medical AI models: large language models trained to answer clinical questions. Anyone can download them, run them on their own hardware and adapt them, from a hospital in Switzerland to a health post in Malawi.</p>
-            <p class="ocean-links"><a class="talk" href="#chat">Talk to Meditron</a><a href="#what">More about Meditron</a></p>
+            <h2>Tested by clinicians</h2>
+            <p>At MOOVE events, clinicians put tough questions from their own practice to the models, then compare two anonymous answers and vote for the better one.</p>
+            <a class="feature-thumb" href="#moove"><img src="static/img/portal-moove.jpg" alt="The MOOVE platform, where clinicians write questions and judge the answers" width="960" height="453"><span class="feature-cta">Explore MOOVE</span></a>
           </div>
         </div>
       </section>
@@ -220,25 +220,54 @@
       </ol>
     </section>
 
-    <!-- the three commitments: a heading and a large linked thumbnail; each comes in as the scroll reaches it, and the beam lights each as it types its name (app.js) -->
-    <section id="openness" class="feature-section commitment" aria-labelledby="openness-title">
-      <div class="feature-wrap">
-        <h2 id="openness-title">Open data, open code, open models</h2>
-        <a class="feature-thumb" href="https://huggingface.co/collections/EPFLiGHT/meditronfo" target="_blank" rel="noopener"><img src="static/img/portal-models.jpg" alt="The MeditronFO collection on Hugging Face" width="960" height="453" loading="lazy"><span class="feature-cta ext">Download</span></a>
-      </div>
-    </section>
-
-    <section id="evaluation" class="feature-section commitment" aria-labelledby="evaluation-title">
-      <div class="feature-wrap">
-        <h2 id="evaluation-title">Tested by clinicians</h2>
-        <a class="feature-thumb" href="#moove"><img src="static/img/portal-moove.jpg" alt="The MOOVE platform, where clinicians write questions and judge the answers" width="960" height="453" loading="lazy"><span class="feature-cta">Explore MOOVE</span></a>
-      </div>
-    </section>
-
+    <!-- the commitments: a heading, a line, the evidence and a linked thumbnail; each comes in as the scroll reaches it, and the beam lights each as it types its name (app.js); the table and the chart are the MeditronFO page's -->
     <section id="meditronfo" class="feature-section commitment" aria-labelledby="meditronfo-title">
       <div class="feature-wrap">
         <h2 id="meditronfo-title">Meet our latest project</h2>
+        <p>MeditronFO is the first fully-open pipeline for creating medical LLMs. On HealthBench, Apertus-70B-MeditronFO reaches 49.3%, up from 39.4% for its base; MedGemma-27B reaches 54.8%.</p>
+        <figure class="m-fig feature-fig">
+          <div class="m-tabs" role="group" aria-label="Models shown">
+            <button type="button" class="on" data-hb="ours" aria-pressed="true">MeditronFO and their bases</button>
+            <button type="button" data-hb="all" aria-pressed="false">With other open models</button>
+          </div>
+          <div class="m-card">
+            <div class="m-card-head"><h4>HealthBench full</h4><span>Score vs model size</span></div>
+            <div class="m-legend" aria-hidden="true">
+              <span><i class="k-dot fully"></i>Fully-open</span>
+              <span><i class="k-dot weights"></i>Open-weight</span>
+              <span><i class="k-circle"></i>Before finetuning</span>
+              <span><i class="k-star"></i>After finetuning</span>
+              <span><i class="k-line"></i>Best at its size</span>
+            </div>
+            <div id="hb-chart" class="m-chart" role="img" aria-label="HealthBench full score against parameter count; the table below has every value."></div>
+          </div>
+          <figcaption>5,000 conversations graded by Gemma-4-31B against physician-written rubrics. Arrows go from each base to its MeditronFO finetune; bars are 95% intervals.</figcaption>
+          <details class="m-details"><summary>Show as a table</summary><div id="hb-table" class="m-scroll"></div></details>
+        </figure>
         <a class="feature-thumb" href="meditronfo/"><img src="static/img/meditronfo-thumb.jpg?v=5" alt="The MeditronFO project page: the name and the paper's subtitle under a blue sky" width="1920" height="906" loading="lazy"><span class="feature-cta">Read about MeditronFO</span></a>
+      </div>
+    </section>
+
+    <section id="openness" class="feature-section commitment" aria-labelledby="openness-title">
+      <div class="feature-wrap">
+        <h2 id="openness-title">Open data, open code, open models</h2>
+        <p>Among existing medical LLMs, the MeditronFO models are the only ones built on a fully-open base that release their medical data, the data pipeline and the training code.</p>
+        <div class="feature-fig m-scroll" tabindex="0" role="region" aria-label="Openness of medical language models">
+          <table class="m-table m-open">
+            <thead><tr><th scope="col">Model</th><th scope="col">Fully-open base</th><th scope="col">Medical data</th><th scope="col">Data pipeline</th><th scope="col">Training code</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Med-Gemini</th><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td></tr>
+              <tr><th scope="row">Meditron-3 (Llama 3.1)</th><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td></tr>
+              <tr><th scope="row">MedGemma-27B</th><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td></tr>
+              <tr><th scope="row">BioMistral</th><td class="no">No</td><td class="yes">Yes</td><td class="no">No</td><td class="no">No</td></tr>
+              <tr><th scope="row">Aloe Beta</th><td class="no">No</td><td class="yes">Yes</td><td class="no">No</td><td class="no">No</td></tr>
+              <tr><th scope="row">HuatuoGPT-o1</th><td class="no">No</td><td class="yes">Yes</td><td class="no">No</td><td class="yes">Yes</td></tr>
+              <tr class="ours"><th scope="row">Gemma-3-27B-MeditronFO</th><td class="no">No</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+              <tr class="ours"><th scope="row">Apertus, OLMo-2, EuroLLM MeditronFO</th><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <a class="feature-thumb" href="https://huggingface.co/collections/EPFLiGHT/meditronfo" target="_blank" rel="noopener"><img src="static/img/portal-models.jpg" alt="The MeditronFO collection on Hugging Face" width="960" height="453" loading="lazy"><span class="feature-cta ext">Download</span></a>
       </div>
     </section>
 
@@ -250,7 +279,7 @@
       <div class="chat-wrap">
         <p class="chat-model" id="chat-model" hidden></p>
         <div class="chat-log" id="chat-log" aria-live="polite">
-          <div class="msg-row"><span class="cube chat-cube" aria-hidden="true"><img class="cube-light" src="static/img/cube.png" alt=""><img class="cube-dark" src="static/img/cube-dark.png" alt=""></span><div class="msg bot"><p>Hello, I'm Meditron, an open medical AI model. Ask me a medical question.</p><p>I'm a research model, not a doctor: I can be wrong, and I know nothing about you beyond what you type.</p></div></div>
+          <div class="msg-row"><span class="cube chat-cube" aria-hidden="true"><img src="static/img/cube.png" alt=""></span><div class="msg bot"><p>Hello, I'm Meditron, an open medical AI model. Ask me a medical question.</p><p>I'm a research model, not a doctor: I can be wrong, and I know nothing about you beyond what you type.</p></div></div>
         </div>
         <div class="chat-suggest" id="chat-suggest">
           <button type="button">A 2-year-old has sunken eyes and drinks eagerly. How should a health post manage this?</button>
@@ -356,6 +385,8 @@
       </nav>
     </div>
   </footer>
+
+  <div id="tip" class="m-tip" role="tooltip" hidden></div>
 
   <!-- One dialog; its content comes from the templates below, chosen by the URL hash. -->
   <dialog class="panel" id="panel" aria-labelledby="panel-title">
@@ -550,6 +581,7 @@
   <script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/15.0.7/marked.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.2.4/purify.min.js"></script>
-  <script src="static/app.js?v=20261031c"></script>
+  <script src="static/charts.js?v=20261101b"></script>
+  <script src="static/app.js?v=20261101f"></script>
 </body>
 </html>

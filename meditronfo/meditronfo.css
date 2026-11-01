@@ -1,12 +1,5 @@
 /* MeditronFO release page: long-form sections on top of ../static/style.css */
 
-/* chart hues by openness, validated (dataviz validate_palette.js) against --paper in each mode */
-:root { --c-fully: #2557b8; --c-weights: #c77406; --c-arrow: #9aa3ad; --c-ci: #8d98a6; }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) { --c-fully: #5f8fe0; --c-weights: #bb8233; --c-arrow: #5d6b7d; --c-ci: #6d7b8e; }
-}
-:root[data-theme="dark"] { --c-fully: #5f8fe0; --c-weights: #bb8233; --c-arrow: #5d6b7d; --c-ci: #6d7b8e; }
-
 .mfo main { padding: 0 16px; }
 
 /* ---------- hero: the name, the paper's full title, its authors and links under a dawn sky ---------- */
@@ -18,7 +11,7 @@
   position: relative; isolation: isolate; margin: 0 -16px; padding: clamp(5.5rem, 11vh, 7rem) 16px clamp(7rem, 20vh, 11rem);
   text-align: center; color: #fbf7ef;
   /* fallback when the canvas can't draw: the same sky */
-  background: linear-gradient(#0a1a44 0%, #1d4096 21%, #5b81c9 37%, var(--paper) 56%);
+  background: linear-gradient(#0a1a44 0%, #1d4096 21%, var(--dawn-low) 37%, var(--paper) 56%);
 }
 /* phones: the seven links need their own lines, under the logo */
 @media (max-width: 700px) {
@@ -77,21 +70,7 @@
 .m-stats span { display: block; font-size: 0.88rem; color: var(--muted); line-height: 1.4; margin-top: 0.2rem; }
 @media (max-width: 760px) { .m-stats { grid-template-columns: 1fr 1fr; } }
 
-/* ---------- tables ---------- */
-.m-scroll { overflow-x: auto; }
-.m-table { border-collapse: collapse; width: 100%; font-size: 0.92rem; font-variant-numeric: tabular-nums; }
-.m-table th, .m-table td { padding: 0.5rem 0.65rem; text-align: right; border-bottom: 1px solid var(--rule); white-space: nowrap; }
-.m-table th:first-child { text-align: left; }
-.m-table thead th { font-size: 0.8rem; color: var(--muted); font-weight: 700; border-bottom: 1.5px solid var(--ink); vertical-align: bottom; }
-.m-table tbody th { font-weight: 600; }
-.m-table tr.ours th { font-weight: 800; }
-.m-table tr.ours { background: var(--blue-wash); }
-.m-open td { text-align: center; }
-.m-open thead th:not(:first-child) { text-align: center; white-space: normal; min-width: 5.5rem; }
-.m-open td.yes { color: var(--ink); font-weight: 700; }
-.m-open td.yes::before { content: "\2713\00a0"; color: var(--green); }
-.m-open td.no { color: var(--muted); }
-.m-open td.no::before { content: "\2014\00a0"; }
+/* ---------- tables (the shared rules are in ../static/style.css) ---------- */
 .m-bench .grp th { text-align: left; font-size: 0.78rem; color: var(--muted); font-weight: 700; padding-top: 1rem; border-bottom: none; }
 .m-bench td.avg { font-weight: 800; }
 .m-bench .ci { color: var(--muted); font-size: 0.78rem; margin-left: 0.25rem; }
@@ -99,50 +78,6 @@
 .m-bench .delta.up { color: var(--green); }
 .m-bench tr.base td, .m-bench tr.base th { color: var(--muted); }
 .m-bench b { font-weight: 800; }
-
-/* ---------- figures: a bordered card per chart, text tabs above, centred caption ---------- */
-.m-fig { margin: 2rem 0 0; }
-.m-fig figcaption { font-size: 0.85rem; color: var(--muted); max-width: 46rem; margin: 0.9rem auto 0; text-align: center; }
-.m-tabs { display: flex; flex-wrap: wrap; gap: 0.25rem 1.25rem; margin-bottom: 0.85rem; }
-.m-tabs button { border: 0; background: none; padding: 0.2rem 0; font-weight: 700; color: var(--muted); cursor: pointer; }
-.m-tabs button.on { color: var(--ink); }
-.m-tabs button:hover { color: var(--ink); }
-.m-card { border: 1px solid var(--ink); padding: 1.25rem 1.5rem 1rem; background: var(--paper); }
-.m-card-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 0.25rem 1rem; }
-.m-card-head h4 { margin: 0; font-size: 1.12rem; font-weight: 700; }
-.m-card-head span { font-size: 0.9rem; color: var(--muted); }
-.m-legend { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0.35rem 1.25rem; font-size: 0.88rem; font-weight: 700; margin: 1rem 0 0.75rem; }
-.m-legend span { display: inline-flex; align-items: center; gap: 0.45rem; }
-.k-dot { width: 0.85rem; height: 0.85rem; border-radius: 50%; display: inline-block; border: 1.25px solid var(--ink); }
-.k-dot.fully { background: var(--c-fully); } .k-dot.weights { background: var(--c-weights); }
-.k-circle { width: 0.8rem; height: 0.8rem; border-radius: 50%; background: var(--ink); display: inline-block; }
-.k-hollow { width: 0.85rem; height: 0.85rem; border-radius: 50%; border: 1.25px solid var(--ink); background: var(--paper); display: inline-block; }
-.k-star { width: 1rem; height: 1rem; display: inline-block; background: var(--ink);
-  clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); }
-.k-line { width: 1.4rem; height: 0; border-top: 2px solid var(--c-fully); display: inline-block; }
-@media (max-width: 560px) {
-  .m-card { padding: 1rem 0.75rem 0.75rem; margin: 0 -4px; }
-  .m-legend { justify-content: flex-start; font-size: 0.8rem; gap: 0.3rem 0.9rem; }
-}
-.m-chart { width: 100%; }
-.m-chart svg { display: block; width: 100%; height: auto; overflow: visible; }
-.m-chart text { font-family: var(--font); }
-.m-chart .grid { stroke: var(--rule); }
-.m-chart .axis { stroke: var(--ink); stroke-width: 1; }
-.m-chart .tick { fill: var(--ink); font-size: 12px; opacity: 0.8; }
-.m-chart .axlab { fill: var(--ink); font-size: 13px; }
-.m-chart .lbl { fill: var(--ink); font-size: 11px; }
-.m-chart .lbl.fo { font-weight: 700; }
-.m-chart .lbl.dim { fill: var(--muted); }
-.m-chart .front { fill: none; stroke-width: 2.5; stroke-linejoin: round; }
-.m-chart .pt { cursor: default; }
-.m-chart .pt .mk { stroke: var(--ink); stroke-width: 1.25; }
-.m-chart .pt.dim { opacity: 0.4; }
-.m-chart .pt:hover .mk, .m-chart .pt:focus .mk { stroke-width: 2.5; }
-.m-chart .hit { fill: transparent; }
-.m-details { margin-top: 0.75rem; font-size: var(--t-sm); text-align: center; }
-.m-details summary { cursor: pointer; color: var(--blue); font-weight: 700; }
-.m-details .m-table { margin-top: 0.5rem; text-align: left; }
 
 /* AutoMOOVE rows: label | track with interval and dot | value */
 .m-bars { display: grid; gap: 0.15rem; max-width: 46rem; }
@@ -171,14 +106,6 @@
   .m-axis > span:first-child { display: none; }
 }
 
-.m-tip {
-  position: fixed; z-index: 60; pointer-events: none; max-width: 18rem;
-  background: var(--ink); color: var(--paper); border-radius: 6px; padding: 0.55rem 0.7rem;
-  font-size: 0.8rem; line-height: 1.4; box-shadow: 0 4px 14px rgb(0 0 0 / 0.2);
-}
-.m-tip b { font-weight: 800; }
-.m-tip .row { display: flex; justify-content: space-between; gap: 1rem; font-variant-numeric: tabular-nums; }
-
 /* ---------- game, inline (style.css styles it for the dialog) ---------- */
 .m-game { margin-top: 1.25rem; padding: 1.5rem; border: 1px solid var(--rule); border-radius: 12px; }
 .m-game .vote { position: static; margin: 1.25rem 0 0; padding: 0; background: none; justify-content: flex-start; }
@@ -186,7 +113,7 @@
 @media (max-width: 560px) { .m-game { padding: 1rem; margin-left: -4px; margin-right: -4px; } }
 
 /* ---------- how it's built, limits, get it ---------- */
-.m-pipe img { width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--rule); background: #fff; }
+.m-pipe img { width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--rule); background: #fff; filter: var(--shot-dim); }
 .m-steps { max-width: var(--measure); padding-left: 1.25rem; margin: 1.5rem 0; }
 .m-steps li { margin-bottom: 0.75rem; }
 .m-limits { list-style: none; padding: 0; max-width: 44rem; }
@@ -214,7 +141,7 @@
 .m-sec > .m-fig, .m-sec > .m-scroll, .m-sec > .m-stats, .m-sec > .m-cards, .m-sec > .m-game { max-width: none; }
 
 /* headlines: as on the main page (style.css) */
-.m-hero h1, .m-sec h2, .m-h3, .m-card-head h4 { font-family: var(--display); font-weight: 700; letter-spacing: 0; }
+.m-hero h1, .m-sec h2, .m-h3 { font-family: var(--display); font-weight: 700; letter-spacing: 0; }
 /* the main page's variants of the name: ?chillax and ?logofont in the logo's font, in capitals; ?manrope in the text font */
 :is(.chillax, .logofont) .m-hero h1 { font-family: 'Chillax', var(--font); text-transform: uppercase; font-size: clamp(1.8rem, 9.4vw, 5.6rem); }
 .manrope .m-hero h1 { font-family: var(--font); font-weight: 800; letter-spacing: -0.035em; }

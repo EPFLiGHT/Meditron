@@ -55,9 +55,9 @@ const SITES = [
 
   // The story's clock T counts stops and can run both ways (the rail, a drag): the camera reaches
   // stop i at T = i + 0.5, after MOVE of a step in flight, and rests there for the rest of the step.
-  // Stop n, after the last site, is the ocean, where the card about Meditron rests until the clock ends.
+  // Stop n, after the last site, is the ocean, where the card about the evaluation rests until the clock ends.
   const n = SITES.length, MOVE = 0.4, END = n + 1.9, STEP_MS = 2600;
-  const START = [-5, 12], OCEAN_VIEW = [70, -15], OCEAN_SPOT = [79, -23];   // where the camera starts; the ocean's view, and where its card sits
+  const START = [-5, 12], OCEAN_VIEW = [70, -15], OCEAN_SPOT = [54, 3];   // where the camera starts; the ocean's view, and its card's top left, clear of the sites
   const docked = matchMedia('(max-width: 900px)');   // phones: the site's card sits under the globe instead of beside its square
   const arrive = (i) => i + 0.5;
   const clamp = (x) => Math.min(1, Math.max(0, x));
@@ -195,15 +195,16 @@ const SITES = [
     const o = ease(clamp((T - arrive(n) + 0.12) / 0.3));
     ocean.style.visibility = o > 0 ? 'visible' : 'hidden';
     ocean.style.opacity = o;
-    if (o > 0) {
-      const [x, y] = inStage(OCEAN_SPOT), w = ocean.offsetWidth, top = y - ocean.offsetHeight / 2;
-      ocean.style.transform = `translate(${Math.max(16, Math.min(x - w / 2, h.width - w - 16))}px, ${Math.max(8, top + 12 * (1 - o))}px)`;
+    if (o > 0 && docked.matches) ocean.style.transform = `translateY(${12 * (1 - o)}px)`;
+    else if (o > 0) {
+      const [x, y] = inStage(OCEAN_SPOT), top = Math.min(y, h.height - ocean.offsetHeight - 8);
+      ocean.style.transform = `translate(${Math.min(x, h.width - ocean.offsetWidth - 16)}px, ${Math.max(8, top + 12 * (1 - o))}px)`;
     }
   }
 
   // the rail, one button per stop: it follows the story, and a click takes the story there
   const items = [...SITES.map((s, i) => [s.name, arrive(i) + 0.15, `${s.since}. ${s.lines.join('. ')}. ${count(s.meditron)} votes on Meditron's answers.`]),
-    ['What is Meditron', END - 0.2, '']];
+    ['Tested by clinicians', END - 0.2, '']];
   stops.innerHTML = items.map(([name, , more]) => `<li><button type="button">${name}${more ? `<span class="sr"> ${more}</span>` : ''}</button></li>`).join('');
   const rows = [...stops.children];
   rows.forEach((li, i) => li.addEventListener('click', () => {
@@ -343,9 +344,17 @@ const SITES = [
   document.querySelectorAll('.commitment').forEach((g) => { g.classList.add('reveal'); seen.observe(g); });
 })();
 
+/* ---------------------------------------------------------- HealthBench */
+
+// the chart of the MeditronFO page, from that page's data (charts.js)
+fetch('meditronfo/data.json')
+  .then((r) => r.json())
+  .then((d) => showHealthBench(d.healthbench))
+  .catch(() => { document.getElementById('hb-chart').textContent = 'The results did not load. Reload the page to try again.'; });
+
 /* ---------------------------------------------------------------- dawn */
 
-// The sky of the MeditronFO page behind the header and the title, blue into the page's ivory, with the horizon just under the buttons.
+// The sky of the MeditronFO page behind the header and the title, blue into the page's own colour, with the horizon just under the buttons.
 (function dawn() {
   const canvas = document.getElementById('sky'), ctas = document.querySelector('.hero-cta');
   if (!canvas || !ctas) return;
@@ -362,7 +371,7 @@ const SITES = [
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     const f = Math.min(0.9, horizon / H), g = ctx.createLinearGradient(0, 0, 0, H);
     const paper = getComputedStyle(document.documentElement).getPropertyValue('--paper').trim();   // the sky ends in the page
-    [[0, '#0a1a44'], [0.38 * f, '#1d4096'], [0.66 * f, '#5b81c9'],
+    [[0, '#0a1a44'], [0.38 * f, '#1d4096'], [0.66 * f, css('--dawn-low')],
       [f, paper], [1, paper]].forEach(([o, c]) => g.addColorStop(o, c));
     ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
     // film grain: grey specks over the blue, gone by the horizon
@@ -381,6 +390,7 @@ const SITES = [
   draw();
   document.fonts?.ready.then(draw);
   addEventListener('resize', draw);
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { drawn = ''; draw(); });
 })();
 
 /* ---------------------------------------------------------------- beam */
@@ -395,8 +405,8 @@ const SITES = [
     el.textContent = `(${words.map((w) => w.slice(1, -1)).join(', ')})`;
     return;
   }
-  // the section of the commitment being typed lights up (the words and the sections share their order)
-  const groups = document.querySelectorAll('.commitment');
+  // the section of the commitment being typed lights up
+  const groups = ['openness', 'meditronfo'].map((id) => document.getElementById(id));
   const light = (k) => groups.forEach((g, gi) => g.classList.toggle('is-lit', gi === k));
   let w = 0, n = words[0].length;
   light(0);
@@ -454,7 +464,6 @@ addEventListener('hashchange', route);
 
 /* --------------------------------------------------------- text helpers */
 
-const esc = (s) => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
 // Just enough markdown for model answers: paragraphs, bullets, bold.
 function renderText(text) {
@@ -672,7 +681,7 @@ async function startGame(root) {
     .then((d) => { setOnline(Boolean(d && d.ok)); if (d && d.ok) showModel(d.model); }).catch(() => {});
 
   // Meditron's answers carry the cube, as chat apps put the assistant's logo beside its messages.
-  const CUBE = '<span class="cube chat-cube" aria-hidden="true"><img class="cube-light" src="static/img/cube.png" alt=""><img class="cube-dark" src="static/img/cube-dark.png" alt=""></span>';
+  const CUBE = '<span class="cube chat-cube" aria-hidden="true"><img src="static/img/cube.png" alt=""></span>';
   function bubble(role, html) {
     const el = document.createElement('div');
     el.className = `msg ${role}`;
