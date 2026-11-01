@@ -56,7 +56,7 @@ const SITES = [
   // The story's clock T counts stops and can run both ways (the rail, a drag): the camera reaches
   // stop i at T = i + 0.5, after MOVE of a step in flight, and rests there for the rest of the step.
   // Stop n, after the last site, is the ocean, where the card about the evaluation rests until the clock ends.
-  const n = SITES.length, MOVE = 0.4, END = n + 1.9, STEP_MS = 2600;
+  const n = SITES.length, MOVE = 0.4, END = n + 1.9, STEP_MS = 1300;
   const START = [-5, 12], OCEAN_VIEW = [70, -15], OCEAN_SPOT = [54, 3];   // where the camera starts; the ocean's view, and its card's top left, clear of the sites
   const docked = matchMedia('(max-width: 900px)');   // phones: the site's card sits under the globe instead of beside its square
   const arrive = (i) => i + 0.5;
@@ -175,6 +175,7 @@ const SITES = [
   }
 
   let cardFor = -1;
+  let opened = -1;   // the stop whose card shows its details: the one last clicked on the rail
   function placeCards(cur) {
     const r = canvas.getBoundingClientRect(), h = stage.getBoundingClientRect(), k = r.width / size;
     const inStage = (at) => { const [x, y] = projection(at); return [r.left - h.left + x * k, r.top - h.top + y * k]; };
@@ -185,6 +186,7 @@ const SITES = [
         card.innerHTML = `<small>${cur.s.since}, ${cur.i ? 'then here' : 'first evaluated here'}</small><strong>${cur.s.name}</strong>`
           + `<b>${count(cur.s.meditron)} votes on Meditron's answers</b>${cur.s.lines.map((l) => `<span>${l}</span>`).join('')}`;
       }
+      card.classList.toggle('open', cur.i === opened);
       card.style.opacity = cur.a;
       if (docked.matches) card.style.transform = '';
       else {
@@ -209,6 +211,7 @@ const SITES = [
   const rows = [...stops.children];
   rows.forEach((li, i) => li.addEventListener('click', () => {
     wanted = false;
+    opened = i;
     if (reduceMotion) T = items[i][1]; else goal = items[i][1];
   }));
   let lastLit = -1, lastHere = -1;
@@ -293,6 +296,7 @@ const SITES = [
 
   play.addEventListener('click', () => {
     goal = null;
+    opened = -1;
     if (T >= END - 0.01) { T = 0; wanted = true; }
     else wanted = !wanted;
   });
@@ -306,7 +310,7 @@ const SITES = [
   });
   canvas.addEventListener('pointerdown', (e) => {
     hover(siteAt(e));
-    if (!reduceMotion && e.button === 0) { goal = null; dragX = e.clientX; canvas.setPointerCapture(e.pointerId); canvas.classList.add('dragging'); }
+    if (!reduceMotion && e.button === 0) { goal = null; opened = -1; dragX = e.clientX; canvas.setPointerCapture(e.pointerId); canvas.classList.add('dragging'); }
   });
   const dragEnd = () => { dragX = null; canvas.classList.remove('dragging'); };
   canvas.addEventListener('pointerup', dragEnd);
