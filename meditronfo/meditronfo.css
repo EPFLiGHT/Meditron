@@ -23,7 +23,7 @@
 .m-hero h1 {
   display: flex; align-items: center; justify-content: center; gap: 0.16em;
   font-size: clamp(3rem, 11vw, 6.5rem); line-height: 1; margin: 0;
-  font-family: var(--display); font-weight: 700; letter-spacing: 0;
+  font-family: var(--display); font-weight: 400; letter-spacing: 0;
   text-shadow: 0 2px 30px rgb(10 22 48 / 0.35);
 }
 .m-hero h1 img { height: 0.9em; width: auto; }
@@ -49,7 +49,7 @@
     60% { opacity: 1; filter: blur(0); color: #faf9f5; }
   }
 }
-.m-intro { max-width: 52rem; margin: 0 auto; padding: 3.5rem 0 3rem; text-align: center; }
+.m-intro { max-width: 52rem; margin: 0 auto; padding: 3.5rem 0 var(--sec); text-align: center; }
 .m-lede { font-size: clamp(1.25rem, 2.6vw, 1.65rem); line-height: 1.4; max-width: 40rem; margin: 0 auto 2rem; font-weight: 500; }
 .m-ctas { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; }
 .m-ghost {
@@ -59,7 +59,9 @@
 .m-ghost:hover { background: var(--blue-wash); }
 
 /* ---------- sections ---------- */
-.m-sec { max-width: 56rem; margin: 0 auto; padding: 4rem 0 1rem; }
+/* the main page's spacing (--sec in style.css): the same space above and below each section's content, so the same between any two */
+.m-sec { max-width: 56rem; margin: 0 auto; padding: var(--sec) 0; }
+.m-sec > :last-child { margin-bottom: 0; }
 .m-sec h2 { font-size: var(--t-xl); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 1.5rem; }
 .m-h3 { font-size: var(--t-md); font-weight: 800; margin: 2.5rem 0 0.75rem; }
 .m-prose { max-width: var(--measure); }
@@ -135,7 +137,7 @@
 @media (max-width: 420px) { .m-cards { grid-template-columns: 1fr; } .m-cards li.wide { grid-column: span 1; } }
 .m-cite-head { margin-top: 2.5rem; }
 .m-cite-head .m-h3 { margin: 0; }
-.mfo .bibtex { overflow-x: auto; font-size: 0.8rem; background: var(--folder); padding: 1rem; border-radius: 8px; margin-bottom: 4rem; }
+.mfo .bibtex { overflow-x: auto; font-size: 0.8rem; background: var(--folder); padding: 1rem; border-radius: 8px; }
 
 /* ---------- column layout: text in a centred reading column, figures, tables and cards wider on the same axis ---------- */
 .m-sec > * { margin-left: auto; margin-right: auto; max-width: var(--measure); }

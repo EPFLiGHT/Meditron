@@ -185,7 +185,7 @@ button { font: inherit; color: inherit; }
 .wordmark {
   display: flex; align-items: center; justify-content: center; gap: 0.2em;
   font-size: clamp(3.25rem, min(9.5vw, 13vh), 6.5rem); line-height: 1; color: var(--ink);
-  font-family: var(--display); font-weight: 700; letter-spacing: 0;   /* the name in Ivy Presto, Bold */
+  font-family: var(--display); font-weight: 400; letter-spacing: 0;   /* the name in Ivy Presto, Regular like the headlines */
 }
 .wordmark .cube { height: 1em; flex: none; }
 .wordmark .cube img { height: 100%; width: auto; }
@@ -302,7 +302,10 @@ button { font: inherit; color: inherit; }
 .site-tip span { display: block; color: var(--muted); }
 
 /* ---------- what is Meditron, and its timeline ---------- */
-.why-section { padding: 6rem 16px 2rem; }
+/* every section below the globe has the same padding above and below its content, bands included, so the space between any two is the same */
+:root { --sec: 6.5rem; }
+@media (max-width: 560px) { :root { --sec: 4rem; } }
+.why-section { padding: var(--sec) 16px; }
 .why-wrap { max-width: var(--measure); margin: 0 auto; }
 /* every section below the hero: one heading size, one text size and colour (the citation stays small and grey) */
 .why-section h2, .chat-section h2, .feature-section h2, .cite-section h2, .credits h2 { font-size: var(--t-xl); font-weight: 800; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 0.75rem; }
@@ -331,7 +334,7 @@ button { font: inherit; color: inherit; }
 
 /* ---------- chat ---------- */
 /* the chat is a band across the page, like Join us */
-.chat-section { margin-top: 4rem; padding: 4.5rem 16px; background: var(--blue-wash); }
+.chat-section { padding: var(--sec) 16px; background: var(--blue-wash); }
 .chat-section > h2 { max-width: var(--measure); margin: 0 auto 1.25rem; }
 .chat-wrap {
   position: relative; max-width: 56rem; margin: 0 auto;
@@ -374,15 +377,16 @@ button { font: inherit; color: inherit; }
   font-weight: 800; cursor: pointer;
 }
 .send:disabled, .chat-form textarea:disabled { opacity: 0.5; cursor: not-allowed; }
-.chat-disclaimer { display: flex; align-items: center; gap: 0.35rem; font-size: var(--t-xs); color: var(--muted); margin-top: 0.5rem; }
+.chat-disclaimer { display: flex; align-items: center; gap: 0.35rem; font-size: var(--t-xs); color: var(--muted); margin: 0.5rem 0 0; }
 .chat-disclaimer svg { flex: none; }
-.chat-status { font-size: var(--t-sm); color: var(--muted); margin-top: 0.6rem; min-height: 1.4em; }
+.chat-status { font-size: var(--t-sm); color: var(--muted); margin: 0.6rem 0 0; min-height: 1.4em; }
+.chat-status:empty { margin: 0; min-height: 0; }   /* nothing to say: no room taken under the band's content */
 .chat-model { font-size: var(--t-sm); color: var(--muted); margin: 0.4rem 0 0.8rem; }
 .chat-model a { font-weight: 700; }
 @media (max-width: 560px) { .chat-suggest { margin-left: 0; } }
 
 /* ---------- the commitments and the game: a heading, a line, a figure and a linked thumbnail ---------- */
-.feature-section { padding: 5rem 16px; }
+.feature-section { padding: var(--sec) 16px; }
 .feature-wrap { max-width: var(--measure); margin: 0 auto; }
 /* as wide as the chat, like a figure */
 .feature-wrap > .feature-fig { margin: 2rem 0 0 calc(50% - min(28rem, 50vw - 16px)); width: min(56rem, calc(100vw - 32px)); max-width: none; }
@@ -496,7 +500,7 @@ button { font: inherit; color: inherit; }
 .m-tip .row { display: flex; justify-content: space-between; gap: 1rem; font-variant-numeric: tabular-nums; }
 
 /* ---------- cite ---------- */
-.cite-section { padding: 5rem 16px; }
+.cite-section { padding: var(--sec) 16px; }
 .cite-wrap { max-width: var(--measure); margin: 0 auto; }
 .cite-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0.75rem 1rem; margin-bottom: 0.75rem; }
 .cite-head h2 { margin-bottom: 0; }
@@ -513,7 +517,7 @@ button { font: inherit; color: inherit; }
 }
 
 /* ---------- join: the community image as a thumbnail, one path per kind of contributor ---------- */
-.join-section { margin-top: 4rem; padding: 4.5rem 16px; background: var(--blue-wash); }
+.join-section { padding: var(--sec) 16px; background: var(--blue-wash); }
 .join-wrap { max-width: 64rem; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 20rem) minmax(0, 1fr); gap: 2rem 3rem; align-items: start; }
 .join-thumb { width: 100%; height: auto; filter: var(--shot-dim); border-radius: 12px; border: 1px solid var(--rule); box-shadow: 0 6px 24px rgb(20 32 46 / 0.10); }
 .join-text h2 { font-size: var(--t-xl); margin-bottom: 0.6rem; }
@@ -527,7 +531,7 @@ button { font: inherit; color: inherit; }
 /* ---------- contact and credits, just above the footer ---------- */
 .credits {
   display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 1.5rem 2.5rem;
-  max-width: calc(var(--measure) + 32px); margin: 0 auto; padding: 3rem 16px 5rem;
+  max-width: calc(var(--measure) + 32px); margin: 0 auto; padding: var(--sec) 16px;
 }
 .credits p { margin: 0; }
 /* the team panel: a row of faces and a plain link under the contact line */
@@ -595,7 +599,7 @@ button { font: inherit; color: inherit; }
   .lf-links { justify-self: start; align-items: flex-start; }
 }
 
-/* ---------- /400 (?w400): every title at regular weight, on both pages; the two wordmarks stay bold ---------- */
+/* ---------- /400 (?w400): every title at regular weight, on both pages, as the two names already are ---------- */
 :root.w400 :is(.why-section, .chat-section, .feature-section, .join-section, .cite-section, .credits) :is(h2, h3),
 :root.w400 :is(.feature-cta, .timeline strong, .team-label, .panel-tab, .pubs a),
 :root.w400 .panel-body :is(h2, h3, h4, .pub-gen),
@@ -778,7 +782,7 @@ tr.ours td { font-weight: 700; background: var(--blue-wash); }
 .tally-row { display: grid; grid-template-columns: 7rem auto; gap: 1rem; align-items: center; margin: 0.6rem 0; }
 .game-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.5rem; }
 
-/* ---------- headlines: Ivy Presto Headline, Regular (the Adobe Fonts kit has Regular and Bold); the names stay Bold ---------- */
+/* ---------- headlines: Ivy Presto Headline, Regular (the Adobe Fonts kit has Regular and Bold), like the names ---------- */
 .ocean-card h2, .story-rail h2, .story-card strong, .m-card-head h4,
 :is(.why-section, .chat-section, .feature-section, .join-section, .cite-section, .credits) :is(h2, h3),
 .panel-body :is(h2, h3, h4) { font-family: var(--display); font-weight: 400; letter-spacing: 0; }
