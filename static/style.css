@@ -185,6 +185,7 @@ button { font: inherit; color: inherit; }
 .wordmark {
   display: flex; align-items: center; justify-content: center; gap: 0.2em;
   font-size: clamp(3.25rem, min(9.5vw, 13vh), 6.5rem); line-height: 1; color: var(--ink);
+  font-family: var(--display); font-weight: 700; letter-spacing: 0;   /* the name in Ivy Presto, Bold */
 }
 .wordmark .cube { height: 1em; flex: none; }
 .wordmark .cube img { height: 100%; width: auto; }
@@ -777,10 +778,10 @@ tr.ours td { font-weight: 700; background: var(--blue-wash); }
 .tally-row { display: grid; grid-template-columns: 7rem auto; gap: 1rem; align-items: center; margin: 0.6rem 0; }
 .game-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.5rem; }
 
-/* ---------- headlines: Ivy Presto Headline, Bold (the Adobe Fonts kit has Regular and Bold); the /400 titles above stay Regular ---------- */
-.wordmark, .ocean-card h2, .story-rail h2, .story-card strong, .m-card-head h4,
+/* ---------- headlines: Ivy Presto Headline, Regular (the Adobe Fonts kit has Regular and Bold); the names stay Bold ---------- */
+.ocean-card h2, .story-rail h2, .story-card strong, .m-card-head h4,
 :is(.why-section, .chat-section, .feature-section, .join-section, .cite-section, .credits) :is(h2, h3),
-.panel-body :is(h2, h3, h4) { font-family: var(--display); font-weight: 700; letter-spacing: 0; }
+.panel-body :is(h2, h3, h4) { font-family: var(--display); font-weight: 400; letter-spacing: 0; }
 
 /* ---------- the dawn of the MeditronFO page behind the header and the title; it fades into the page behind the globe (app.js) ---------- */
 #sky {
@@ -808,6 +809,6 @@ tr.ours td { font-weight: 700; background: var(--blue-wash); }
 .chillax .beam-eq { font-family: 'Chillax', var(--font); }
 .chillax .beam-lhs { font-weight: 700; font-size: clamp(1.9rem, 3.4vw, 3.1rem); }
 .chillax .beam-fx { font-weight: 500; }
-:is(.chillax, .logofont) .wordmark { font-family: 'Chillax', var(--font); text-transform: uppercase; font-size: clamp(2.6rem, min(7.6vw, 11vh), 5.4rem); }
+:is(.chillax, .logofont) .wordmark { font-family: 'Chillax', var(--font); font-weight: 700; letter-spacing: 0; text-transform: uppercase; font-size: clamp(2.6rem, min(7.6vw, 11vh), 5.4rem); }
 /* ?manrope: the name in the site's text font, as in v6 */
 .manrope .wordmark { font-family: var(--font); font-weight: 800; letter-spacing: -0.035em; }

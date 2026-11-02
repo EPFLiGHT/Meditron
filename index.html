@@ -112,7 +112,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400..800&display=swap">
   <link rel="stylesheet" href="https://use.typekit.net/ssi4ehi.css">
-  <link rel="stylesheet" href="static/style.css?v=20261101g">
+  <link rel="stylesheet" href="static/style.css?v=20261102b">
   <link rel="preload" href="static/data/land-110m.json" as="fetch" crossorigin>
   <!-- page variants, to compare: ?withbeam shows the LiGHT beam (withbeam/), ?chillax the beam with its text and the name in the Meditron logo's font (chillax/), ?logofont only the name in that font (v8-logo/), ?manrope the name in Manrope (manrope/), ?w400 sets every title at weight 400 (400/); links within the site keep them -->
   <script>
@@ -126,7 +126,7 @@
     if (on.length) addEventListener('DOMContentLoaded', () => {
       // the MeditronFO thumbnail is a picture of that page: it shows the same name
       const thumb = on.includes('manrope') ? 'manrope' : on.includes('chillax') || on.includes('logofont') ? 'logofont' : '';
-      if (thumb) document.querySelector('img[src*="meditronfo-thumb"]').src = `static/img/meditronfo-thumb-${thumb}.jpg?v=3`;
+      if (thumb) document.querySelector('img[src*="meditronfo-thumb"]').src = `static/img/meditronfo-thumb-${thumb}.jpg?v=4`;
       for (const el of document.querySelectorAll('a[href]:not([href^="#"]):not([href*=":"]), [data-href]:not([data-href*=":"])')) {
         const u = new URL(el.getAttribute('href') ?? el.dataset.href, location.href);
         u.search = '?' + on.join('&');
@@ -244,7 +244,7 @@
           <figcaption>5,000 conversations graded by Gemma-4-31B against physician-written rubrics. Arrows go from each base to its MeditronFO finetune; bars are 95% intervals.</figcaption>
           <details class="m-details"><summary>Show as a table</summary><div id="hb-table" class="m-scroll"></div></details>
         </figure>
-        <a class="feature-thumb" href="meditronfo/"><img src="static/img/meditronfo-thumb.jpg?v=5" alt="The MeditronFO project page: the name and the paper's subtitle under a blue sky" width="1920" height="906" loading="lazy"><span class="feature-cta">Read about MeditronFO</span></a>
+        <a class="feature-thumb" href="meditronfo/"><img src="static/img/meditronfo-thumb.jpg?v=7" alt="The MeditronFO project page: the name and the paper's subtitle under a blue sky" width="1920" height="906" loading="lazy"><span class="feature-cta">Read about MeditronFO</span></a>
       </div>
     </section>
 

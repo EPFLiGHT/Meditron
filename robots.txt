@@ -18,6 +18,5 @@ Disallow: /v6/
 Disallow: /v6-logo/
 Disallow: /v8-logo/
 Disallow: /v7/
-Disallow: /v7-logo/
 
 Sitemap: https://epflight.github.io/Meditron/sitemap.xml

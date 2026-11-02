@@ -23,10 +23,11 @@
 .m-hero h1 {
   display: flex; align-items: center; justify-content: center; gap: 0.16em;
   font-size: clamp(3rem, 11vw, 6.5rem); line-height: 1; margin: 0;
+  font-family: var(--display); font-weight: 700; letter-spacing: 0;
   text-shadow: 0 2px 30px rgb(10 22 48 / 0.35);
 }
 .m-hero h1 img { height: 0.9em; width: auto; }
-.m-paper { font: 700 clamp(1.4rem, 3vw, 2rem)/1.25 var(--display); max-width: 27em; margin: 1.1rem auto 1.4rem; }
+.m-paper { font: 400 clamp(1.4rem, 3vw, 2rem)/1.25 var(--display); max-width: 27em; margin: 1.1rem auto 1.4rem; }
 .m-authors { list-style: none; margin: 0 auto 1.75rem; padding: 0; max-width: 46rem; display: flex; flex-wrap: wrap; justify-content: center; gap: 0.25rem 1rem; color: rgb(255 255 255 / 0.85); }
 .m-authors li { white-space: nowrap; }
 .m-authors a { color: inherit; text-decoration: none; }
@@ -141,7 +142,7 @@
 .m-sec > .m-fig, .m-sec > .m-scroll, .m-sec > .m-stats, .m-sec > .m-cards, .m-sec > .m-game { max-width: none; }
 
 /* headlines: as on the main page (style.css) */
-.m-hero h1, .m-sec h2, .m-h3 { font-family: var(--display); font-weight: 700; letter-spacing: 0; }
+.m-sec h2, .m-h3 { font-family: var(--display); font-weight: 400; letter-spacing: 0; }
 /* the main page's variants of the name: ?chillax and ?logofont in the logo's font, in capitals; ?manrope in the text font */
-:is(.chillax, .logofont) .m-hero h1 { font-family: 'Chillax', var(--font); text-transform: uppercase; font-size: clamp(1.8rem, 9.4vw, 5.6rem); }
+:is(.chillax, .logofont) .m-hero h1 { font-family: 'Chillax', var(--font); font-weight: 700; letter-spacing: 0; text-transform: uppercase; font-size: clamp(1.8rem, 9.4vw, 5.6rem); }
 .manrope .m-hero h1 { font-family: var(--font); font-weight: 800; letter-spacing: -0.035em; }
