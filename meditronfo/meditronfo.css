@@ -22,8 +22,8 @@
 #sky { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; }
 .m-hero h1 {
   display: flex; align-items: center; justify-content: center; gap: 0.16em;
-  font-size: clamp(3rem, 11vw, 6.5rem); line-height: 1; margin: 0;
-  font-family: var(--display); font-weight: 400; letter-spacing: 0;
+  font-size: clamp(1.8rem, 9.4vw, 5.6rem); line-height: 1; margin: 0;
+  font-family: 'Chillax', var(--font); font-weight: 700; letter-spacing: -0.035em; text-transform: uppercase;   /* as on the main page */
   text-shadow: 0 2px 30px rgb(10 22 48 / 0.35);
 }
 .m-hero h1 img { height: 0.9em; width: auto; }
@@ -38,7 +38,7 @@
 .m-hero .m-ghost:hover { background: rgb(10 26 68 / 0.85); }
 /* "FO" arrives after "Meditron": the word widens to make room, then each letter rises in, in ivory, and settles to white */
 .m-fo { display: inline-block; white-space: nowrap; }
-.m-fo span { display: inline-block; }
+.m-fo span { display: inline-block; text-shadow: none; }   /* drawn after "Meditron", their shadow would darken the N beside them */
 @media (prefers-reduced-motion: no-preference) {
   .m-fo { animation: fo-room 0.7s cubic-bezier(.5,0,.2,1) 0.5s both; }
   .m-fo span { animation: fo-rise 0.9s cubic-bezier(.2,.8,.3,1) 0.85s both; }
@@ -49,7 +49,7 @@
     60% { opacity: 1; filter: blur(0); color: #faf9f5; }
   }
 }
-.m-intro { max-width: 52rem; margin: 0 auto; padding: 3.5rem 0 var(--sec); text-align: center; }
+.m-intro { max-width: var(--col); margin: 0 auto; padding: 3.5rem 0 var(--sec); text-align: center; }
 .m-lede { font-size: clamp(1.25rem, 2.6vw, 1.65rem); line-height: 1.4; max-width: 40rem; margin: 0 auto 2rem; font-weight: 500; }
 .m-ctas { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; }
 .m-ghost {
@@ -59,13 +59,13 @@
 .m-ghost:hover { background: var(--blue-wash); }
 
 /* ---------- sections ---------- */
-/* the main page's spacing (--sec in style.css): the same space above and below each section's content, so the same between any two */
-.m-sec { max-width: 56rem; margin: 0 auto; padding: var(--sec) 0; }
+/* the main page's spacing (--sec in style.css): the same space above and below each section's content, so the same between any two;
+   and its column (--col): text, figures, tables and cards all as wide */
+.m-sec { max-width: var(--col); margin: 0 auto; padding: var(--sec) 0; }
 .m-sec > :last-child { margin-bottom: 0; }
 .m-sec h2 { font-size: var(--t-xl); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 1.5rem; }
 .m-h3 { font-size: var(--t-md); font-weight: 800; margin: 2.5rem 0 0.75rem; }
-.m-prose { max-width: var(--measure); }
-.m-foot { font-size: 0.85rem; color: var(--muted); max-width: 44rem; margin-top: 0.75rem; }
+.m-foot { font-size: 0.85rem; color: var(--muted); margin-top: 0.75rem; }
 
 .m-stats { list-style: none; padding: 0; margin: 2rem 0 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; }
 .m-stats li { background: var(--paper); padding: 1.1rem 1.1rem 1.2rem; }
@@ -83,7 +83,7 @@
 .m-bench b { font-weight: 800; }
 
 /* AutoMOOVE rows: label | track with interval and dot | value */
-.m-bars { display: grid; gap: 0.15rem; max-width: 46rem; }
+.m-bars { display: grid; gap: 0.15rem; }
 .m-bars .grp { font-size: 0.78rem; color: var(--muted); font-weight: 700; margin: 0.9rem 0 0.2rem; }
 .m-bars .grp:first-child { margin-top: 0; }
 .m-row { display: grid; grid-template-columns: minmax(9rem, 15rem) 1fr 3rem; gap: 0.75rem; align-items: center; padding: 0.3rem 0; border-radius: 4px; }
@@ -117,9 +117,9 @@
 
 /* ---------- how it's built, limits, get it ---------- */
 .m-pipe img { width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--rule); background: #fff; filter: var(--shot-dim); }
-.m-steps { max-width: var(--measure); padding-left: 1.25rem; margin: 1.5rem 0; }
+.m-steps { padding-left: 1.25rem; margin: 1.5rem 0; }
 .m-steps li { margin-bottom: 0.75rem; }
-.m-limits { list-style: none; padding: 0; max-width: 44rem; }
+.m-limits { list-style: none; padding: 0; }
 .m-limits li { padding: 0.85rem 0; border-bottom: 1px solid var(--rule); }
 .m-limits li:first-child { border-top: 1px solid var(--rule); }
 .m-limits strong { display: block; }
@@ -139,12 +139,9 @@
 .m-cite-head .m-h3 { margin: 0; }
 .mfo .bibtex { overflow-x: auto; font-size: 0.8rem; background: var(--folder); padding: 1rem; border-radius: 8px; }
 
-/* ---------- column layout: text in a centred reading column, figures, tables and cards wider on the same axis ---------- */
-.m-sec > * { margin-left: auto; margin-right: auto; max-width: var(--measure); }
-.m-sec > .m-fig, .m-sec > .m-scroll, .m-sec > .m-stats, .m-sec > .m-cards, .m-sec > .m-game { max-width: none; }
 
 /* headlines: as on the main page (style.css) */
 .m-sec h2, .m-h3 { font-family: var(--display); font-weight: 400; letter-spacing: 0; }
-/* the main page's variants of the name: ?chillax and ?logofont in the logo's font, in capitals; ?manrope in the text font */
-:is(.chillax, .logofont) .m-hero h1 { font-family: 'Chillax', var(--font); font-weight: 700; letter-spacing: 0; text-transform: uppercase; font-size: clamp(1.8rem, 9.4vw, 5.6rem); }
-.manrope .m-hero h1 { font-family: var(--font); font-weight: 800; letter-spacing: -0.035em; }
+/* the main page's variants of the name: ?ivy in Ivy Presto, ?manrope in the text font */
+.ivy .m-hero h1 { font-family: var(--display); font-weight: 400; letter-spacing: 0; text-transform: none; font-size: clamp(3rem, 11vw, 6.5rem); }
+.manrope .m-hero h1 { font-family: var(--font); font-weight: 800; letter-spacing: -0.035em; text-transform: none; font-size: clamp(3rem, 11vw, 6.5rem); }

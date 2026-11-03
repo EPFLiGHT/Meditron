@@ -1,0 +1,110 @@
+{
+ "meta": {
+  "n_pairs": 576,
+  "judge_agree": 455,
+  "judge": "Gemma-4-31B",
+  "source": "MOOVE pairs where every clinician agreed (data/moove/moove_eval_unanimous_576.jsonl); judge: winner rubric, log-prob, both orders"
+ },
+ "rounds": [
+  {
+   "id": "1566f37279",
+   "setting": "Primary care, Ethiopia",
+   "question": "A 2 year child with sign of Restless, irritable ,Sunken eyes and Drinks eagerly,come to my health post how to manage?",
+   "a": "Based on the child presenting with signs of Restless, irritable, Sunken eyes, and Drinks eagerly as described in your scenario, the child is classified as having Some Dehydration. The appropriate management would be to give fluid, Zinc supplements and food for some dehydration (Plan B) according to the guidelines provided in hepassist:167/40891. Additionally, you should advise the mother when to return immediately and plan for a follow-up in 5 days if the child is not improving.",
+   "b": "Based on the signs presented – restlessness, irritability, sunken eyes, and eager drinking – and the information provided in hepassist:167/40891 and hepassist:165/40730, this 2-year-old child is likely experiencing **SOME DEHYDRATION**. The document states that two of the following signs indicate some dehydration: “Restless, irritable”, “Sunken eyes”, and “Drinks eagerly, thirsty” (hepassist:167/40891). This child presents with all three of these signs.\n**Management should include:**\n* **Plan B:** Give fluid, Zinc supplements, and food for some dehydration.\n* **Continue Breastfeeding:** Advise the mother to continue breastfeeding.\n* **Return Instructions:** Advise the mother when to return immediately (e.g., worsening condition, inability to drink).\n* **Follow-up:** Schedule a follow-up in 5 days if the child is not improving. It’s also important to note, as stated in hepassist:169/41184, that a child who is becoming dehydrated is often *first* restless and irritable, and sunken eyes are a sign of dehydration. This reinforces the classification of some dehydration, given the presentation of these signs.",
+   "clinicians": {
+    "A": 0,
+    "B": 2,
+    "tie": 0
+   },
+   "clinician_pick": "B",
+   "judge_pick": "B",
+   "judge_prob": {
+    "A": 0.105,
+    "B": 0.862,
+    "tie": 0.033
+   },
+   "note": "Both answers classify the child the same way and give the same plan. The clinicians picked B, which shows how the three signs lead to the classification and adds breastfeeding and when to come back. The \"hepassist\" tags are references to the guideline the answering model looked up."
+  },
+  {
+   "id": "f677298c12",
+   "setting": "Paediatrics, asked at HUG Geneva",
+   "question": "should i treat a 7 year old child with group A strep sore throat? even if I live in the netherlands?",
+   "a": "Hello! I am Meditron, a medical AI assistant, and I am here to help. Group A streptococcal (GAS) sore throat is a bacterial infection that is commonly seen in children. Treatment for GAS sore throat is recommended to prevent complications, such as rheumatic fever, and to reduce the spread of the infection. In the Netherlands, as in most other countries, the recommended treatment for GAS sore throat is antibiotics. The antibiotics most commonly used are penicillin or amoxicillin. The duration of treatment is typically 10 days. It is important to complete the full course of antibiotics even if the child feels better before the end of the treatment. In addition to antibiotics, there are also some supportive treatments that can help alleviate the symptoms of GAS sore throat. These include pain relief medications such as acetaminophen (paracetamol) or ibuprofen, throat lozenges, and increased fluid intake. It’s important to note that GAS sore throat is contagious, so good hygiene practices such as frequent handwashing and avoiding close contact with others can help prevent the spread of the infection. I hope my answer helps. Please let me know if you have any other questions.",
+   "b": "Hello! I am Meditron, a medical AI assistant, and I am here to help. The management of group A strep (GAS) sore throat in children depends on several factors, including the severity of symptoms, the presence of complications, and the likelihood of rheumatic fever (a potentially serious complication). In general, antibiotic treatment is recommended for GAS sore throat in children, especially if symptoms are severe or complications are suspected. However, antibiotic treatment may not be necessary in all cases, and the decision should be made on a case-by-case basis. In the Netherlands, guidelines for the management of GAS sore throat may differ from other countries. Therefore, it is essential to consult with a pediatrician or family doctor for personalized advice. They can assess the child's symptoms, perform a throat swab for a rapid antigen detection test (RADT) or culture, and provide appropriate guidance based on the test results and the child's overall health. If the child is experiencing severe symptoms, such as difficulty swallowing, high fever, or shortness of breath, immediate medical attention is necessary. In summary, the decision to treat a child with group A strep sore throat in the Netherlands should be made in consultation with a pediatrician or family doctor, taking into account the child's symptoms, the presence of complications, and the likelihood of rheumatic fever.",
+   "clinicians": {
+    "A": 0,
+    "B": 4,
+    "tie": 0
+   },
+   "clinician_pick": "B",
+   "judge_pick": "B",
+   "judge_prob": {
+    "A": 0.12,
+    "B": 0.864,
+    "tie": 0.016
+   },
+   "note": "All four clinicians picked B, the answer that does not prescribe antibiotics outright and flags that Dutch guidelines may differ. A sounds confident and complete; the clinicians did not reward that."
+  },
+  {
+   "id": "4941005c3d",
+   "setting": "Clinical pharmacology, CHUV Lausanne",
+   "question": "A 32-year-old man presents to the emergency department 5 hours after ingesting 15 grams of paracetamol in a suicide attempt. He is alert, with stable vital signs. What is the most appropriate next step in management? Provide a brief answer.",
+   "a": "Administer N-acetylcysteine (NAC).",
+   "b": "Thank you for your question. The patient's paracetamol overdose poses a risk of acute liver failure. The most appropriate next step in management is to administer N-acetylcysteine (NAC), which is an antidote for paracetamol overdose. NAC should be administered as soon as possible, ideally within 8 hours of ingestion, to minimize the risk of liver damage.",
+   "clinicians": {
+    "A": 0,
+    "B": 4,
+    "tie": 0
+   },
+   "clinician_pick": "B",
+   "judge_pick": "A",
+   "judge_prob": {
+    "A": 0.688,
+    "B": 0.214,
+    "tie": 0.098
+   },
+   "note": "The question asked for a brief answer, and A is three words. All four clinicians still preferred B, which explains why and gives the time window. The judge took the request literally and picked A."
+  },
+  {
+   "id": "8ba5c5e867",
+   "setting": "Primary care, Kenya",
+   "question": "A 60-year-old woman is being evaluated for a mood disorder and unexplained weight gain despite a poor appetite over the last 5 months. She also reports episodes of dizziness, heartburn, and difficult bowel movements. Her Thyroid Stimulating Hormone(TSH) levels are 10 mlU/L. 1. What is the most likely diagnosis? 2. As a medical officer, what other signs and symptoms should I look for to support the diagnosis? 3. What are the other priority investigations, apart from the one listed above? 4. What is the definitive treatment?",
+   "a": "1. The most likely diagnosis is hypothyroidism, as indicated by the elevated TSH level, which suggests that the thyroid gland is not producing enough thyroid hormones.\n2. Other signs and symptoms that support the diagnosis of hypothyroidism include:\n- Fatigue, muscle weakness, or stiffness\n- Cold intolerance\n- Dry skin, hair loss, or brittle nails\n- Menstrual irregularities\n- Constipation\n- Depression, mood swings, or cognitive impairment\n- Hoarseness or a weak voice\n- Swelling of the face, hands, or feet (edema)\n- Weight gain despite poor appetite\n- Slow heart rate or heart failure\n- Muscle or joint pain or stiffness\n- Poor circulation, causing cold hands and feet\n- Memory problems or difficulty concentrating\n- Hearing loss\n3. Other priority investigations for hypothyroidism include:\n- Serum free T4 (FT4) levels to assess the level of thyroid hormones in the blood\n- Thyroid peroxidase antibody (TPO) levels to detect autoimmune thyroiditis\n- Ultrasound of the thyroid gland to assess for any structural abnormalities\n4. The definitive treatment for hypothyroidism is thyroid hormone replacement therapy, which involves taking synthetic thyroid hormone (levothyroxine) orally to replace the deficient thyroid hormones. The dose should be titrated according to the patient's TSH level, aiming to keep it within the normal range. It is essential to monitor the patient's response to treatment and adjust the medication dose as necessary to maintain optimal thyroid hormone levels.",
+   "b": "1. The most likely diagnosis is hypothyroidism. The elevated Thyroid Stimulating Hormone (TSH) level suggests that the thyroid gland is underactive and not producing enough thyroid hormones, which aligns with the symptoms of weight gain, poor appetite, mood disorder, and bowel changes.\n2. To support the diagnosis of hypothyroidism, you should look for other signs and symptoms such as:\n- Fatigue or lethargy\n- Cold intolerance\n- Dry skin and brittle hair\n- Hair loss\n- Muscle weakness or cramps\n- Depression or cognitive slowing\n- Bradycardia (slow heart rate)\n- Swelling or puffiness, particularly in the face\n- Menstrual irregularities in women\n3. Other priority investigations include:\n- Free Thyroxine (Free T4) and possibly Free Triiodothyronine (Free T3) to assess the levels of circulating thyroid hormones.\n- Thyroid peroxidase antibodies (TPO antibodies) to evaluate for autoimmune thyroiditis, such as Hashimoto's thyroiditis.\n- Lipid profile, as hypothyroidism can lead to hyperlipidemia.\n- Complete blood count (CBC) to check for anemia, which can be associated with hypothyroidism.\n- Electrolytes and renal function tests to rule out any secondary effects.\n4. The definitive treatment for hypothyroidism is thyroid hormone replacement therapy. The most commonly used medication is levothyroxine, a synthetic form of the thyroid hormone T4. The dosage is individualized based on the patient's weight, age, severity of hypothyroidism, and response to treatment. Regular monitoring of TSH and Free T4 levels is necessary to adjust the dosage and ensure adequate treatment.",
+   "clinicians": {
+    "A": 0,
+    "B": 2,
+    "tie": 0
+   },
+   "clinician_pick": "B",
+   "judge_pick": "B",
+   "judge_prob": {
+    "A": 0.111,
+    "B": 0.678,
+    "tie": 0.211
+   },
+   "note": "Both answers are sound. B adds lipids, a blood count and kidney function to the work-up. Clinicians and judge agree."
+  },
+  {
+   "id": "a2ed9922e0",
+   "setting": "Infectious disease, CHUV Lausanne",
+   "question": "I'm an infectious disease specialist at the CHUV in Lausanne, who has been asked a question by the emergency room physician. A farmer reports sudden onset of high fever and chest pain. His chest X-ray shows pneumonia. What other questions should be asked before prescribing any treatment? Please give me a brief answer.",
+   "a": "Key Questions for the Farmer with Pneumonia\n Given the presentation of a farmer with sudden fever, chest pain, and pneumonia on X-ray, I would recommend asking about:\n1. Specific animal exposures (cattle, sheep, poultry, etc.)\n2. Recent agricultural activities (harvesting, working with hay/soil)\n3. Travel history\n4. Tick or insect bites\n5. Immunization status (particularly pneumococcal and influenza)\n6. Onset timing and progression of symptoms\n7. Any hemoptysis or productive cough\n8. Prior lung conditions or immunocompromising factors These questions help identify zoonotic infections (Q fever, psittacosis), environmental exposures (histoplasmosis, legionellosis), and guide appropriate empiric therapy while awaiting cultures.",
+   "b": "This is a classic scenario for zoonotic infections. The key questions focus on the farmer's animal contact and specific symptoms:\n1. **Animal Contact:**\n* What type of animals is he in contact with (cattle, sheep, goats, pigs, poultry, rodents)?\n* Has there been any recent birthing, abortions, or sick animals?\n* Has he assisted with any animal deliveries or handled aborted fetuses/placentas recently?\n2. **Exposure:**\n* Has he been exposed to dust from animal enclosures, hay, or manure?\n* Has he consumed unpasteurized milk products from his own farm or others?\n3. **Specific Symptoms:**\n* Does he have any muscle aches, joint pain, skin lesions (especially on hands or arms), or swollen lymph nodes?\n* Has he experienced any vomiting, diarrhea, or abdominal pain?\n**Rationale:** These questions are crucial to consider zoonotic causes such as:\n* **Q Fever** (Coxiella burnetii)\n* **Brucellosis**\n* **Leptospirosis**\n* **Listeriosis** (from unpasteurized dairy)\n* **Tularemia** (Francisella tularensis)\n* **Psittacosis** (if poultry involved)\n* **Orf** (Parapoxvirus, causing skin lesions) These specific infections often require targeted diagnostics and tailored treatment, which standard pneumonia protocols might miss.",
+   "clinicians": {
+    "A": 3,
+    "B": 0,
+    "tie": 0
+   },
+   "clinician_pick": "A",
+   "judge_pick": "B",
+   "judge_prob": {
+    "A": 0.097,
+    "B": 0.894,
+    "tie": 0.008
+   },
+   "note": "Again a brief answer was asked for. The clinicians preferred A, the shorter and broader checklist. The judge preferred B, the longer one: its known weak spot is cases where clinicians want the shorter answer."
+  }
+ ]
+}

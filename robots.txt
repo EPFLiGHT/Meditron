@@ -6,6 +6,7 @@ Disallow: /nobeam/
 Disallow: /withbeam/
 Disallow: /chillax/
 Disallow: /manrope/
+Disallow: /ivy/
 Disallow: /400/
 Disallow: /versions/
 Disallow: /globes/
@@ -18,5 +19,6 @@ Disallow: /v6/
 Disallow: /v6-logo/
 Disallow: /v8-logo/
 Disallow: /v7/
+Disallow: /v8/
 
 Sitemap: https://epflight.github.io/Meditron/sitemap.xml

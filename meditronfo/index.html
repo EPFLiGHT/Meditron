@@ -14,12 +14,12 @@
   <meta property="og:url" content="https://epflight.github.io/Meditron/meditronfo/">
   <meta property="og:image" content="https://epflight.github.io/Meditron/static/img/social-preview.png">
   <meta name="twitter:card" content="summary_large_image">
-  <!-- page variants, to compare: ?withbeam shows the LiGHT beam (withbeam/), ?chillax (chillax/) and ?logofont (v8-logo/) the name in the Meditron logo's font, ?manrope the name in Manrope (manrope/), ?w400 sets every title at weight 400 (400/); links within the site keep them -->
+  <!-- page variants, to compare: ?withbeam shows the LiGHT beam (withbeam/), ?chillax (chillax/) the beam in the Meditron logo's font, like the name, ?ivy the name in Ivy Presto (ivy/), ?manrope the name in Manrope (manrope/), ?w400 sets every title at weight 400 (400/); links within the site keep them -->
   <script>
   (() => {
-    const q = new URLSearchParams(location.search), on = ['withbeam', 'chillax', 'logofont', 'manrope', 'w400'].filter((k) => q.has(k));
+    const q = new URLSearchParams(location.search), on = ['withbeam', 'chillax', 'ivy', 'manrope', 'w400'].filter((k) => q.has(k));
     on.forEach((k) => document.documentElement.classList.add(k));
-    if (on.includes('chillax') || on.includes('logofont')) {
+    if (on.includes('chillax')) {
       document.head.insertAdjacentHTML('beforeend', '<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=chillax@500,600,700&display=swap">');
     }
     if (on.length) addEventListener('DOMContentLoaded', () => {
@@ -36,8 +36,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400..800&display=swap">
   <link rel="stylesheet" href="https://use.typekit.net/ssi4ehi.css">
-  <link rel="stylesheet" href="../static/style.css?v=20261102d">
-  <link rel="stylesheet" href="meditronfo.css?v=20261102d">
+  <link rel="preload" href="../static/fonts/chillax-700.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../static/style.css?v=20261103g">
+  <link rel="stylesheet" href="meditronfo.css?v=20261103b">
   <link rel="preload" href="../static/data/land-110m.json" as="fetch" crossorigin>
 </head>
 <body class="mfo">

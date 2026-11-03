@@ -36,6 +36,7 @@
   --t-lg: 1.75rem;
   --t-xl: 2.375rem;
   --measure: 40rem;
+  --col: 46rem;   /* the column every section below the globe shares: its text, figures, cards and the chat */
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
@@ -177,15 +178,21 @@ button { font: inherit; color: inherit; }
 
 /* ---------- hero: the cube, the name, then the globe rising from under the fold ---------- */
 .hero {
-  /* clipped sideways only */
-  position: relative; overflow-x: clip; padding-bottom: 3.5rem;
+  /* clipped sideways only; --gs: the globe's size */
+  position: relative; overflow-x: clip; padding-bottom: 3.5rem; --gs: min(96svh, 96vw, 70rem);
 }
-.hero-center { text-align: center; padding: 0 16px clamp(1.25rem, 4vh, 2.75rem); }
-/* the Meditron cube beside the name, set in the headline face; the guidelines' Horizontal Stack stays in static/img/meditron-logo.png */
+/* on landing the globe's middle is level with the bottom of the screen (app.js); the name, the line and the buttons
+   sit in the middle of the room above it */
+.hero-center {
+  display: flex; flex-direction: column; justify-content: center; min-height: calc(100svh - var(--gs) / 2 - 4rem);
+  text-align: center; padding: 0 16px clamp(1.25rem, 4vh, 2.75rem);
+}
+/* the Meditron cube beside the name, in capitals in the font of the Meditron logo (static/img/meditron-logo.png), a little tighter */
+@font-face { font-family: 'Chillax'; src: url('fonts/chillax-700.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
 .wordmark {
   display: flex; align-items: center; justify-content: center; gap: 0.2em;
-  font-size: clamp(3.25rem, min(9.5vw, 13vh), 6.5rem); line-height: 1; color: var(--ink);
-  font-family: var(--display); font-weight: 400; letter-spacing: 0;   /* the name in Ivy Presto, Regular like the headlines */
+  font-size: clamp(2.6rem, min(7.6vw, 11vh), 5.4rem); line-height: 1; color: var(--ink);
+  font-family: 'Chillax', var(--font); font-weight: 700; letter-spacing: -0.035em; text-transform: uppercase;
 }
 .wordmark .cube { height: 1em; flex: none; }
 .wordmark .cube img { height: 100%; width: auto; }
@@ -202,9 +209,9 @@ button { font: inherit; color: inherit; }
 
 /* ---------- the story: one screen, the globe running on its own clock (app.js) ---------- */
 .story { position: relative; }
-.story-stage { --gs: min(96svh, 96vw, 70rem); position: relative; height: 100svh; }
+.story-stage { position: relative; height: 100svh; }
 #globe {
-  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, calc(-50% + var(--drop, 0px)));   /* --drop: lower on landing (app.js) */
   width: var(--gs); height: var(--gs); touch-action: pan-y; cursor: grab;
   transition: opacity 0.6s ease;
 }
@@ -235,16 +242,23 @@ button { font: inherit; color: inherit; }
 .story-card small { display: block; font-size: var(--t-xs); font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--blue); }
 .story-card strong { display: block; margin: 0.1rem 0 0.25rem; font-size: var(--t-md); font-weight: 800; line-height: 1.2; }
 .story-card b { display: block; font-weight: 800; }
-.story-card span { display: none; color: var(--muted); }
-.story-card.open span { display: block; }
+/* a year's sites and their votes, when its year is clicked on the rail */
+.story-card .sites { display: none; grid-template-columns: auto auto; gap: 0 1rem; margin-top: 0.4rem; color: var(--muted); font-style: normal; }
+.story-card .sites i { font-style: normal; }
+.story-card .sites i:nth-child(even) { text-align: right; font-variant-numeric: tabular-nums; }
+.story-card.open .sites { display: grid; }
+/* the text, and MOOVE under it as a card like the page's other links (.feature-thumb) */
 .ocean-card {
-  position: absolute; z-index: 4; left: 0; top: 0; width: min(40rem, 100% - 32px); visibility: hidden;
+  position: absolute; z-index: 4; left: 0; top: 0; width: min(30rem, 100% - 32px); visibility: hidden;
   background: var(--paper); border: 1.5px solid var(--ink); border-radius: 6px;
-  padding: 1.2rem 1.3rem 1.3rem; box-shadow: 0 10px 28px rgb(9 18 40 / 0.35);
+  padding: 1.1rem 1.2rem 1.2rem; box-shadow: 0 10px 28px rgb(9 18 40 / 0.35);
 }
 .ocean-card h2 { font-size: var(--t-lg); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.4rem; }
 .ocean-card p { font-size: var(--t-dense); line-height: 1.5; margin: 0; }
-.ocean-card .feature-thumb { width: 100%; margin: 0.9rem 0 0; }
+.ocean-card .feature-thumb { margin-top: 1rem; box-shadow: none; }
+.ocean-card .feature-body { padding: 0.8rem 1rem 0.9rem; }
+.ocean-card .feature-body strong { font-size: var(--t-base); }
+.ocean-card .feature-body > span { font-size: var(--t-sm); }
 /* no room beside the globe: the rail folds to a line and a bar over it */
 @media (max-aspect-ratio: 3/2), (max-width: 900px) {
   .story-rail { top: 0.75rem; left: 50%; transform: translateX(-50%); width: min(32rem, 100% - 32px); text-align: center; padding: 0.4rem 0.7rem 0.5rem; background: color-mix(in srgb, var(--paper) 88%, transparent); border-radius: 6px; }
@@ -258,7 +272,7 @@ button { font: inherit; color: inherit; }
 }
 /* phones: a globe wider than the screen, the site's card docked under it */
 @media (max-width: 900px) {
-  .story-stage { --gs: min(135vw, 84svh); }
+  .hero { --gs: min(135vw, 84svh); }
   #globe { top: 47%; }
   .story-card { left: 16px; top: auto; right: 16px; bottom: 1rem; width: auto; max-width: none; }
   .ocean-card { left: 16px; top: auto; right: 16px; bottom: 1rem; width: auto; }
@@ -306,13 +320,13 @@ button { font: inherit; color: inherit; }
 :root { --sec: 6.5rem; }
 @media (max-width: 560px) { :root { --sec: 4rem; } }
 .why-section { padding: var(--sec) 16px; }
-.why-wrap { max-width: var(--measure); margin: 0 auto; }
+.why-wrap { max-width: var(--col); margin: 0 auto; }
 /* every section below the hero: one heading size, one text size and colour (the citation stays small and grey) */
 .why-section h2, .chat-section h2, .feature-section h2, .cite-section h2, .credits h2 { font-size: var(--t-xl); font-weight: 800; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 0.75rem; }
 .why-section p, .feature-section p, .credits p { font-size: var(--t-base); line-height: 1.5; color: var(--ink); }
 .why-wrap p + p { margin-top: 0.9rem; }
 /* four steps on one line from 900px; below that a vertical list on a left rule */
-.timeline { list-style: none; margin: 3rem auto 0; padding: 0; max-width: 64rem; display: grid; gap: 1.5rem; }
+.timeline { list-style: none; margin: 3rem auto 0; padding: 0; max-width: var(--col); display: grid; gap: 1.5rem; }
 .timeline li { position: relative; padding-left: 1.5rem; border-left: 2px solid var(--rule); }
 .timeline li::before {
   content: ""; position: absolute; left: -7px; top: 0.3rem; width: 12px; height: 12px;
@@ -327,17 +341,18 @@ button { font: inherit; color: inherit; }
 .tl-now .tl-tag { background: var(--marker); color: #14202e; }
 .timeline p { margin-top: 0.4rem; font-size: var(--t-dense); line-height: 1.45; color: var(--ink); }
 @media (min-width: 900px) {
-  .timeline { grid-template-columns: repeat(4, 1fr); gap: 0 1.5rem; }
+  .timeline { grid-template-columns: repeat(4, 1fr); gap: 0 1.25rem; }
   .timeline li { padding: 1.4rem 0 0; border-left: 0; border-top: 2px solid var(--rule); }
   .timeline li::before { left: 0; top: -7px; }
 }
 
 /* ---------- chat ---------- */
-/* the chat is a band across the page, like Join us */
-.chat-section { padding: var(--sec) 16px; background: var(--blue-wash); }
-.chat-section > h2 { max-width: var(--measure); margin: 0 auto 1.25rem; }
+/* the chat is a band across the page, like Join us; on the column, the heading and the cube on its left edge,
+   and everything else (the answers, the questions, the box and the lines under it) on one line right of the cube */
+.chat-section { padding: var(--sec) 16px; background: var(--blue-wash); --indent: 2.6rem; }
+.chat-section > h2 { max-width: var(--col); margin: 0 auto 1.25rem; }
 .chat-wrap {
-  position: relative; max-width: 56rem; margin: 0 auto;
+  position: relative; max-width: var(--col); margin: 0 auto; padding-left: var(--indent);
 }
 .chat-log { display: flex; flex-direction: column; gap: 1rem; margin: 0 0 1rem; }
 .msg { max-width: 92%; padding: 0.75rem 1rem; border-radius: 12px; line-height: 1.55; }
@@ -350,9 +365,9 @@ button { font: inherit; color: inherit; }
 .msg.bot table { min-width: 0; width: 100%; font-size: var(--t-sm); margin: 0.5rem 0 0.8rem; display: block; overflow-x: auto; }
 .msg.bot th, .msg.bot td { padding: 0.3rem 0.5rem; vertical-align: top; }
 .msg.user { align-self: flex-end; background: var(--blue); color: var(--paper); border-bottom-right-radius: 3px; white-space: pre-wrap; }
-.msg-row { align-self: flex-start; display: flex; gap: 0.6rem; align-items: flex-start; max-width: 100%; }
-.msg-row .msg { min-width: 0; max-width: calc(92% - 2.6rem); }
-.chat-cube { flex: none; width: 2rem; margin-top: 0.15rem; }
+.msg-row { align-self: flex-start; display: flex; gap: 0.6rem; align-items: flex-start; max-width: calc(100% + var(--indent)); margin-left: calc(-1 * var(--indent)); }
+.msg-row .msg { min-width: 0; max-width: calc(100% - var(--indent)); }   /* up to the box's right edge */
+.chat-cube { flex: none; width: calc(var(--indent) - 0.6rem); margin-top: 0.15rem; }
 .chat-cube img { width: 100%; height: auto; }
 /* the Meditron cube, in its own colours on every background */
 .cube { display: inline-block; }
@@ -360,59 +375,50 @@ button { font: inherit; color: inherit; }
 .msg.bot { align-self: flex-start; background: var(--paper); border-top-left-radius: 3px; }
 .msg.bot.error { background: none; border: 1.5px solid var(--red); color: var(--ink); }
 /* the example questions, as pills under the greeting */
-.chat-suggest { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0 0 1.25rem 2.6rem; }
+.chat-suggest { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0 0 1.25rem; }
 .chat-suggest[hidden] { display: none; }
 .chat-suggest button {
   background: var(--paper); border: 1.5px solid var(--sky); border-radius: 999px; padding: 0.45rem 1rem;
   font-size: var(--t-sm); text-align: left; cursor: pointer; line-height: 1.35; color: var(--blue);
 }
 .chat-suggest button:hover { background: var(--sky-wash); border-color: var(--blue); }
-.chat-form { display: flex; gap: 0.6rem; align-items: flex-end; }
+.chat-form { display: flex; gap: 0.6rem; align-items: stretch; }   /* Send as tall as the box */
 .chat-form textarea {
   flex: 1; font: inherit; color: inherit; background: var(--paper); resize: vertical; min-height: 3.6rem;
   border: 2px solid var(--blue); border-radius: 12px; padding: 0.8rem 1rem;
 }
 .send {
-  border: 0; border-radius: 12px; padding: 0.95rem 1.5rem; background: var(--blue); color: var(--paper);
+  border: 0; border-radius: 12px; padding: 0 1.5rem; background: var(--blue); color: var(--paper);
   font-weight: 800; cursor: pointer;
 }
 .send:disabled, .chat-form textarea:disabled { opacity: 0.5; cursor: not-allowed; }
-.chat-disclaimer { display: flex; align-items: center; gap: 0.35rem; font-size: var(--t-xs); color: var(--muted); margin: 0.5rem 0 0; }
+.chat-disclaimer { display: flex; align-items: center; gap: 0.35rem; font-size: var(--t-xs); color: var(--muted); margin: 0.6rem 0 0; }
 .chat-disclaimer svg { flex: none; }
 .chat-status { font-size: var(--t-sm); color: var(--muted); margin: 0.6rem 0 0; min-height: 1.4em; }
 .chat-status:empty { margin: 0; min-height: 0; }   /* nothing to say: no room taken under the band's content */
 .chat-model { font-size: var(--t-sm); color: var(--muted); margin: 0.4rem 0 0.8rem; }
 .chat-model a { font-weight: 700; }
-@media (max-width: 560px) { .chat-suggest { margin-left: 0; } }
+@media (max-width: 560px) { .chat-section { --indent: 2.1rem; } }
 
 /* ---------- the commitments and the game: a heading, a line, a figure and a linked thumbnail ---------- */
 .feature-section { padding: var(--sec) 16px; }
-.feature-wrap { max-width: var(--measure); margin: 0 auto; }
-/* as wide as the chat, like a figure */
-.feature-wrap > .feature-fig { margin: 2rem 0 0 calc(50% - min(28rem, 50vw - 16px)); width: min(56rem, calc(100vw - 32px)); max-width: none; }
+.feature-wrap { max-width: var(--col); margin: 0 auto; }
+.feature-wrap > .feature-fig { margin: 2rem 0 0; }
 .feature-fig + .feature-thumb { margin-top: 2.5rem; }
+/* a link as a card, like a Substack post's: the picture across the top, a band under it with the title in the headline
+   face, a grey line and a small line in capitals; the whole card is the link, with no button or link text */
 .feature-thumb {
-  display: block; margin-top: 1.25rem; overflow: hidden;
-  width: min(56rem, calc(100vw - 32px)); margin-left: calc(50% - min(28rem, 50vw - 16px));
-  border: 1px solid var(--rule); border-radius: 14px; box-shadow: 0 6px 24px rgb(20 32 46 / 0.10);
+  display: block; margin-top: 1.5rem; overflow: hidden; text-decoration: none; color: var(--ink);
+  background: var(--paper); border: 1px solid var(--rule); border-radius: 12px; box-shadow: 0 4px 18px rgb(20 32 46 / 0.08);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-.feature-thumb:hover, .feature-thumb:focus-visible { transform: translateY(-3px); box-shadow: 0 12px 32px rgb(20 32 46 / 0.16); }
-.feature-thumb { position: relative; text-decoration: none; }
-.feature-thumb img { display: block; width: 100%; height: auto; filter: var(--shot-dim); transition: transform 0.3s ease, filter 0.3s ease; }
-.feature-thumb:hover img, .feature-thumb:focus-visible img { transform: scale(1.02); filter: none; }
-/* the button on the image, like Talk to Meditron: blue, ink on hover */
-.feature-cta {
-  position: absolute; left: clamp(0.75rem, 2.5vw, 1.5rem); bottom: clamp(0.75rem, 2.5vw, 1.5rem);
-  display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.7rem 1.3rem; border-radius: 999px;
-  background: var(--blue); color: var(--paper); font-size: var(--t-base); font-weight: 800; box-shadow: 0 4px 14px rgb(20 32 46 / 0.25);
-  transition: background-color 0.2s;
-}
-.feature-cta::after { content: "→"; transition: transform 0.2s; }
-.feature-cta.ext::after { content: "↗"; }
-.feature-thumb:hover .feature-cta, .feature-thumb:focus-visible .feature-cta { background: var(--ink); }
-.feature-thumb:hover .feature-cta::after, .feature-thumb:focus-visible .feature-cta::after { transform: translateX(3px); }
-@media (max-width: 560px) { .feature-cta { padding: 0.45rem 0.9rem; font-size: var(--t-sm); } }
+.feature-thumb:hover, .feature-thumb:focus-visible { transform: translateY(-3px); box-shadow: 0 12px 32px rgb(20 32 46 / 0.14); }
+.feature-thumb img { display: block; width: 100%; height: auto; border-bottom: 1px solid var(--rule); filter: var(--shot-dim); }
+.feature-body { display: block; padding: 1.1rem 1.35rem 1.25rem; }
+.feature-body strong { display: block; font-size: var(--t-md); line-height: 1.25; }
+.feature-body > span { display: block; margin-top: 0.35rem; font-size: var(--t-dense); line-height: 1.5; color: var(--muted); }
+.feature-body small { display: block; margin-top: 0.6rem; font-size: var(--t-xs); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); text-decoration: none; }
+@media (max-width: 560px) { .feature-body { padding: 0.9rem 1rem 1rem; } }
 /* a commitment comes in as the scroll reaches it (app.js); it lights up while the beam types its name */
 .commitment h2 { transition: color 0.3s; }
 .commitment.is-lit h2 { color: var(--blue); }
@@ -422,7 +428,7 @@ button { font: inherit; color: inherit; }
   .commitment .feature-thumb { transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.5s 0.15s, translate 0.5s 0.15s; }
   .commitment.reveal:not(.is-in) :is(h2, p, .feature-fig, .feature-thumb) { opacity: 0; translate: 0 1.5rem; }
 }
-@media (prefers-reduced-motion: reduce) { .feature-thumb, .feature-thumb img { transition: none; } .feature-thumb:hover, .feature-thumb:hover img { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .feature-thumb { transition: none; } .feature-thumb:hover { transform: none; } }
 
 /* ---------- tables and figures, on the main page and the MeditronFO page ---------- */
 /* chart hues by openness, validated (dataviz validate_palette.js) against --paper in each mode */
@@ -501,7 +507,7 @@ button { font: inherit; color: inherit; }
 
 /* ---------- cite ---------- */
 .cite-section { padding: var(--sec) 16px; }
-.cite-wrap { max-width: var(--measure); margin: 0 auto; }
+.cite-wrap { max-width: var(--col); margin: 0 auto; }
 .cite-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0.75rem 1rem; margin-bottom: 0.75rem; }
 .cite-head h2 { margin-bottom: 0; }
 .cite-copy {
@@ -516,22 +522,22 @@ button { font: inherit; color: inherit; }
   font-size: var(--t-xs); line-height: 1.5;
 }
 
-/* ---------- join: the community image as a thumbnail, one path per kind of contributor ---------- */
+/* ---------- join: one path per kind of contributor ---------- */
 .join-section { padding: var(--sec) 16px; background: var(--blue-wash); }
-.join-wrap { max-width: 64rem; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 20rem) minmax(0, 1fr); gap: 2rem 3rem; align-items: start; }
-.join-thumb { width: 100%; height: auto; filter: var(--shot-dim); border-radius: 12px; border: 1px solid var(--rule); box-shadow: 0 6px 24px rgb(20 32 46 / 0.10); }
-.join-text h2 { font-size: var(--t-xl); margin-bottom: 0.6rem; }
-.join-paths { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; margin-top: 1.25rem; }
-.join-path { display: flex; flex-direction: column; align-items: flex-start; padding: 1.1rem 1.25rem 1.25rem; background: var(--paper); border-top: 4px solid var(--sky); }
+.join-wrap { max-width: var(--col); margin: 0 auto; }
+.join-text h2 { font-size: var(--t-xl); margin-bottom: 0.75rem; }
+.join-text > p { font-size: var(--t-base); line-height: 1.5; margin: 0; }
+/* the two ways in, side by side and as tall as each other, their buttons on one line at the bottom */
+.join-paths { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; margin-top: 1.5rem; }
+.join-path { display: flex; flex-direction: column; align-items: flex-start; padding: 1.25rem 1.35rem 1.35rem; background: var(--paper); border: 1px solid var(--rule); border-radius: 12px; }
 .join-path h3 { font-size: var(--t-md); margin-bottom: 0.4rem; }
-.join-path p { font-size: var(--t-dense); color: var(--muted); flex: 1; }
-@media (max-width: 820px) { .join-wrap { grid-template-columns: 1fr; } .join-thumb { max-width: 24rem; } }
+.join-path p { font-size: var(--t-dense); line-height: 1.5; color: var(--muted); flex: 1; margin-bottom: 1.25rem; }
 @media (max-width: 560px) { .join-paths { grid-template-columns: 1fr; } }
 
 /* ---------- contact and credits, just above the footer ---------- */
 .credits {
   display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 1.5rem 2.5rem;
-  max-width: calc(var(--measure) + 32px); margin: 0 auto; padding: var(--sec) 16px;
+  max-width: calc(var(--col) + 32px); margin: 0 auto; padding: var(--sec) 16px;
 }
 .credits p { margin: 0; }
 /* the team panel: a row of faces and a plain link under the contact line */
@@ -581,7 +587,7 @@ button { font: inherit; color: inherit; }
 .lf { background: var(--band); color: #fff; padding: 2.4rem 0; }
 .lf :focus-visible { outline-color: var(--sky); }
 /* the hosts start where the page's text column does; -5px is the EPFL tile's transparent margin, so its ink lines up */
-.lf-row { width: var(--page); margin: 0 auto; display: grid; grid-template-columns: calc((100% - var(--measure)) / 2) auto 1fr; align-items: center; gap: 1.5rem 0; }
+.lf-row { width: var(--page); margin: 0 auto; display: grid; grid-template-columns: calc((100% - var(--col)) / 2) auto 1fr; align-items: center; gap: 1.5rem 0; }
 .lf-logo img { width: 166px; height: auto; }
 .lf-hosts { list-style: none; margin: 0 0 0 -5px; padding: 0; display: flex; gap: 10px; }
 .lf-hosts img { width: 130px; height: auto; }
@@ -601,7 +607,7 @@ button { font: inherit; color: inherit; }
 
 /* ---------- /400 (?w400): every title at regular weight, on both pages, as the two names already are ---------- */
 :root.w400 :is(.why-section, .chat-section, .feature-section, .join-section, .cite-section, .credits) :is(h2, h3),
-:root.w400 :is(.feature-cta, .timeline strong, .team-label, .panel-tab, .pubs a),
+:root.w400 :is(.timeline strong, .team-label, .panel-tab, .pubs a),
 :root.w400 .panel-body :is(h2, h3, h4, .pub-gen),
 :root.w400 :is(.m-sec h2, .m-h3, .m-card-head h4) { font-weight: 400; }
 
@@ -782,8 +788,8 @@ tr.ours td { font-weight: 700; background: var(--blue-wash); }
 .tally-row { display: grid; grid-template-columns: 7rem auto; gap: 1rem; align-items: center; margin: 0.6rem 0; }
 .game-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.5rem; }
 
-/* ---------- headlines: Ivy Presto Headline, Regular (the Adobe Fonts kit has Regular and Bold), like the names ---------- */
-.ocean-card h2, .story-rail h2, .story-card strong, .m-card-head h4,
+/* ---------- headlines: Ivy Presto Headline, Regular (the Adobe Fonts kit has Regular and Bold) ---------- */
+.ocean-card h2, .story-rail h2, .story-card strong, .m-card-head h4, .feature-body strong,
 :is(.why-section, .chat-section, .feature-section, .join-section, .cite-section, .credits) :is(h2, h3),
 .panel-body :is(h2, h3, h4) { font-family: var(--display); font-weight: 400; letter-spacing: 0; }
 
@@ -809,10 +815,10 @@ tr.ours td { font-weight: 700; background: var(--blue-wash); }
 
 /* ---------- ?withbeam, ?chillax: room between the beam and the name ---------- */
 .withbeam .hero-center { padding-top: 2.25rem; }
-/* ?chillax: the beam and the name in the font of the Meditron logo, the name in capitals as in the logo; ?logofont: the name only */
+/* ?chillax: the beam in the font of the Meditron logo too, like the name */
 .chillax .beam-eq { font-family: 'Chillax', var(--font); }
 .chillax .beam-lhs { font-weight: 700; font-size: clamp(1.9rem, 3.4vw, 3.1rem); }
 .chillax .beam-fx { font-weight: 500; }
-:is(.chillax, .logofont) .wordmark { font-family: 'Chillax', var(--font); font-weight: 700; letter-spacing: 0; text-transform: uppercase; font-size: clamp(2.6rem, min(7.6vw, 11vh), 5.4rem); }
-/* ?manrope: the name in the site's text font, as in v6 */
-.manrope .wordmark { font-family: var(--font); font-weight: 800; letter-spacing: -0.035em; }
+/* ?ivy: the name in Ivy Presto, Regular like the headlines; ?manrope: in the site's text font, as in v6 */
+.ivy .wordmark { font-family: var(--display); font-weight: 400; letter-spacing: 0; text-transform: none; font-size: clamp(3.25rem, min(9.5vw, 13vh), 6.5rem); }
+.manrope .wordmark { font-family: var(--font); font-weight: 800; letter-spacing: -0.035em; text-transform: none; font-size: clamp(3.25rem, min(9.5vw, 13vh), 6.5rem); }

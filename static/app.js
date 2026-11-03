@@ -14,25 +14,25 @@ const css = (name) => getComputedStyle(document.documentElement).getPropertyValu
 
 /* ---------------------------------------------------------------- globe */
 
-// Where clinicians evaluated Meditron, in the order the story visits them: the month of the first vote on a Meditron
+// Where clinicians evaluated Meditron, in the order the story visits them, a year at a time: the month of the first vote on a Meditron
 // answer there (`since`). `meditron` counts the votes on a pair with a Meditron answer; `lines` describe every MOOVE
 // event at the place, with or without Meditron. City where the event is known, the capital otherwise.
 // Counts are distinct questions and clinician votes per place (two Kenya events shared one question set).
 const SITES = [
-  { at: [39.21, -6.79], name: 'Tanzania', since: 'Aug 2024', meditron: 2838, lines: ['5 events, Aug 2024 to Aug 2026', '1,055 questions, 4,621 clinician votes', 'Primary care, paediatric emergency care'] },
-  { at: [6.15, 46.20], name: 'HUG, Geneva', since: 'Sep 2024', meditron: 1704, lines: ['1 event, Sep to Dec 2024', '320 questions, 1,704 clinician votes', 'Specialist hospital care'] },
-  { at: [36.82, -1.29], name: 'Kenya', since: 'Oct 2024', meditron: 5417, lines: ['7 events, Oct 2024 to Oct 2026', '2,130 questions, 7,549 clinician votes', 'Primary care, maternal, newborn and child health'] },
-  { at: [6.63, 46.52], name: 'CHUV, Lausanne', since: 'Oct 2024', meditron: 3883, lines: ['4 events, Aug 2024 to Nov 2025', '4,320 questions, 13,112 clinician votes', 'Specialist hospital care'] },
-  { at: [100.49, 13.76], name: 'Siriraj Hospital, Bangkok', since: 'Dec 2024', meditron: 1126, lines: ['1 event, Dec 2024 to Aug 2025', '339 questions, 1,126 clinician votes', 'Specialist hospital care'] },
-  { at: [-47.88, -15.79], name: 'Brazil', since: 'Jan 2025', meditron: 173, lines: ['2 events, Jan to Nov 2025', '450 questions, 1,514 clinician votes', 'Specialist hospital care'] },
-  { at: [4.35, 50.85], name: 'Belgium', since: 'Oct 2025', meditron: 58, lines: ['1 event, Oct 2025', '108 questions, 126 clinician votes', 'Specialist hospital care'] },
-  { at: [77.02, 28.99], name: 'Ashoka University, India', since: 'Jan 2026', meditron: 41, lines: ['1 event, Jan to Apr 2026', '86 questions, 138 clinician votes', 'Specialist hospital care'] },
-  { at: [77.59, 12.97], name: 'Bengaluru, India', since: 'Jan 2026', meditron: 201, lines: ['1 event, Jan to Mar 2026', '305 questions, 491 clinician votes', 'Specialist hospital care'] },
-  { at: [78.49, 17.39], name: 'Hyderabad, India', since: 'Jan 2026', meditron: 33, lines: ['1 event, Jan to Feb 2026', '98 questions, 87 clinician votes', 'Specialist hospital care'] },
-  { at: [33.79, -13.96], name: 'Malawi', since: 'May 2026', meditron: 1033, lines: ['2 events, May to Jul 2026', '300 questions, 1,700 clinician votes', 'Primary care'] },
-  { at: [76.27, 9.93], name: 'Amrita, India', since: 'Jul 2026', meditron: 458, lines: ['1 event, Jul to Sep 2026', '306 questions, 684 clinician votes', 'Primary care, maternal and newborn health'] },
-  { at: [38.74, 9.03], name: 'Ethiopia', since: 'Sep 2026', meditron: 720, lines: ['3 events, Mar to Sep 2026', '812 questions, 2,734 clinician votes', 'Primary care, paediatric emergency care'] },
-  { at: [73.05, 33.68], name: 'Pakistan', since: 'Sep 2026', meditron: 556, lines: ['1 event, Sep 2026', '278 questions, 834 clinician votes', 'Primary care, maternal and newborn health'] },
+  { at: [39.21, -6.79], name: 'Tanzania', country: 'Tanzania', since: 'Aug 2024', meditron: 2838, lines: ['5 events, Aug 2024 to Aug 2026', '1,055 questions, 4,621 clinician votes', 'Primary care, paediatric emergency care'] },
+  { at: [6.15, 46.20], name: 'HUG, Geneva', country: 'Switzerland', since: 'Sep 2024', meditron: 1704, lines: ['1 event, Sep to Dec 2024', '320 questions, 1,704 clinician votes', 'Specialist hospital care'] },
+  { at: [36.82, -1.29], name: 'Kenya', country: 'Kenya', since: 'Oct 2024', meditron: 5417, lines: ['7 events, Oct 2024 to Oct 2026', '2,130 questions, 7,549 clinician votes', 'Primary care, maternal, newborn and child health'] },
+  { at: [6.63, 46.52], name: 'CHUV, Lausanne', country: 'Switzerland', since: 'Oct 2024', meditron: 3883, lines: ['4 events, Aug 2024 to Nov 2025', '4,320 questions, 13,112 clinician votes', 'Specialist hospital care'] },
+  { at: [100.49, 13.76], name: 'Siriraj Hospital, Bangkok', country: 'Thailand', since: 'Dec 2024', meditron: 1126, lines: ['1 event, Dec 2024 to Aug 2025', '339 questions, 1,126 clinician votes', 'Specialist hospital care'] },
+  { at: [-47.88, -15.79], name: 'Brazil', country: 'Brazil', since: 'Jan 2025', meditron: 173, lines: ['2 events, Jan to Nov 2025', '450 questions, 1,514 clinician votes', 'Specialist hospital care'] },
+  { at: [4.35, 50.85], name: 'Belgium', country: 'Belgium', since: 'Oct 2025', meditron: 58, lines: ['1 event, Oct 2025', '108 questions, 126 clinician votes', 'Specialist hospital care'] },
+  { at: [77.02, 28.99], name: 'Ashoka University, India', country: 'India', since: 'Jan 2026', meditron: 41, lines: ['1 event, Jan to Apr 2026', '86 questions, 138 clinician votes', 'Specialist hospital care'] },
+  { at: [77.59, 12.97], name: 'Bengaluru, India', country: 'India', since: 'Jan 2026', meditron: 201, lines: ['1 event, Jan to Mar 2026', '305 questions, 491 clinician votes', 'Specialist hospital care'] },
+  { at: [78.49, 17.39], name: 'Hyderabad, India', country: 'India', since: 'Jan 2026', meditron: 33, lines: ['1 event, Jan to Feb 2026', '98 questions, 87 clinician votes', 'Specialist hospital care'] },
+  { at: [33.79, -13.96], name: 'Malawi', country: 'Malawi', since: 'May 2026', meditron: 1033, lines: ['2 events, May to Jul 2026', '300 questions, 1,700 clinician votes', 'Primary care'] },
+  { at: [76.27, 9.93], name: 'Amrita, India', country: 'India', since: 'Jul 2026', meditron: 458, lines: ['1 event, Jul to Sep 2026', '306 questions, 684 clinician votes', 'Primary care, maternal and newborn health'] },
+  { at: [38.74, 9.03], name: 'Ethiopia', country: 'Ethiopia', since: 'Sep 2026', meditron: 720, lines: ['3 events, Mar to Sep 2026', '812 questions, 2,734 clinician votes', 'Primary care, paediatric emergency care'] },
+  { at: [73.05, 33.68], name: 'Pakistan', country: 'Pakistan', since: 'Sep 2026', meditron: 556, lines: ['1 event, Sep 2026', '278 questions, 834 clinician votes', 'Primary care, maternal and newborn health'] },
 ];
 
 (function globe() {
@@ -53,29 +53,39 @@ const SITES = [
   const projection = d3.geoOrthographic().clipAngle(90).precision(0.5);
   const path = d3.geoPath(projection, ctx);
 
-  // The story's clock T counts stops and can run both ways (the rail, a drag): the camera reaches
-  // stop i at T = i + 0.5, after MOVE of a step in flight, and rests there for the rest of the step.
-  // Stop n, after the last site, is the ocean, where the card about the evaluation rests until the clock ends.
-  const n = SITES.length, MOVE = 0.4, END = n + 1.9, STEP_MS = 1300;
-  const START = [-5, 12], OCEAN_VIEW = [70, -15], OCEAN_SPOT = [54, 3];   // where the camera starts; the ocean's view, and its card's top left, clear of the sites
-  const docked = matchMedia('(max-width: 900px)');   // phones: the site's card sits under the globe instead of beside its square
-  const arrive = (i) => i + 0.5;
+  // The story goes year by year, each year's sites lighting up together. Its clock T counts steps and can run both ways
+  // (the rail, a drag): the camera reaches year g at T = g + 0.5, after MOVE of a step in flight, and rests there for the
+  // rest of the step. Step G, after the last year, is the ocean, where the card about the evaluation rests until the clock ends.
+  const YEARS = [...new Set(SITES.map((s) => s.since.match(/\d{4}/)[0]))].map((year) => ({ year, sites: SITES.filter((s) => s.since.includes(year)) }));
+  const G = YEARS.length, n = SITES.length, MOVE = 0.4, END = G + 1.9, STEP_MS = 2400;
+  // where the camera starts, the equator level with the bottom of the screen on landing (lift()); the ocean's view, and its card's top left, clear of the sites
+  const START = [-5, 0], OCEAN_VIEW = [70, -15], OCEAN_SPOT = [54, 3];
+  const docked = matchMedia('(max-width: 900px)');   // phones: the year's card sits under the globe instead of beside its squares
+  const arrive = (g) => g + 0.5;
   const clamp = (x) => Math.min(1, Math.max(0, x));
   const ease = (x) => x * x * (3 - 2 * x);
   const wrap = (d) => ((d + 540) % 360) - 180;
   const count = (v) => v.toLocaleString('en-US');
+  const votesOn = (s) => `${count(s.meditron)} votes on Meditron's answers`;
+  // a year's sites light one after the other as the camera lands; the way to each is drawn just before: in flight to a
+  // year's first site, quickly between the others
+  const yearOf = SITES.map((s) => YEARS.findIndex((y) => y.sites.includes(s)));
+  const nth = SITES.map((s, i) => YEARS[yearOf[i]].sites.indexOf(s));
+  const litAt = (i) => arrive(yearOf[i]) - 0.05 + 0.05 * nth[i];
+  const legFrom = (i) => (nth[i] ? litAt(i) - 0.05 : arrive(yearOf[i]) - MOVE);
   const legs = SITES.map((s, i) => (i ? d3.geoInterpolate(SITES[i - 1].at, s.at) : null));
   let T = reduceMotion ? END : 0, spin = 0;   // the turn of the idle globe, in degrees from its start
 
-  const view = (i) => {
-    if (i < 0) return START;
-    if (i >= n) return OCEAN_VIEW;
-    // the site a little left of centre, with room for its card on the right, and nearer the equator than the camera
-    const [lon, lat] = SITES[i].at;
-    return [lon + (docked.matches ? 0 : 16), lat * 0.7];
+  const view = (g) => {
+    if (g < 0) return START;
+    if (g >= G) return OCEAN_VIEW;
+    // the middle of the year's sites, a little left of centre, with room for its card on the right, and nearer the equator than the camera
+    const lons = YEARS[g].sites.map((s) => s.at[0]), lats = YEARS[g].sites.map((s) => s.at[1]);
+    const lon = (Math.min(...lons) + Math.max(...lons)) / 2, lat = (Math.min(...lats) + Math.max(...lats)) / 2;
+    return [lon + (docked.matches ? 0 : 10), lat * 0.7];
   };
   function camera() {
-    const k = Math.min(n, Math.max(0, Math.ceil(T - 0.5)));
+    const k = Math.min(G, Math.max(0, Math.ceil(T - 0.5)));
     const [lon0, lat0] = view(k - 1), [lon1, lat1] = view(k), e = ease(clamp((T - arrive(k) + MOVE) / MOVE));
     return [lon0 + wrap(lon1 - lon0) * e + spin, lat0 + (lat1 - lat0) * e];
   }
@@ -131,11 +141,11 @@ const SITES = [
     ctx.drawImage(seaLayer, 0, 0);
     if (land) { ctx.save(); ctx.beginPath(); path(land); ctx.clip(); ctx.drawImage(landLayer, 0, 0); ctx.restore(); }
     const d = Math.max(3, Math.round(size / 95)), b = Math.max(1, Math.round(size / 500));
-    const lit = Math.min(n, Math.max(0, Math.floor(T - 0.45) + 1));
+    const lit = SITES.reduce((c, s, i) => c + (T >= litAt(i)), 0);
     // the way from site to site, dotted like the dither, drawn out as the camera flies it
     ctx.strokeStyle = marker; ctx.lineWidth = b * 1.5; ctx.setLineDash([b * 1.5, b * 3.5]); ctx.globalAlpha = 0.8;
     for (let i = 1; i < n; i++) {
-      const k = ease(clamp((T - arrive(i) + MOVE) / MOVE));
+      const k = ease(clamp((T - legFrom(i)) / (litAt(i) - legFrom(i))));
       if (k <= 0) break;
       ctx.beginPath(); path({ type: 'LineString', coordinates: [SITES[i - 1].at, legs[i](k)] }); ctx.stroke();
     }
@@ -146,19 +156,18 @@ const SITES = [
     SITES.slice(0, lit).forEach((s, i) => {
       if (d3.geoDistance(s.at, center) > Math.PI / 2 - 0.04) return;
       const [px, py] = projection(s.at);
-      const k = Math.round(s === hovered ? 2 * d : d * (2 - clamp((T - arrive(i) + 0.05) / 0.2)));
+      const k = Math.round(s === hovered ? 2 * d : d * (2 - clamp((T - litAt(i)) / 0.2)));
       const x0 = Math.round(px - k / 2), y0 = Math.round(py - k / 2);
       ctx.fillStyle = `rgb(${ink})`; ctx.fillRect(x0 - b, y0 - b, k + 2 * b, k + 2 * b);
       ctx.fillStyle = marker; ctx.fillRect(x0, y0, k, k);
       shown.push({ s, px, py });
     });
-    // the site of the moment sends out a square ring
+    // the year of the moment: each of its sites sends out a square ring
     const cur = showing();
-    const m = cur && shown.find((x) => x.s === cur.s);
-    if (m) {
+    if (cur) {
       const q = (now / 1300) % 1, k = d * (1.5 + 3.5 * q);
       ctx.strokeStyle = marker; ctx.lineWidth = b * 1.5; ctx.globalAlpha = (1 - q) * cur.a;
-      ctx.strokeRect(m.px - k / 2, m.py - k / 2, k, k);
+      for (const m of shown) if (cur.y.sites.includes(m.s)) ctx.strokeRect(m.px - k / 2, m.py - k / 2, k, k);
       ctx.globalAlpha = 1;
     }
     placeCards(cur);
@@ -166,35 +175,45 @@ const SITES = [
     if (hovered) placeTip();
   }
 
-  // the site whose card is up at this T, and how far it has faded in
+  // the year whose card is up at this T, and how far it has faded in
   function showing() {
-    const i = Math.floor(T - 0.44);
-    if (i < 0 || i >= n) return null;
-    const x = T - arrive(i), a = clamp((x + 0.06) / 0.1) * clamp((0.56 - x) / 0.07);
-    return a > 0 ? { s: SITES[i], i, a } : null;
+    const g = Math.floor(T - 0.44);
+    if (g < 0 || g >= G) return null;
+    const x = T - arrive(g), a = clamp((x + 0.06) / 0.1) * clamp((0.56 - x) / 0.07);
+    return a > 0 ? { y: YEARS[g], g, a } : null;
   }
 
   let cardFor = -1;
-  let opened = -1;   // the stop whose card shows its details: the one last clicked on the rail
+  let opened = -1;   // the year whose card lists its sites: the one last clicked on the rail
   function placeCards(cur) {
     const r = canvas.getBoundingClientRect(), h = stage.getBoundingClientRect(), k = r.width / size;
     const inStage = (at) => { const [x, y] = projection(at); return [r.left - h.left + x * k, r.top - h.top + y * k]; };
     card.hidden = !cur;
     if (cur) {
-      if (cur.i !== cardFor) {
-        cardFor = cur.i;
-        card.innerHTML = `<small>${cur.s.since}, ${cur.i ? 'then here' : 'first evaluated here'}</small><strong>${cur.s.name}</strong>`
-          + `<b>${count(cur.s.meditron)} votes on Meditron's answers</b>${cur.s.lines.map((l) => `<span>${l}</span>`).join('')}`;
+      if (cur.g !== cardFor) {
+        cardFor = cur.g;
+        const votes = cur.y.sites.reduce((sum, s) => sum + s.meditron, 0);
+        card.innerHTML = `<small>${cur.y.year}</small><strong>${[...new Set(cur.y.sites.map((s) => s.country))].join(', ')}</strong>`
+          + `<b>${count(votes)} votes on Meditron's answers</b>`
+          + `<span class="sites">${cur.y.sites.map((s) => `<i>${s.name}</i><i>${count(s.meditron)}</i>`).join('')}</span>`;
       }
-      card.classList.toggle('open', cur.i === opened);
+      card.classList.toggle('open', cur.g === opened);
       card.style.opacity = cur.a;
       if (docked.matches) card.style.transform = '';
       else {
-        const [x, y] = inStage(cur.s.at), left = Math.min(x + 26 * (1 + 0.3 * (1 - cur.a)), h.width - card.offsetWidth - 16);
-        card.style.transform = `translate(${left}px, ${Math.max(8, y - card.offsetHeight / 2)}px)`;
+        // beside the year's squares: on their right if it fits, else on their left, clear of the rail
+        const pts = shown.filter((m) => cur.y.sites.includes(m.s)).map((m) => inStage(m.s.at));
+        if (pts.length) {
+          const xs = pts.map((p) => p[0]), ys = pts.map((p) => p[1]), w = card.offsetWidth, ch = card.offsetHeight;
+          const gap = 26 * (1 + 0.3 * (1 - cur.a)), right = Math.max(...xs) + gap, left = Math.min(...xs) - gap - w;
+          const y = Math.max(8, Math.min((Math.min(...ys) + Math.max(...ys)) / 2 - ch / 2, h.height - ch - 8));
+          const rb = rail.getBoundingClientRect(), besideRail = rb.top - h.top < y + ch && rb.bottom - h.top > y;
+          const x = right + w <= h.width - 16 || left < (besideRail ? rb.right - h.left + 16 : 16) ? Math.min(right, h.width - w - 16) : left;
+          card.style.transform = `translate(${x}px, ${y}px)`;
+        }
       }
     }
-    const o = ease(clamp((T - arrive(n) + 0.12) / 0.3));
+    const o = ease(clamp((T - arrive(G) + 0.12) / 0.3));
     ocean.style.visibility = o > 0 ? 'visible' : 'hidden';
     ocean.style.opacity = o;
     if (o > 0 && docked.matches) ocean.style.transform = `translateY(${12 * (1 - o)}px)`;
@@ -204,8 +223,8 @@ const SITES = [
     }
   }
 
-  // the rail, one button per stop: it follows the story, and a click takes the story there
-  const items = [...SITES.map((s, i) => [s.name, arrive(i) + 0.15, `${s.since}. ${s.lines.join('. ')}. ${count(s.meditron)} votes on Meditron's answers.`]),
+  // the rail, one button per year and one for the end: it follows the story, and a click takes the story there
+  const items = [...YEARS.map((y, g) => [y.year, arrive(g) + 0.15, y.sites.map((s) => `${s.name}, ${votesOn(s)}`).join('. ') + '.']),
     ['Tested by clinicians', END - 0.2, '']];
   stops.innerHTML = items.map(([name, , more]) => `<li><button type="button">${name}${more ? `<span class="sr"> ${more}</span>` : ''}</button></li>`).join('');
   const rows = [...stops.children];
@@ -217,10 +236,11 @@ const SITES = [
   let lastLit = -1, lastHere = -1;
   function showProgress(lit) {
     rail.style.setProperty('--p', (T / END).toFixed(4));
-    const here = T >= arrive(n) - 0.12 ? n : lit - 1;
+    const years = YEARS.filter((y, g) => T >= arrive(g) - 0.05).length;
+    const here = T >= arrive(G) - 0.12 ? G : years - 1;
     if (here !== lastHere) {
       lastHere = here;
-      rows.forEach((li, i) => { li.classList.toggle('lit', i < lit); if (i === here) li.setAttribute('aria-current', 'step'); else li.removeAttribute('aria-current'); });
+      rows.forEach((li, i) => { li.classList.toggle('lit', i < years); if (i === here) li.setAttribute('aria-current', 'step'); else li.removeAttribute('aria-current'); });
     }
     if (lit !== lastLit) {
       lastLit = lit;
@@ -288,7 +308,7 @@ const SITES = [
     rail.style.opacity = railIn; rail.style.visibility = railIn > 0 ? 'visible' : 'hidden';
     // the globe turns by itself until the story starts, then comes round to the camera the short way
     spin = T === 0 && !playing ? wrap(spin + dt * 0.0042) : Math.abs(spin) < 0.05 ? 0 : spin * Math.exp(-dt / 220);
-    const state = `${T}|${spin}|${size}`;
+    const state = `${T}|${spin}|${size}|${drop.toFixed(0)}`;
     if (visible && !open && (state !== drawn || showing())) { drawn = state; draw(t); }
   }
   let visible = true;
@@ -321,8 +341,18 @@ const SITES = [
   const reveal = () => canvas.classList.remove('pending');
   canvas.classList.add('pending'); setTimeout(reveal, 1500);
   if (reduceMotion) story.classList.add('still');
-  readColors(); resize(); draw();
-  addEventListener('resize', () => { resize(); draw(); });
+  // on landing the globe's middle (the equator, at START) is level with the bottom of the screen;
+  // it comes to the middle of the stage as the page scrolls to it
+  let drop = 0;
+  function lift() {
+    const r = stage.getBoundingClientRect(), top0 = r.top + scrollY, mid = parseFloat(getComputedStyle(canvas).top);
+    drop = (innerHeight - top0 - mid) * clamp(r.top / top0);
+    canvas.style.setProperty('--drop', `${drop.toFixed(1)}px`);
+    if (reduceMotion) placeCards(showing());   // no clock to redraw them: the cards follow the globe from here
+  }
+  addEventListener('scroll', lift, { passive: true });
+  readColors(); resize(); lift(); draw();
+  addEventListener('resize', () => { resize(); lift(); draw(); });
   matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { readColors(); draw(); });
 
   fetch('static/data/land-110m.json')

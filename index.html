@@ -112,21 +112,22 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400..800&display=swap">
   <link rel="stylesheet" href="https://use.typekit.net/ssi4ehi.css">
-  <link rel="stylesheet" href="static/style.css?v=20261102d">
+  <link rel="preload" href="static/fonts/chillax-700.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="static/style.css?v=20261103g">
   <link rel="preload" href="static/data/land-110m.json" as="fetch" crossorigin>
-  <!-- page variants, to compare: ?withbeam shows the LiGHT beam (withbeam/), ?chillax the beam with its text and the name in the Meditron logo's font (chillax/), ?logofont only the name in that font (v8-logo/), ?manrope the name in Manrope (manrope/), ?w400 sets every title at weight 400 (400/); links within the site keep them -->
+  <!-- page variants, to compare: ?withbeam shows the LiGHT beam (withbeam/), ?chillax the beam with its text in the Meditron logo's font, like the name (chillax/), ?ivy the name in Ivy Presto (ivy/), ?manrope the name in Manrope (manrope/), ?w400 sets every title at weight 400 (400/); links within the site keep them -->
   <script>
   (() => {
-    const q = new URLSearchParams(location.search), on = ['withbeam', 'chillax', 'logofont', 'manrope', 'w400'].filter((k) => q.has(k));
+    const q = new URLSearchParams(location.search), on = ['withbeam', 'chillax', 'ivy', 'manrope', 'w400'].filter((k) => q.has(k));
     on.forEach((k) => document.documentElement.classList.add(k));
     if (on.includes('chillax')) document.documentElement.classList.add('withbeam');
-    if (on.includes('chillax') || on.includes('logofont')) {
+    if (on.includes('chillax')) {
       document.head.insertAdjacentHTML('beforeend', '<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=chillax@500,600,700&display=swap">');
     }
     if (on.length) addEventListener('DOMContentLoaded', () => {
       // the MeditronFO thumbnail is a picture of that page: it shows the same name
-      const thumb = on.includes('manrope') ? 'manrope' : on.includes('chillax') || on.includes('logofont') ? 'logofont' : '';
-      if (thumb) document.querySelector('img[src*="meditronfo-thumb"]').src = `static/img/meditronfo-thumb-${thumb}.jpg?v=4`;
+      const thumb = on.includes('manrope') ? 'manrope' : on.includes('ivy') ? 'ivy' : '';
+      if (thumb) document.querySelector('img[src*="meditronfo-thumb"]').src = `static/img/meditronfo-thumb-${thumb}.jpg?v=5`;
       for (const el of document.querySelectorAll('a[href]:not([href^="#"]):not([href*=":"]), [data-href]:not([data-href*=":"])')) {
         const u = new URL(el.getAttribute('href') ?? el.dataset.href, location.href);
         u.search = '?' + on.join('&');
@@ -145,10 +146,9 @@
     <a class="top-lab" href="https://www.light-laboratory.org/" target="_blank" rel="noopener"><img class="logo-color" src="static/img/light-logo-color.png" alt="LiGHT, Laboratory for intelligent Global Health and Humanitarian Response Technologies"><img class="logo-mono" src="static/img/light-logo.png" alt=""></a>
     <nav class="top-links" aria-label="Sections">
       <a href="#what">What is Meditron</a>
-      <a href="#meditronfo">Latest project</a>
+      <a href="#meditronfo">Latest</a>
       <a href="#openness">Download</a>
       <a href="#cite">Cite</a>
-      <a href="#contact">Contact</a>
     </nav>
   </header>
 
@@ -178,11 +178,11 @@
             <p class="story-ctl"><button type="button" id="story-play">Pause</button></p>
           </div>
           <div class="story-card" id="story-card" aria-hidden="true" hidden></div>
-          <!-- the last stop: this card rests in the Indian Ocean, with the sites lit around it -->
+          <!-- the last stop: this card rests in the Indian Ocean, with the sites lit around it; under its text, MOOVE as a card like the page's other links -->
           <div class="ocean-card" id="ocean-card">
             <h2>Tested by clinicians</h2>
             <p>At MOOVE events, clinicians put tough questions from their own practice to the models, then compare two anonymous answers and vote for the better one.</p>
-            <a class="feature-thumb" href="#moove"><img src="static/img/portal-moove.jpg" alt="The MOOVE platform, where clinicians write questions and judge the answers" width="960" height="453"><span class="feature-cta">Explore MOOVE</span></a>
+            <a class="feature-thumb" href="#moove"><img src="static/img/portal-moove.jpg" alt="" width="960" height="453"><span class="feature-body"><strong>MOOVE</strong><span>The platform where clinicians ask the questions and judge the answers.</span><small>Clinical evaluation</small></span></a>
           </div>
         </div>
       </section>
@@ -244,7 +244,7 @@
           <figcaption>5,000 conversations graded by Gemma-4-31B against physician-written rubrics. Arrows go from each base to its MeditronFO finetune; bars are 95% intervals.</figcaption>
           <details class="m-details"><summary>Show as a table</summary><div id="hb-table" class="m-scroll"></div></details>
         </figure>
-        <a class="feature-thumb" href="meditronfo/"><img src="static/img/meditronfo-thumb.jpg?v=8" alt="The MeditronFO project page: the name and the paper's subtitle under a blue sky" width="1920" height="906" loading="lazy"><span class="feature-cta">Read about MeditronFO</span></a>
+        <a class="feature-thumb" href="meditronfo/"><img src="static/img/meditronfo-thumb.jpg?v=10" alt="" width="1920" height="906" loading="lazy"><span class="feature-body"><strong>MeditronFO: An Auditable Pipeline for Clinical LLMs</strong><span>The models, their data, the results and the paper.</span><small>Project page</small></span></a>
       </div>
     </section>
 
@@ -267,7 +267,7 @@
             </tbody>
           </table>
         </div>
-        <a class="feature-thumb" href="https://huggingface.co/collections/EPFLiGHT/meditronfo" target="_blank" rel="noopener"><img src="static/img/portal-models.jpg" alt="The MeditronFO collection on Hugging Face" width="960" height="453" loading="lazy"><span class="feature-cta ext">Download</span></a>
+        <a class="feature-thumb" href="https://huggingface.co/collections/EPFLiGHT/meditronfo" target="_blank" rel="noopener"><img src="static/img/portal-models.jpg" alt="" width="960" height="453" loading="lazy"><span class="feature-body"><strong>The MeditronFO collection</strong><span>The models and their training data, free to download.</span><small>Hugging Face</small></span></a>
       </div>
     </section>
 
@@ -302,14 +302,13 @@
       <div class="feature-wrap">
         <h2 id="game-feature-title">Can you judge like a clinician?</h2>
         <p>Five real MOOVE cases written by clinicians in Ethiopia, Switzerland and Kenya: read two anonymous answers, vote for the better one, and see whether you agree with the clinicians and with AutoMOOVE, our AI judge.</p>
-        <a class="feature-thumb" href="#automoove"><img src="static/img/automoove-thumb.jpg" alt="A round of the AutoMOOVE game: a clinician's question and two anonymous answers to compare" width="1920" height="906" loading="lazy"><span class="feature-cta">Play the game</span></a>
+        <a class="feature-thumb" href="#automoove"><img src="static/img/automoove-thumb.jpg" alt="" width="1920" height="906" loading="lazy"><span class="feature-body"><strong>AutoMOOVE: judge like a clinician</strong><span>Five cases, two anonymous answers each.</span><small>Game</small></span></a>
       </div>
     </section>
 
-    <!-- one way in for each kind of contributor; the image is the community folder's -->
+    <!-- one way in for each kind of contributor -->
     <section id="join" class="join-section" aria-labelledby="join-title">
       <div class="join-wrap">
-        <img class="join-thumb" src="static/img/portal-community.jpg" alt="The globe with the places where clinicians have tested Meditron" width="960" height="453" loading="lazy">
         <div class="join-text">
           <h2 id="join-title">Join us</h2>
           <p>Meditron is built with the people who use it.</p>
@@ -455,7 +454,7 @@
     <ol class="pubs">
       <li>
         <span class="pub-gen">MeditronFO · 2026</span>
-        <a href="https://arxiv.org/abs/2605.16215" target="_blank" rel="noopener">Fully Open Meditron: An Auditable Pipeline for Clinical LLMs</a>
+        <a href="https://arxiv.org/abs/2605.16215" target="_blank" rel="noopener">MeditronFO: An Auditable Pipeline for Clinical LLMs</a>
         <span class="pub-meta">Theimer-Lienhard et al. · arXiv preprint</span>
         <p>A clinician-vetted corpus, decontamination and training code, applied to five fully open base models, Apertus among them.</p>
       </li>
@@ -582,6 +581,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/15.0.7/marked.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.2.4/purify.min.js"></script>
   <script src="static/charts.js?v=20261101b"></script>
-  <script src="static/app.js?v=20261101g"></script>
+  <script src="static/app.js?v=20261103b"></script>
 </body>
 </html>
