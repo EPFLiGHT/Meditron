@@ -211,7 +211,7 @@ function evalTable(s) {
   rs.sort((a, b) => order(a).localeCompare(order(b)));
   const row = r => `<tr class="${r.is_base ? "ev-base" : ""}"><td class="exp">${r.is_base
       ? `${esc(r.label || r.model)}<small>starting model${r.thinking ? ", thinking" : ""}</small>`
-      : `${esc(r.model)}<small>${esc(r.experiment)} · step ${r.step ?? "?"}${r.job ? ` · job ${esc(r.job)}` : ""}${r.thinking ? " · thinking" : ""}</small>`}</td>
+      : `${esc(r.label || r.model)}<small>${esc(r.experiment)} · step ${r.step ?? "?"}${r.job ? ` · job ${esc(r.job)}` : ""}${r.thinking ? " · thinking" : ""}${r.automoove_vs ? ` · AutoMOOVE vs ${esc(r.automoove_vs)}` : ""}</small>`}</td>
       ${cols.map(c => evalCell(c, r, r.is_base ? null : baseOf(r))).join("")}</tr>`;
   return `<div class="tbl evals"><table>
     <thead><tr><th rowspan="2">Evaluated checkpoint</th>${groups.map(([g, n]) => `<th class="grp" colspan="${n}">${esc(g)}</th>`).join("")}</tr>
