@@ -54,9 +54,9 @@
     <div class="rate-row">
       <button type="button" class="nav" id="prev" aria-label="Previous sample">&larr; Previous</button>
       <div class="scale" role="radiogroup" aria-label="Rating" id="scale">
-        <button type="button" role="radio" data-r="1" class="r1"><b>Bad</b></button>
-        <button type="button" role="radio" data-r="2" class="r2"><b>Slightly bad</b></button>
-        <button type="button" role="radio" data-r="3" class="r3"><b>Slightly correct</b></button>
+        <button type="button" role="radio" data-r="1" class="r1"><b>Wrong</b></button>
+        <button type="button" role="radio" data-r="2" class="r2"><b>Partly wrong</b></button>
+        <button type="button" role="radio" data-r="3" class="r3"><b>Partly correct</b></button>
         <button type="button" role="radio" data-r="4" class="r4"><b>Correct</b></button>
       </div>
       <button type="button" class="nav" id="next" aria-label="Next sample">Next &rarr;</button>
@@ -67,9 +67,9 @@
     <h2 tabindex="-1" autofocus>How to rate</h2>
     <p>Each sample is one training example for Meditron: a question and the answer we teach the model to give. Please judge whether it is <b>correct and safe to learn from</b>.</p>
     <dl class="scale-help">
-      <dt class="r1">Bad</dt><dd>Wrong, unsafe, or misleading. It should not be used.</dd>
-      <dt class="r2">Slightly bad</dt><dd>Mostly right, but with a mistake that matters for patient care.</dd>
-      <dt class="r3">Slightly correct</dt><dd>Right, with small problems: missing detail, imprecise wording, outdated but harmless.</dd>
+      <dt class="r1">Wrong</dt><dd>Incorrect, unsafe, or misleading. It should not be used.</dd>
+      <dt class="r2">Partly wrong</dt><dd>Mostly right, but with a mistake that matters for patient care.</dd>
+      <dt class="r3">Partly correct</dt><dd>Right, with small problems: missing detail, imprecise wording, outdated but harmless.</dd>
       <dt class="r4">Correct</dt><dd>Right and safe. Nothing to fix.</dd>
     </dl>
     <p>On the left you see what the sample was built from: the source guideline, the answer key, or the clinical case. Questions with an answer key were written with that answer in mind; please also check that the key itself is right.</p>
