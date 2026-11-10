@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Meditron data review</title>
+  <link rel="icon" href="../static/img/meditron-logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="review.css">
+</head>
+<body>
+  <header class="bar">
+    <div class="bar-title">Meditron data review</div>
+    <div class="bar-progress" id="progress" hidden>
+      <span id="progress-text"></span>
+      <span class="meter" aria-hidden="true"><span id="progress-fill"></span></span>
+    </div>
+    <div class="bar-save" id="save" role="status" aria-live="polite"></div>
+    <nav class="bar-actions" id="actions" hidden>
+      <button type="button" class="ghost" id="open-list">All items</button>
+      <button type="button" class="ghost" id="open-help">How to rate</button>
+      <button type="button" class="ghost" id="open-send">Send to Xavier</button>
+    </nav>
+  </header>
+
+  <!-- shown when the link has no valid code -->
+  <main class="notice" id="no-link" hidden>
+    <h1>This page needs your personal link</h1>
+    <p>Each reviewer has their own link, so that your ratings are saved under your name. Please open the link Xavier sent you, or write to him for a new one.</p>
+  </main>
+
+  <!-- the review screen -->
+  <main class="review" id="review" hidden>
+    <section class="pane context" id="context" aria-label="Context"></section>
+    <div class="right">
+      <section class="pane sample" id="sample" aria-label="Sample to review"></section>
+      <div class="notes" id="extra">
+        <fieldset class="issues" id="issues">
+          <legend>What is wrong? Pick any that apply.</legend>
+          <div class="chips" id="chips"></div>
+        </fieldset>
+        <label class="comment">
+          <span>Comment (optional)</span>
+          <textarea id="comment" rows="2" placeholder="Anything we should know about this sample"></textarea>
+        </label>
+      </div>
+    </div>
+  </main>
+
+  <footer class="rate" id="rate" hidden>
+    <div class="rate-row">
+      <button type="button" class="nav" id="prev" aria-label="Previous sample">&larr; Previous</button>
+      <div class="scale" role="radiogroup" aria-label="Rating" id="scale">
+        <button type="button" role="radio" data-r="1" class="r1"><b>Bad</b></button>
+        <button type="button" role="radio" data-r="2" class="r2"><b>Slightly bad</b></button>
+        <button type="button" role="radio" data-r="3" class="r3"><b>Slightly correct</b></button>
+        <button type="button" role="radio" data-r="4" class="r4"><b>Correct</b></button>
+      </div>
+      <button type="button" class="nav" id="next" aria-label="Next sample">Next &rarr;</button>
+    </div>
+  </footer>
+
+  <dialog id="help">
+    <h2>How to rate</h2>
+    <p>Each sample is one training example for Meditron: a question and the answer we teach the model to give. Please judge whether it is <b>correct and safe to learn from</b>.</p>
+    <dl class="scale-help">
+      <dt class="r1">Bad</dt><dd>Wrong, unsafe, or misleading. It should not be used.</dd>
+      <dt class="r2">Slightly bad</dt><dd>Mostly right, but with a mistake that matters for patient care.</dd>
+      <dt class="r3">Slightly correct</dt><dd>Right, with small problems: missing detail, imprecise wording, outdated but harmless.</dd>
+      <dt class="r4">Correct</dt><dd>Right and safe. Nothing to fix.</dd>
+    </dl>
+    <p>On the left you see what the sample was built from: the source guideline, the answer key, or the clinical case. Questions with an answer key were written with that answer in mind; please also check that the key itself is right.</p>
+    <p>The answer on the right was written by an AI model that did not see the guideline. Please judge everything in it, including what it says about each option.</p>
+    <p>Every click is saved at once. You can stop at any time and come back with the same link. Keys: <kbd>1</kbd> to <kbd>4</kbd> rate, <kbd>&larr;</kbd> and <kbd>&rarr;</kbd> move between samples.</p>
+    <form method="dialog"><button class="primary" id="help-start">Start reviewing</button></form>
+  </dialog>
+
+  <dialog id="list">
+    <h2>All items</h2>
+    <p id="list-sum"></p>
+    <div class="grid" id="grid"></div>
+    <form method="dialog" class="dialog-actions">
+      <button type="button" class="primary" id="next-unrated">Go to the next unrated</button>
+      <button class="ghost">Close</button>
+    </form>
+  </dialog>
+
+  <dialog id="send">
+    <h2>Send to Xavier</h2>
+    <p id="send-text"></p>
+    <form method="dialog" class="dialog-actions">
+      <button type="button" class="primary" id="send-go">Send now</button>
+      <button class="ghost">Not yet</button>
+    </form>
+  </dialog>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/15.0.7/marked.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.2.4/purify.min.js"></script>
+  <script src="review.js"></script>
+</body>
+</html>
