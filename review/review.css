@@ -149,6 +149,17 @@ button:focus-visible, textarea:focus-visible { outline: 3px solid var(--accent);
 .issues { border: 0; margin: 0; padding: 0; min-width: 0; }
 .issues legend { padding: 0; margin-bottom: .35rem; font-weight: 700; }
 .issues.off { display: none; }
+.issues.ask legend { color: var(--r1); }
+.issues.ask .chips { animation: ask 1.2s ease-out 1; border-radius: .6rem; }
+@keyframes ask { 0%, 60% { box-shadow: 0 0 0 3px var(--r1); } 100% { box-shadow: 0 0 0 3px transparent; } }
+
+/* guideline finder: words of the question highlighted, best paragraphs visited in turn */
+.finder { position: sticky; top: -1.2rem; z-index: 1; margin: 0 -1.4rem 1rem; padding: .8rem 1.4rem;
+  background: var(--panel); border-bottom: 1px solid var(--line); }
+.finder p { margin: 0 0 .5rem; }
+.finder-row { display: flex; align-items: center; gap: .8rem; flex-wrap: wrap; }
+mark { background: #ffe58a; color: #16181d; border-radius: .2rem; padding: 0 .1rem; }
+.guide .found { outline: 3px solid var(--accent); outline-offset: 4px; border-radius: .2rem; }
 .chips { display: flex; flex-wrap: wrap; gap: .4rem; }
 .chips button { border-color: var(--ctl); background: var(--panel); padding: .3rem .7rem; }
 .chips button[aria-pressed="true"] { border-color: var(--r1); background: var(--r1-bg); color: var(--r1); font-weight: 700; }
@@ -178,6 +189,7 @@ dialog::backdrop { background: rgba(10, 12, 16, .45); }
 /* narrow screens: the page scrolls as a whole; the rating row sticks to the bottom of the window,
    and it is the last element of the page, so at the end it sits below the notes, not on them */
 @media (max-width: 900px) {
+  .finder { position: static; margin: 0 0 1rem; padding: .8rem 0; }
   html { font-size: 18px; }
   body { display: block; height: auto; }
   .bar { flex-wrap: wrap; gap: .5rem .9rem; padding: .6rem 1rem; }
