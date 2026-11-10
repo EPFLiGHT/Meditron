@@ -8,6 +8,8 @@
   --accent: #2557b8;
   --accent-ink: #ffffff;
   --soft: #eef2fb;
+  --ctl: #8f8a7c;                          /* borders of controls: 3:1 against the panel */
+  --ph: #666870;                           /* placeholder text */
   --r1: #b3261e; --r1-bg: #fbe9e7;
   --r2: #a35400; --r2-bg: #fdf0e1;
   --r3: #3b7a16; --r3-bg: #eef6e6;
@@ -19,7 +21,7 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #14161a; --panel: #1c1f25; --ink: #eceae4; --ink-2: #c4c2bb; --line: #343841;
-    --accent: #7ea6f2; --accent-ink: #0d1424; --soft: #222a3a;
+    --accent: #7ea6f2; --accent-ink: #0d1424; --soft: #222a3a; --ctl: #6b7080; --ph: #9a9890;
     --r1: #ff8a80; --r1-bg: #3a1d1b; --r2: #ffb35c; --r2-bg: #3a2a14;
     --r3: #a5d67f; --r3-bg: #22301a; --r4: #6fd394; --r4-bg: #173022;
     --q-line: #34466e; --q-ink: #e6ecfa; --a-line: #c4c2bb; --a-ink: #14161a;
@@ -28,7 +30,7 @@
 }
 :root[data-theme="dark"] {
   --bg: #14161a; --panel: #1c1f25; --ink: #eceae4; --ink-2: #c4c2bb; --line: #343841;
-  --accent: #7ea6f2; --accent-ink: #0d1424; --soft: #222a3a;
+  --accent: #7ea6f2; --accent-ink: #0d1424; --soft: #222a3a; --ctl: #6b7080; --ph: #9a9890;
   --r1: #ff8a80; --r1-bg: #3a1d1b; --r2: #ffb35c; --r2-bg: #3a2a14;
   --r3: #a5d67f; --r3-bg: #22301a; --r4: #6fd394; --r4-bg: #173022;
     --q-line: #34466e; --q-ink: #e6ecfa; --a-line: #c4c2bb; --a-ink: #14161a;
@@ -54,20 +56,21 @@ kbd { border: 1px solid var(--line); border-radius: .3rem; padding: 0 .35rem; ba
 /* top bar */
 .bar {
   flex: none; min-height: 4rem;
-  display: flex; align-items: center; gap: 1.2rem; padding: 0 1.25rem;
+  display: flex; flex-wrap: wrap; align-items: center; gap: .3rem 1.2rem; padding: .35rem 1.25rem;
   background: var(--panel); border-bottom: 1px solid var(--line);
 }
 .bar-title { font-weight: 700; white-space: nowrap; }
 .bar-progress { display: flex; align-items: center; gap: .7rem; white-space: nowrap; }
 .meter { display: inline-block; width: 9rem; height: .55rem; border-radius: 1rem; background: var(--line); overflow: hidden; }
 .meter span { display: block; height: 100%; width: 0; background: var(--accent); transition: width .25s; }
-.bar-save { margin-left: auto; white-space: nowrap; }
+.bar-save { margin-left: auto; flex: 1 1 11rem; min-width: 0; text-align: right; line-height: 1.3; }
 .bar-save.bad { color: var(--r1); font-weight: 700; }
-.bar-actions { display: flex; gap: .4rem; }
+.bar-actions { display: flex; gap: .4rem; flex: none; }
+.bar-actions button { white-space: nowrap; }
 
 button { cursor: pointer; border-radius: .55rem; border: 2px solid transparent; padding: .45rem .9rem; background: none; }
 button:focus-visible, textarea:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
-.ghost { border-color: var(--line); background: var(--panel); }
+.ghost { border-color: var(--ctl); background: var(--panel); }
 .ghost:hover { border-color: var(--accent); }
 .primary { background: var(--accent); color: var(--accent-ink); font-weight: 700; }
 
@@ -125,30 +128,38 @@ button:focus-visible, textarea:focus-visible { outline: 3px solid var(--accent);
   background: var(--panel); border-top: 1px solid var(--line); padding: .7rem 1.25rem;
 }
 .rate-row { display: flex; align-items: center; gap: 1rem; }
-.nav { border-color: var(--line); background: var(--panel); white-space: nowrap; }
+.nav { border-color: var(--ctl); background: var(--panel); white-space: nowrap; }
 .nav:disabled { opacity: .4; cursor: default; }
 .nav.go { border-color: var(--accent); background: var(--accent); color: var(--accent-ink); font-weight: 700; }
 .scale { flex: 1; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .6rem; }
-.scale button { padding: .7rem .5rem; border-color: var(--line); background: var(--panel); }
+.scale button { padding: .7rem .5rem; border-color: var(--ctl); background: var(--panel); }
 .scale button b { display: block; }
-.scale .r1:hover, .scale .r1[aria-checked="true"] { border-color: var(--r1); background: var(--r1-bg); color: var(--r1); }
-.scale .r2:hover, .scale .r2[aria-checked="true"] { border-color: var(--r2); background: var(--r2-bg); color: var(--r2); }
-.scale .r3:hover, .scale .r3[aria-checked="true"] { border-color: var(--r3); background: var(--r3-bg); color: var(--r3); }
-.scale .r4:hover, .scale .r4[aria-checked="true"] { border-color: var(--r4); background: var(--r4-bg); color: var(--r4); }
-.scale button[aria-checked="true"] { border-width: 3px; }
+@media (hover: hover) {
+  .scale .r1:hover { border-color: var(--r1); }
+  .scale .r2:hover { border-color: var(--r2); }
+  .scale .r3:hover { border-color: var(--r3); }
+  .scale .r4:hover { border-color: var(--r4); }
+}
+.scale .r1[aria-checked="true"] { border-color: var(--r1); background: var(--r1-bg); color: var(--r1); }
+.scale .r2[aria-checked="true"] { border-color: var(--r2); background: var(--r2-bg); color: var(--r2); }
+.scale .r3[aria-checked="true"] { border-color: var(--r3); background: var(--r3-bg); color: var(--r3); }
+.scale .r4[aria-checked="true"] { border-color: var(--r4); background: var(--r4-bg); color: var(--r4); }
+.scale button[aria-checked="true"] { box-shadow: inset 0 0 0 1px currentColor; }
 
 .issues { border: 0; margin: 0; padding: 0; min-width: 0; }
 .issues legend { padding: 0; margin-bottom: .35rem; font-weight: 700; }
 .issues.off { display: none; }
 .chips { display: flex; flex-wrap: wrap; gap: .4rem; }
-.chips button { border-color: var(--line); background: var(--panel); padding: .3rem .7rem; }
+.chips button { border-color: var(--ctl); background: var(--panel); padding: .3rem .7rem; }
 .chips button[aria-pressed="true"] { border-color: var(--r1); background: var(--r1-bg); color: var(--r1); font-weight: 700; }
 .comment { display: flex; flex-direction: column; gap: .3rem; }
 .comment span { font-weight: 700; }
-.comment textarea { width: 100%; resize: vertical; border: 1px solid var(--line); border-radius: .55rem; padding: .45rem .6rem; background: var(--bg); }
+.comment textarea { width: 100%; resize: vertical; border: 1px solid var(--ctl); border-radius: .55rem; padding: .45rem .6rem; background: var(--bg); }
+.comment textarea::placeholder { color: var(--ph); opacity: 1; }
 
 /* dialogs */
 dialog { border: 1px solid var(--line); border-radius: .9rem; padding: 1.6rem 1.8rem; max-width: 40rem; width: calc(100% - 2rem); background: var(--panel); color: var(--ink); }
+dialog h2:focus { outline: none; }
 dialog::backdrop { background: rgba(10, 12, 16, .45); }
 .scale-help { display: grid; grid-template-columns: auto 1fr; gap: .5rem 1rem; margin: 1rem 0; }
 .scale-help dt { font-weight: 700; }
@@ -157,21 +168,24 @@ dialog::backdrop { background: rgba(10, 12, 16, .45); }
 .scale-help .r3 { color: var(--r3); } .scale-help .r4 { color: var(--r4); }
 .dialog-actions { display: flex; gap: .6rem; margin-top: 1.2rem; flex-wrap: wrap; }
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(4.2rem, 1fr)); gap: .4rem; max-height: 50vh; overflow-y: auto; }
-.grid button { border-color: var(--line); background: var(--panel); padding: .4rem 0; }
+.grid button { border-color: var(--ctl); background: var(--panel); padding: .4rem 0; }
 .grid button.now { outline: 3px solid var(--accent); outline-offset: 1px; }
 .grid button.g1 { background: var(--r1-bg); border-color: var(--r1); }
 .grid button.g2 { background: var(--r2-bg); border-color: var(--r2); }
 .grid button.g3 { background: var(--r3-bg); border-color: var(--r3); }
 .grid button.g4 { background: var(--r4-bg); border-color: var(--r4); }
 
-/* narrow screens: one column, page scroll, the rating bar stays at the bottom */
 /* narrow screens: the page scrolls as a whole; the rating row sticks to the bottom of the window,
    and it is the last element of the page, so at the end it sits below the notes, not on them */
 @media (max-width: 900px) {
   html { font-size: 18px; }
   body { display: block; height: auto; }
   .bar { flex-wrap: wrap; gap: .5rem .9rem; padding: .6rem 1rem; }
-  .bar-save { margin-left: 0; }
+  .bar-save { margin-left: 0; flex-basis: 100%; text-align: left; }
+  .bar-actions { flex: 1 1 100%; flex-wrap: wrap; }
+  .bar-actions button { flex: 1 1 auto; padding: .45rem .6rem; }
+  .scale-help { grid-template-columns: 1fr; gap: 0; }
+  .scale-help dd { margin-bottom: .6rem; }
   .meter { width: 5rem; }
   .review { display: block; padding: 1rem; }
   .right { display: block; }

@@ -43,7 +43,7 @@ function status(text, bad) {
 }
 
 async function post(body) {
-  const res = await fetch(BACKEND, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify({ r: S.code, ...body }) });
+  const res = await fetch(BACKEND, { method: "POST", keepalive: true, headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify({ r: S.code, ...body }) });
   const out = await res.json();
   if (!out.ok) throw new Error(out.error || "not saved");
 }
@@ -62,7 +62,7 @@ async function flush() {
       S.pending.shift();
       saveLocal();
     }
-    status("All changes saved");
+    status(typing ? "Typing…" : "All changes saved");
     clearTimeout(retry);
   } catch (e) {
     status("Not saved yet, trying again. Your ratings are kept on this device.", true);
@@ -71,6 +71,14 @@ async function flush() {
   } finally {
     S.sending = false;
   }
+}
+
+let typing = null, typingId = null;
+function commitTyping() {
+  if (!typing) return;
+  clearTimeout(typing);
+  typing = null;
+  touch(typingId);
 }
 
 function touch(id) {
@@ -244,12 +252,14 @@ async function start() {
       }
     } catch (e) { status("Working offline. Your ratings are kept on this device.", true); }
   }
+  if (!local) { const k = S.items.findIndex((it) => !S.ratings[it.id]?.rating); S.pos = k >= 0 ? k : 0; }
   S.pos = Math.min(S.pos, S.items.length - 1);
+  if (rated() === S.items.length) S.sentAll = true;
 
   $("review").hidden = $("rate").hidden = $("progress").hidden = $("actions").hidden = false;
   render(true);
   flush();
-  if (!local) $("help").showModal();
+  if (!local && !rated()) $("help").showModal();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -262,14 +272,18 @@ document.addEventListener("DOMContentLoaded", () => {
     b.setAttribute("aria-pressed", String(!on));
     touch(it.id);
   });
-  let typing = null;
   $("comment").addEventListener("input", () => {
     const it = S.items[S.pos];
+    if (typingId !== it.id) commitTyping();   // a comment still being typed on the previous sample goes first
     (S.ratings[it.id] ||= {}).comment = $("comment").value;
+    if (!S.pending.includes(it.id)) S.pending.push(it.id);
+    saveLocal();
     clearTimeout(typing);
     status("Typing…");
-    typing = setTimeout(() => touch(it.id), 800);
+    typingId = it.id;
+    typing = setTimeout(commitTyping, 800);
   });
+  document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden") { commitTyping(); flush(); } });
   $("prev").addEventListener("click", () => go(S.pos - 1));
   $("next").addEventListener("click", () => go(S.pos + 1));
   $("open-help").addEventListener("click", () => $("help").showModal());

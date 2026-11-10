@@ -64,7 +64,7 @@
   </footer>
 
   <dialog id="help">
-    <h2>How to rate</h2>
+    <h2 tabindex="-1" autofocus>How to rate</h2>
     <p>Each sample is one training example for Meditron: a question and the answer we teach the model to give. Please judge whether it is <b>correct and safe to learn from</b>.</p>
     <dl class="scale-help">
       <dt class="r1">Bad</dt><dd>Wrong, unsafe, or misleading. It should not be used.</dd>
@@ -79,7 +79,7 @@
   </dialog>
 
   <dialog id="list">
-    <h2>All items</h2>
+    <h2 tabindex="-1" autofocus>All items</h2>
     <p id="list-sum"></p>
     <div class="grid" id="grid"></div>
     <form method="dialog" class="dialog-actions">
@@ -89,7 +89,7 @@
   </dialog>
 
   <dialog id="send">
-    <h2>Send to Xavier</h2>
+    <h2 tabindex="-1" autofocus>Send to Xavier</h2>
     <p id="send-text"></p>
     <form method="dialog" class="dialog-actions">
       <button type="button" class="primary" id="send-go">Send now</button>
