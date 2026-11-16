@@ -12,6 +12,7 @@ const CODE = (Q.get("r") || "").trim();
 const BACKEND = "https://script.google.com/macros/s/AKfycbwdKTu11IIVG0iSg1AZeBZ0a7sS9wtiHFl6kUixn6ErQ0qXbdWnIOof6c7AlwhRRbry3w/exec";
 const remote = () => Boolean(BACKEND && CODE);
 const item = (row, m) => `${LANG}-r${row}-${m}`;
+const SHORT = { SC: "SC", TRANK: "T-RANK", USI: "USI" };
 const SCALE = [[1, "Wrong"], [2, "Partly wrong"], [3, "Partly correct"], [4, "Correct"]];
 const S = { data: null, pos: 0, cols: ["SC", "TRANK"] };
 
@@ -57,7 +58,7 @@ function render() {
     for (const m of S.cols) {
       const t = (d.methods[m] || {})[f] || { html: "", status: "missing" };
       const st = t.n_changes ? `${t.n_changes} change${t.n_changes > 1 ? "s" : ""}` : t.status;
-      h += cell(f === "question" ? "Question" : "Answer", st, t.html);
+      h += cell(`${f === "question" ? "Question" : "Answer"} · ${SHORT[m] || m}`, st, t.html);
     }
   }
   h += `<div></div>`;
@@ -71,12 +72,13 @@ function render() {
   $("rowsel").value = String(S.pos);
   $("prev").disabled = S.pos === 0;
   $("next").disabled = S.pos === S.data.rows.length - 1;
+  $("next").classList.toggle("go", S.cols.every((m) => (load(rkey(d.row, m)) || {}).rating));
   save(`gemma4-compare:pos:${LANG}`, { pos: S.pos, cols: S.cols });
 }
 
 function go(k) {
   if (k < 0 || k >= S.data.rows.length) return;
-  S.pos = k; render(); window.scrollTo(0, 0);
+  S.pos = k; render(); $("scroller").scrollTop = 0;
 }
 
 function download() {
@@ -117,7 +119,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   S.data = await (await fetch(LANG === "fr" ? "compare.json" : `compare_${LANG}.json`, { cache: "no-cache" })).json();
   const lang = S.data.lang_name || "French";
   document.title = `${lang} translation comparison`;
-  document.querySelector(".cmp-bar h1").textContent = `${lang} translations, after the medical-term check`;
+  $("title").textContent = `${lang} translations, after the medical-term check`;
+  document.querySelectorAll(".lang-name").forEach((el) => { el.textContent = lang; });
   const prev = load(`gemma4-compare:pos:${LANG}`);
   if (prev) { S.pos = Math.min(prev.pos || 0, S.data.rows.length - 1); S.cols = prev.cols || S.cols; }
   $("rowsel").innerHTML = S.data.rows.map((d, k) => `<option value="${k}">Row ${k + 1} of ${S.data.rows.length} · ${esc(d.source)}</option>`).join("");
@@ -165,9 +168,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     pushSoon(S.data.rows[S.pos].row, m);
   });
   document.addEventListener("keydown", (e) => {
-    if (e.target.closest("textarea, select")) return;
+    if (e.target.closest("textarea, select, dialog[open]")) return;
     if (e.key === "ArrowLeft") go(S.pos - 1);
     else if (e.key === "ArrowRight") go(S.pos + 1);
   });
+  $("open-help").addEventListener("click", () => $("help").showModal());
+  if (remote()) $("help-save").textContent = "Every click is saved under your name; press \"Send to Xavier\" when you are done.";
   render();
+  if (!load(`gemma4-compare:help:${LANG}`)) { $("help").showModal(); save(`gemma4-compare:help:${LANG}`, 1); }
 });

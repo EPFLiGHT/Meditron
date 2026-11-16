@@ -4,19 +4,19 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow">
-  <title>German translation check</title>
+  <title>Translation check</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Noto+Sans+Devanagari:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="review.css">
   <style>
-    .cmp-bar { position: sticky; top: 0; z-index: 5; background: var(--panel); border-bottom: 1px solid var(--line);
-      display: flex; flex-wrap: wrap; gap: 12px; align-items: center; padding: 10px 16px; }
-    .cmp-bar h1 { font-size: 18px; margin: 0 12px 0 0; }
-    .cmp-bar select, .cmp-bar button { font: inherit; font-size: 16px; padding: 4px 10px; border: 1px solid var(--ctl);
-      border-radius: 8px; background: var(--panel); color: var(--ink); }
-    .cmp-legend { margin-left: auto; font-size: 16px; }
-    .cmp-status { font-size: 16px; color: var(--ink-2); }
-    .cmp-intro { max-width: 70em; margin: 12px 16px 0; font-size: 17px; line-height: 1.5; }
-    .cmp-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; padding: 12px 16px 40px; }
-    .cmp-head { position: sticky; top: 58px; z-index: 4; background: var(--bg); padding: 6px 0; display: flex;
+    .bar h1 { font-size: 1.05rem; margin: 0; white-space: normal; }
+    body { font-family: "Atkinson Hyperlegible", "Noto Sans Devanagari", system-ui, sans-serif; }
+    .cmp-legend { font-size: 16px; }
+    /* the page is the window's height: bar, the scrolling grid, the navigation row (as on review/) */
+    .cmp-scroll { flex: 1; min-height: 0; overflow-y: auto; }
+    .cmp-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; padding: 0 16px 24px; }
+    .cmp-head { position: sticky; top: 0; z-index: 4; background: var(--bg); padding: 10px 0 6px; display: flex;
       align-items: center; gap: 8px; font-weight: 700; }
     .cmp-head select { font: inherit; font-weight: 700; font-size: 17px; border: 1px solid var(--ctl); border-radius: 8px;
       padding: 3px 8px; background: var(--panel); color: var(--ink); max-width: 100%; }
@@ -27,32 +27,55 @@
     .cmp-cell table { display: block; overflow-x: auto; }
     .chg { cursor: help; border-bottom: 2px dotted var(--ink-2); }
     .cmp-rate { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
-    .cmp-rate button { font: inherit; font-size: 15px; padding: 4px 10px; border-radius: 8px; border: 1px solid var(--ctl);
-      background: var(--panel); color: var(--ink); cursor: pointer; }
+    .cmp-rate button { font-size: 16px; padding: 4px 10px; border-radius: 8px; border: 1px solid var(--ctl);
+      background: var(--panel); color: var(--ink); }
     .cmp-rate button[aria-pressed="true"].g1 { background: var(--r1-bg); color: var(--r1); border-color: var(--r1); }
     .cmp-rate button[aria-pressed="true"].g2 { background: var(--r2-bg); color: var(--r2); border-color: var(--r2); }
     .cmp-rate button[aria-pressed="true"].g3 { background: var(--r3-bg); color: var(--r3); border-color: var(--r3); }
     .cmp-rate button[aria-pressed="true"].g4 { background: var(--r4-bg); color: var(--r4); border-color: var(--r4); }
-    .cmp-rate textarea { width: 100%; font: inherit; font-size: 15px; min-height: 52px; border: 1px solid var(--ctl);
+    .cmp-rate textarea { width: 100%; font-size: 16px; min-height: 52px; border: 1px solid var(--ctl);
       border-radius: 8px; background: var(--panel); color: var(--ink); padding: 6px; }
-    .cmp-tip { position: fixed; z-index: 20; background: var(--ink); color: var(--panel); font-size: 15px; line-height: 1.4;
+    .cmp-tip { position: fixed; z-index: 20; background: var(--ink); color: var(--panel); font-size: 16px; line-height: 1.4;
       padding: 8px 10px; border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,.25); pointer-events: none; }
+    .rate-row #rowsel { flex: 1; min-width: 0; font: inherit; padding: .45rem .6rem; border: 2px solid var(--ctl);
+      border-radius: .55rem; background: var(--panel); color: var(--ink); }
     @media (max-width: 900px) { .cmp-grid { grid-template-columns: minmax(0, 1fr); } .cmp-head { position: static; } }
   </style>
 </head>
 <body>
-  <div class="cmp-bar">
-    <h1>German translations, after the medical-term check</h1>
-    <button type="button" id="prev">← Previous</button>
-    <select id="rowsel" aria-label="Row"></select>
-    <button type="button" id="next">Next →</button>
-    <span class="cmp-legend"><del>removed</del> <ins>added</ins> by the check · hover a change for its reason</span>
-    <span id="status" class="cmp-status" role="status"></span>
-    <button type="button" id="send">Send to Xavier</button>
-    <button type="button" id="download">Download ratings</button>
-  </div>
-  <p class="cmp-intro">A quick vibe check of Gemma-4's German translations of 20 training samples (exam questions, patient questions, synthetic cases). English is on the left; the two other columns are two translation methods, switchable in their headers. After translating, Gemma-4 checked the medical terms: its changes are marked <del>removed</del> <ins>added</ins>, and hovering one shows why. Rate each translation by whether a German-speaking clinician would find it correct and natural; a comment is welcome but optional. Ratings save as you go.</p>
-  <div class="cmp-grid" id="grid"></div>
+  <header class="bar">
+    <h1 class="bar-title" id="title">Translations, after the medical-term check</h1>
+    <span class="cmp-legend"><del>removed</del> <ins>added</ins> by the check</span>
+    <div class="bar-save" id="status" role="status" aria-live="polite"></div>
+    <nav class="bar-actions">
+      <button type="button" class="ghost" id="open-help">How to read</button>
+      <button type="button" class="ghost" id="send" hidden>Send to Xavier</button>
+      <button type="button" class="ghost" id="download">Download ratings</button>
+    </nav>
+  </header>
+
+  <main class="cmp-scroll" id="scroller">
+    <div class="cmp-grid" id="grid"></div>
+  </main>
+
+  <footer class="rate">
+    <div class="rate-row">
+      <button type="button" class="nav" id="prev" aria-label="Previous sample">&larr; Previous</button>
+      <select id="rowsel" aria-label="Sample"></select>
+      <button type="button" class="nav" id="next" aria-label="Next sample">Next &rarr;</button>
+    </div>
+  </footer>
+
+  <dialog id="help">
+    <h2 tabindex="-1" autofocus>How to read this page</h2>
+    <p>These are 20 training samples for Meditron (exam questions, patient questions, synthetic cases), translated from English into <span class="lang-name">German</span> by Gemma-4.</p>
+    <p><b>Left:</b> the English original. <b>Middle and right:</b> two independent translations made with different methods. SC translates in one pass; T-RANK writes several drafts, ranks them and corrects the best. Either column can be switched to another method in its header.</p>
+    <p>After translating, Gemma-4 checked each translation's medical terms. Its changes are marked <del>removed</del> <ins>added</ins>, compared with that column's own draft. Hover over a change to see why it was made.</p>
+    <p>Please rate each translation by whether a <span class="lang-name">German</span>-speaking clinician would find it correct and natural. A comment is optional. <span id="help-save">Your ratings stay in this browser; "Download ratings" saves them to a file.</span></p>
+    <p>Keys: <kbd>&larr;</kbd> and <kbd>&rarr;</kbd> move between samples.</p>
+    <form method="dialog"><button class="primary">Start</button></form>
+  </dialog>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/15.0.7/marked.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.2.4/purify.min.js"></script>
   <script src="compare.js"></script>
