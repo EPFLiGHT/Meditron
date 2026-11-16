@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Charter flag audit</title>
+  <link rel="icon" href="../static/img/meditron-logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="review.css?v=20261116b">
+</head>
+<body>
+  <header class="bar">
+    <div class="bar-title">Charter flag audit</div>
+    <div class="bar-progress" id="progress" hidden>
+      <span id="progress-text"></span>
+      <span class="meter" aria-hidden="true"><span id="progress-fill"></span></span>
+    </div>
+    <div class="bar-save" id="save" role="status" aria-live="polite"></div>
+    <nav class="bar-actions" id="actions" hidden>
+      <button type="button" class="ghost" id="open-list">All flags</button>
+      <button type="button" class="ghost" id="open-help">How to rate</button>
+    </nav>
+  </header>
+
+  <!-- shown when the link has no valid code -->
+  <main class="notice" id="no-link" hidden>
+    <h1>This page needs your personal link</h1>
+    <p>Open it with <code>?r=&lt;your code&gt;</code>, for example <code>?r=xavier</code>.</p>
+  </main>
+
+  <main class="review" id="review" hidden>
+    <section class="pane context" id="context" aria-label="The judge's flag"></section>
+    <div class="right">
+      <section class="pane sample" id="sample" aria-label="Question and answer"></section>
+      <div class="notes" id="extra">
+        <fieldset class="issues" id="issues">
+          <legend>Why? Pick at least one.</legend>
+          <div class="chips" id="chips"></div>
+        </fieldset>
+        <label class="comment">
+          <span>Comment (optional)</span>
+          <textarea id="comment" rows="2" placeholder="Anything we should know about this flag"></textarea>
+        </label>
+      </div>
+    </div>
+  </main>
+
+  <footer class="rate" id="rate" hidden>
+    <div class="rate-row">
+      <button type="button" class="nav" id="prev" aria-label="Previous flag">&larr; Previous</button>
+      <div class="scale" role="radiogroup" aria-label="Is the flag right?" id="scale">
+        <button type="button" role="radio" data-r="1" class="r1"><b>Wrong flag</b></button>
+        <button type="button" role="radio" data-r="2" class="r2"><b>Partly wrong</b></button>
+        <button type="button" role="radio" data-r="3" class="r3"><b>Partly right</b></button>
+        <button type="button" role="radio" data-r="4" class="r4"><b>Right flag</b></button>
+      </div>
+      <button type="button" class="nav" id="next" aria-label="Next flag">Next &rarr;</button>
+    </div>
+  </footer>
+
+  <dialog id="help">
+    <h2 tabindex="-1" autofocus>How to rate</h2>
+    <p id="help-intro">Gemma-4-31B checked answers from MOOVE training data against the Meditron Charter. Each sample is <b>one flag it raised on one answer</b>; there are a few samples per flag, grouped by charter clause. Please judge whether <b>the flag is right</b>.</p>
+    <dl class="scale-help">
+      <dt class="r1">Wrong flag</dt><dd>The answer does not do what the flag says, or it does not matter.</dd>
+      <dt class="r2">Partly wrong</dt><dd>There is a problem, but the flag gets it wrong: another clause, a much lower severity, or the wrong reason.</dd>
+      <dt class="r3">Partly right</dt><dd>The problem is real and the clause fits, but the severity or the reason is a bit off.</dd>
+      <dt class="r4">Right flag</dt><dd>Right clause, right severity, right reason.</dd>
+    </dl>
+    <p>On the left: the flag, the charter check it applies, the judge's reason and the quote it took from the answer. On the right: the question and the answer, with the quote <mark>highlighted</mark>. Omissions have no quote.</p>
+    <p>Severity decides what happens to the answer: <b>critical</b> drops it from training, <b>major</b> sends it for revision, <b>minor</b> keeps it.</p>
+    <p>Flags marked <span class="src med">MED</span> come from the clauses Meditron added to the Apertus Charter; <span class="src apertus">Apertus</span> flags are the Apertus clauses.</p>
+    <p>Under the flag, <b>Doctors agree / disagree</b> says whether what MOOVE clinicians said about this same answer supports the flag: their pairwise vote (they preferred the other answer, which lacks the flag), their Safety score, their tags. In All flags, ✓ / ✗ / ~ mark the same.</p>
+    <p>Ratings stay in this browser. Keys: <kbd>1</kbd> to <kbd>4</kbd> rate, <kbd>&larr;</kbd> and <kbd>&rarr;</kbd> move between samples.</p>
+    <p id="help-run"></p>
+    <form method="dialog"><button class="primary" id="help-start">Start reviewing</button></form>
+  </dialog>
+
+  <dialog id="list">
+    <h2 tabindex="-1" autofocus>All flags</h2>
+    <p id="list-sum"></p>
+    <div class="grid" id="grid"></div>
+    <form method="dialog" class="dialog-actions">
+      <button type="button" class="primary" id="next-unrated">Go to the next unrated</button>
+      <button type="button" class="ghost" id="export">Download my ratings</button>
+      <button class="ghost">Close</button>
+    </form>
+  </dialog>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/15.0.7/marked.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.2.4/purify.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+  <script src="review.js?v=20261116g"></script>
+</body>
+</html>

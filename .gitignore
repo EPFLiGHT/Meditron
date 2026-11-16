@@ -7,3 +7,9 @@ leaderboard/
 persample/
 pipeline/
 axis2/
+# charter/: only the synthetic-vignette review is public; MOOVE items (items.json) stay local
+charter/*
+!charter/index.html
+!charter/review.js
+!charter/review.css
+!charter/vignettes.json
