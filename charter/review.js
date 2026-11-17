@@ -100,8 +100,9 @@ function contextHtml(it) {
       <dt>Event</dt><dd>${esc(it.event)}${it.setting ? " · " + esc(it.setting) : ""}</dd>
       <dt>Asker</dt><dd>${esc(it.audience)} (the judge's reading)</dd>
       <dt>Model</dt><dd>${esc(it.model)}</dd>
-      <dt>Sample</dt><dd>${S.data.source === "vignettes" ? "random synthetic vignette" : { random: "random MOOVE answer", pair: "answer from a clinician-voted pair", clinician: "answer a MOOVE clinician flagged" }[it.stratum] || esc(it.stratum)}</dd>
-      <dt>This flag</dt><dd>${it.n_flag} answers in the run (${it.n_rand} of ${S.data.n_random} random)</dd></dl></div>
+      <dt>Sample</dt><dd>${S.data.sample_label ? esc(S.data.sample_label) : S.data.source === "vignettes" ? "random synthetic vignette" : { random: "random MOOVE answer", pair: "answer from a clinician-voted pair", clinician: "answer a MOOVE clinician flagged" }[it.stratum] || esc(it.stratum)}</dd>
+      <dt>This flag</dt><dd>${S.data.intro ? `main flag of ${it.n_flag} of the ${S.items.length} dropped answers` : `${it.n_flag} answers in the run (${it.n_rand} of ${S.data.n_random} random)`}</dd>
+      ${it.other_teacher ? `<dt>Other teacher</dt><dd>${esc(it.other_teacher)}</dd>` : ""}</dl></div>
     <div class="block"><h3>Other flags on this answer</h3>${others}</div>
     <details class="block"><summary><b>The judge's analysis</b></summary><p>${esc(it.analysis)}</p></details>
     ${(it.votes || []).map((v) => `<details class="block"><summary><b>The other answer in the doctors' pair</b></summary>
@@ -242,8 +243,13 @@ async function start() {
     document.querySelector(".bar-title").textContent = "Charter flag audit · synthetic vignettes";
     $("help-intro").innerHTML = "Gemma-4-31B checked " + esc(data.source_label) + " against the Meditron Charter. Each sample is <b>one flag it raised on one answer</b>; there are a few samples per flag, grouped by charter clause. Please judge whether <b>the flag is right</b>.";
   }
+  if (data.intro) {   // a set with its own description (charter_review.py --drops)
+    document.title = "Charter flag audit: dropped vignettes";
+    document.querySelector(".bar-title").textContent = "Charter flag audit · dropped vignettes";
+    $("help-intro").innerHTML = data.intro;
+  }
   const v = data.verdicts_random || {};
-  $("help-run").textContent = `Run ${data.run}, judge ${data.judge}: ${data.n_judged} answers judged; of the ${data.n_random} random ones, ` +
+  if (data.run_note) $("help-run").textContent = data.run_note; else $("help-run").textContent = `Run ${data.run}, judge ${data.judge}: ${data.n_judged} answers judged; of the ${data.n_random} random ones, ` +
     `${v.keep || 0} kept, ${v.revise || 0} revised, ${v.drop || 0} dropped. ${S.items.length} samples here, at most 5 per flag.`;
 
   const local = loadLocal();

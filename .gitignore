@@ -13,3 +13,4 @@ charter/*
 !charter/review.js
 !charter/review.css
 !charter/vignettes.json
+!charter/vignettes_drop.json
