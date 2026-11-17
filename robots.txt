@@ -22,4 +22,4 @@ Disallow: /v8-logo/
 Disallow: /v7/
 Disallow: /v8/
 
-Sitemap: https://epflight.github.io/Meditron/sitemap.xml
+Sitemap: https://meditron.light-laboratory.org/sitemap.xml
