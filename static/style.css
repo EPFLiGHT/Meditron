@@ -23,7 +23,7 @@
   --font: 'Manrope', system-ui, sans-serif;
 
   --font-read: 'Source Serif 4', Georgia, serif;   /* quoted material: MOOVE questions, answers, quotes */
-  --display: 'ivypresto-headline', 'Cormorant Garamond', Georgia, serif;   /* LiGHT's headline face (Adobe Fonts kit) */
+  --display: 'DM Serif Display', Georgia, serif;   /* stand-in for LiGHT's IvyPresto Headline SemiBold until the kit has that weight (its only weight, 400, matches Ivy 600); to switch back: 'ivypresto-headline' + the use.typekit.net/ssi4ehi.css link in index.html and meditronfo/index.html */
   --gutter: clamp(16px, 3.2vw, 46px);   /* LiGHT's page margin */
   --page: min(1500px, 100% - 2 * var(--gutter));   /* LiGHT's column */
   /* the type scale, the only text sizes on the site (display headings excepted): labels, secondary text,
