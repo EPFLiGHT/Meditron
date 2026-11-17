@@ -255,10 +255,19 @@ button { font: inherit; color: inherit; }
 }
 .ocean-card h2 { font-size: var(--t-lg); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.4rem; }
 .ocean-card p { font-size: var(--t-dense); line-height: 1.5; margin: 0; }
-.ocean-card .feature-thumb { margin-top: 1rem; box-shadow: none; }
-.ocean-card .feature-body { padding: 0.8rem 1rem 0.9rem; }
-.ocean-card .feature-body strong { font-size: var(--t-base); }
-.ocean-card .feature-body > span { font-size: var(--t-sm); }
+/* MOOVE's logo as the call to action: the logo is a mask over a gradient, and a glint sweeps across it (faster on hover) */
+.moove-cta { display: flex; flex-direction: column; align-items: flex-start; gap: 0.45rem; margin-top: 1.1rem; color: var(--ink); text-decoration: none; }
+.moove-logo {
+  display: block; width: min(15rem, 100%); aspect-ratio: 1146.99 / 187.89;
+  background: linear-gradient(105deg, var(--ink) 0 40%, var(--sky) 46%, #fff 50%, var(--sky) 54%, var(--ink) 60% 100%) 100% 0 / 300% 100%;
+  -webkit-mask: url(img/moove-logo.svg) left center / contain no-repeat; mask: url(img/moove-logo.svg) left center / contain no-repeat;
+  animation: moove-glint 4.5s ease-in-out infinite; transition: transform 0.2s ease;
+}
+.moove-cta-label { font-size: var(--t-sm); font-weight: 700; color: var(--blue); }
+.moove-cta:hover .moove-logo, .moove-cta:focus-visible .moove-logo { animation-duration: 1.4s; transform: translateY(-1px); }
+.moove-cta:hover .moove-cta-label, .moove-cta:focus-visible .moove-cta-label { text-decoration: underline; text-underline-offset: 3px; }
+@keyframes moove-glint { 0%, 55% { background-position: 100% 0; } 100% { background-position: 0 0; } }
+@media (prefers-reduced-motion: reduce) { .moove-logo { animation: none; } }
 /* no room beside the globe: the rail folds to a line and a bar over it */
 @media (max-aspect-ratio: 3/2), (max-width: 900px) {
   .story-rail { top: 0.75rem; left: 50%; transform: translateX(-50%); width: min(32rem, 100% - 32px); text-align: center; padding: 0.4rem 0.7rem 0.5rem; background: color-mix(in srgb, var(--paper) 88%, transparent); border-radius: 6px; }
@@ -452,6 +461,7 @@ button { font: inherit; color: inherit; }
 .m-open td.yes::before { content: "\2713\00a0"; color: var(--green); }
 .m-open td.no { color: var(--muted); }
 .m-open td.no::before { content: "\2014\00a0"; }
+
 
 /* figures: a bordered card per chart, text tabs above, centred caption */
 .m-fig { margin: 2rem 0 0; }

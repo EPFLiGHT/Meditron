@@ -112,7 +112,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400..800&display=swap">
   <link rel="preload" href="static/fonts/chillax-700.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="static/style.css?v=20261117a">
+  <link rel="stylesheet" href="static/style.css?v=20261117d">
   <link rel="preload" href="static/data/land-110m.json" as="fetch" crossorigin>
   <!-- page variants, to compare: ?withbeam shows the LiGHT beam (withbeam/), ?chillax the beam with its text in the Meditron logo's font, like the name (chillax/), ?ivy the name in Ivy Presto (ivy/), ?manrope the name in Manrope (manrope/), ?w400 sets every title at weight 400 (400/); links within the site keep them -->
   <script>
@@ -177,11 +177,11 @@
             <p class="story-ctl"><button type="button" id="story-play">Pause</button></p>
           </div>
           <div class="story-card" id="story-card" aria-hidden="true" hidden></div>
-          <!-- the last stop: this card rests in the Indian Ocean, with the sites lit around it; under its text, MOOVE as a card like the page's other links -->
+          <!-- the last stop: this card rests in the Indian Ocean, with the sites lit around it; under its text, the MOOVE logo (shiny) links to jointhemoove.org -->
           <div class="ocean-card" id="ocean-card">
-            <h2>Tested by clinicians</h2>
-            <p>At MOOVE events, clinicians put tough questions from their own practice to the models, then compare two anonymous answers and vote for the better one.</p>
-            <a class="feature-thumb" href="#moove"><img src="static/img/portal-moove.jpg" alt="" width="960" height="453"><span class="feature-body"><strong>MOOVE</strong><span>The platform where clinicians ask the questions and judge the answers.</span><small>Clinical evaluation</small></span></a>
+            <h2>Clinical experts evaluate AI against real-world local contexts.</h2>
+            <p>Clinicians contribute realistic scenarios from their daily practice and evaluate blinded AI responses for clinical quality, safety and contextual relevance.</p>
+            <a class="moove-cta" href="https://jointhemoove.org/" target="_blank" rel="noopener"><span class="moove-logo" role="img" aria-label="MOOVE"></span><span class="moove-cta-label">Explore MOOVE <span aria-hidden="true">→</span></span></a>
           </div>
         </div>
       </section>
@@ -225,10 +225,6 @@
         <h2 id="meditronfo-title">Meet our latest project</h2>
         <p>MeditronFO is the first fully-open pipeline for creating medical LLMs. On HealthBench, Apertus-70B-MeditronFO reaches 49.3%, up from 39.4% for its base; MedGemma-27B reaches 54.8%.</p>
         <figure class="m-fig feature-fig">
-          <div class="m-tabs" role="group" aria-label="Models shown">
-            <button type="button" class="on" data-hb="ours" aria-pressed="true">MeditronFO and their bases</button>
-            <button type="button" data-hb="all" aria-pressed="false">With other open models</button>
-          </div>
           <div class="m-card">
             <div class="m-card-head"><h4>HealthBench full</h4><span>Score vs model size</span></div>
             <div class="m-legend" aria-hidden="true">
@@ -238,10 +234,9 @@
               <span><i class="k-star"></i>After finetuning</span>
               <span><i class="k-line"></i>Best at its size</span>
             </div>
-            <div id="hb-chart" class="m-chart" role="img" aria-label="HealthBench full score against parameter count; the table below has every value."></div>
+            <div id="hb-chart" class="m-chart" role="img" aria-label="HealthBench full score against parameter count, base to MeditronFO finetune: Apertus-8B 26.0 to 42.1%, EuroLLM-22B 39.9 to 43.5%, Gemma-3-27B 55.4 to 56.2%, Apertus-70B 39.4 to 49.3%; MedGemma-27B 54.8%."></div>
           </div>
           <figcaption>5,000 conversations graded by Gemma-4-31B against physician-written rubrics. Arrows go from each base to its MeditronFO finetune; bars are 95% intervals.</figcaption>
-          <details class="m-details"><summary>Show as a table</summary><div id="hb-table" class="m-scroll"></div></details>
         </figure>
         <a class="feature-thumb" href="meditronfo/"><img src="static/img/meditronfo-thumb.jpg?v=10" alt="" width="1920" height="906" loading="lazy"><span class="feature-body"><strong>MeditronFO: An Auditable Pipeline for Clinical LLMs</strong><span>The models, their data, the results and the paper.</span><small>Project page</small></span></a>
       </div>
@@ -320,8 +315,7 @@
             <div class="join-path">
               <h3>Community</h3>
               <p>Everyone else: researchers, engineers, health workers or simply curious. Stay up to date with Meditron and join the community: fill in a short form and we send you an invite to our Slack.</p>
-              <!-- TODO: replace the placeholder with the sign-up form, whose confirmation page gives the Slack invite -->
-              <a class="btn btn-solid" href="https://example.org/meditron-community-form" target="_blank" rel="noopener">Join the community</a>
+              <a class="btn btn-solid" href="https://forms.gle/d49uaX2GdYAvVwds7" target="_blank" rel="noopener">Join the community</a>
             </div>
           </div>
         </div>
@@ -579,7 +573,7 @@
   <script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/15.0.7/marked.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.2.4/purify.min.js"></script>
-  <script src="static/charts.js?v=20261101b"></script>
-  <script src="static/app.js?v=20261103b"></script>
+  <script src="static/charts.js?v=20261117c"></script>
+  <script src="static/app.js?v=20261117d"></script>
 </body>
 </html>

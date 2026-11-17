@@ -124,6 +124,7 @@ function drawHB(points, hbView) {
 }
 
 function hbTable(points) {
+  if (!document.getElementById('hb-table')) return;   // the main page shows no table
   const rows = [...points].sort((a, b) => b.score - a.score).map((p) => `<tr class="${p.role === 'fo' ? 'ours' : ''}">
     <th scope="row">${esc(p.model)}</th><td>${p.params}B</td><td>${p.open === 'fully' ? 'Fully-open' : 'Open-weight'}</td>
     <td>${fmt(p.score)}</td><td>${fmt(p.ci[0])}–${fmt(p.ci[1])}</td></tr>`).join('');

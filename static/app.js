@@ -300,6 +300,8 @@ const SITES = [
       const left = goal - T, move = dt / GLIDE_MS;
       if (Math.abs(left) <= move) { T = goal; goal = null; } else T += Math.sign(left) * move;
     }
+    // scrolled past the globe (mostly above the screen): the story counts as seen, so coming back up shows its end, the MOOVE card
+    if (box.top < 0 && seen < 0.3 && T < END && goal === null && dragX === null) { T = END; opened = -1; }
     const playing = wanted && goal === null && dragX === null && !document.hidden && seen >= 0.7 && T < END && !open;
     if (playing) T = Math.min(END, T + dt / STEP_MS);
     play.textContent = T >= END - 0.01 ? 'Replay' : wanted ? 'Pause' : 'Play';
@@ -380,10 +382,10 @@ const SITES = [
 
 /* ---------------------------------------------------------- HealthBench */
 
-// the chart of the MeditronFO page, from that page's data (charts.js)
+// the chart of the MeditronFO page, from that page's data (charts.js), without EuroLLM-9B and OLMo-2-32B
 fetch('meditronfo/data.json')
   .then((r) => r.json())
-  .then((d) => showHealthBench(d.healthbench))
+  .then((d) => showHealthBench(d.healthbench.filter((p) => !/^(EuroLLM-9B|OLMo-2-32B)-/.test(p.model))))   // the main page: three pairs and MedGemma, no table
   .catch(() => { document.getElementById('hb-chart').textContent = 'The results did not load. Reload the page to try again.'; });
 
 /* ---------------------------------------------------------------- dawn */
